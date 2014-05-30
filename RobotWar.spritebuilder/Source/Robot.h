@@ -8,12 +8,22 @@
 
 #import "CCNode.h"
 
-@interface Robot : NSObject
+@protocol RobotProtocol <NSObject>
+
+- (void)scannedRobot;
+
+@end
+
+@interface Robot : NSObject <RobotProtocol>
 
 - (void)turnGunLeft:(NSInteger)degree;
 - (void)turnGunRight:(NSInteger)degree;
-- (void)performAction;
 
-@property (nonatomic, assign) dispatch_queue_t operationQueue;
+- (void)moveAhead:(NSInteger)distance;
+
+- (void)run;
+
+@property (nonatomic, assign) dispatch_queue_t basicMovementQueue;
+@property (nonatomic, assign) dispatch_queue_t eventResponseQueue;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "MainScene.h"
 #import "Robot.h"
+#import "BasicRobot.h"
 
 @implementation MainScene {
   Robot *robot1;
@@ -22,8 +23,8 @@
 
 - (void)didLoadFromCCB {
   // intantiate two AIs
-  robot1 = [[Robot alloc]init];
-  robot2 = [[Robot alloc]init];
+  robot1 = [[BasicRobot alloc]init];
+  robot2 = [[BasicRobot alloc]init];
 
   // create a dispatch queue for each robot
   robot1Queue = dispatch_queue_create("robot1Queue", DISPATCH_QUEUE_SERIAL);
@@ -34,22 +35,30 @@
   CCNode *robotNode2 = [CCBReader load:@"Robot" owner:robot2];
 
   robotNode1.position = ccp(50,50);
-  robot1.operationQueue = robot1Queue;
+  robot1.basicMovementQueue = robot1Queue;
+  robot1.eventResponseQueue = dispatch_queue_create("robot1EventResponseQueue", DISPATCH_QUEUE_SERIAL);
   [self addChild:robotNode1];
 
   robotNode2.position = ccp(200,200);
-  robot2.operationQueue = robot2Queue;
+  robot2.basicMovementQueue = robot2Queue;
+  robot2.eventResponseQueue = dispatch_queue_create("robot2EventResponseQueue", DISPATCH_QUEUE_SERIAL);
   [self addChild:robotNode2];
+
+  // if queue is empty call performAction, otherwise not
+  dispatch_async(robot1Queue, ^{
+    [robot1 run];
+  });
+  
+  dispatch_async(robot2Queue, ^{
+    [robot2 run];
+  });
+  
+  [self performSelector:@selector(enemyDetected) withObject:nil afterDelay:1.f];
 }
 
-- (void)update:(CCTime)delta {
-  dispatch_async(robot1Queue, ^{
-    [robot1 performAction];
-  });
-
-  dispatch_async(robot2Queue, ^{
-    [robot2 performAction];
-  });
+- (void)enemyDetected {
+  // on event call handler with high priority
+  [robot1 scannedRobot];
 }
 
 @end

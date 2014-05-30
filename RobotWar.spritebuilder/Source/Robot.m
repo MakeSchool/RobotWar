@@ -12,11 +12,12 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
 
 @implementation Robot {
   CCNode *_barell;
+  CCNode *_body;
 }
 
-- (void)performRobotAction:(CCActionFiniteTime *)action {
+- (void)performRobotAction:(CCActionFiniteTime *)action target:(CCNode *)target  {
   // each robot can only perform operations on his own queue!
-  NSAssert(dispatch_get_current_queue() == self.operationQueue, @"You're trying to cheat? Your robot is only allowed to use his own queue!");
+  NSAssert(dispatch_get_current_queue() == self.basicMovementQueue || dispatch_get_current_queue() == self.eventResponseQueue, @"You're trying to cheat? Your robot is only allowed to use his own queue!");
 
   dispatch_semaphore_t sema = dispatch_semaphore_create(0);
   
@@ -27,7 +28,7 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   CCActionSequence *sequence = [CCActionSequence actionOne:action two:actionCallBlock];
 
   dispatch_async(dispatch_get_main_queue(), ^{
-    [_barell runAction:sequence];
+    [target runAction:sequence];
   });
   
   dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
@@ -41,7 +42,7 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND;
 
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation-degree];
-  [self performRobotAction:rotateTo];
+  [self performRobotAction:rotateTo target:_barell];
 }
 
 - (void)turnGunRight:(NSInteger)degree {
@@ -49,21 +50,26 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND;
 
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation+degree];
-  [self performRobotAction:rotateTo];
+  [self performRobotAction:rotateTo target:_barell];
 }
 
-- (void)performAction {
-  [self turnGunLeft:180];
-  [self turnGunRight:20];
-  NSLog(@"Turn completed");
+- (void)moveAhead:(NSInteger)distance {
+  CCActionMoveBy *moveBy = [CCActionMoveBy actionWithDuration:1.f position:ccp(10.f, 10.f)];
+  [self performRobotAction:moveBy target:_body];
 }
 
 #pragma mark - Override setters
 
-- (void)setOperationQueue:(dispatch_queue_t)operationQueue {
-  NSAssert(_operationQueue == NULL, @"Operation queue can only be set once and never alternated!");
+- (void)setBasicMovementQueue:(dispatch_queue_t)basicMovementQueue {
+  NSAssert(_basicMovementQueue == NULL, @"Operation queue can only be set once and never alternated!");
   
-  _operationQueue = operationQueue;
+  _basicMovementQueue = basicMovementQueue;
+}
+
+- (void)setEventResponseQueue:(dispatch_queue_t)eventResponseQueue {
+  NSAssert(_eventResponseQueue == NULL, @"Operation queue can only be set once and never alternated!");
+  
+  _eventResponseQueue = eventResponseQueue;
 }
 
 @end
