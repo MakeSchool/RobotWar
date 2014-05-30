@@ -54,6 +54,8 @@
   });
   
   [self performSelector:@selector(enemyDetected) withObject:nil afterDelay:1.f];
+  [self performSelector:@selector(enemyDetected) withObject:nil afterDelay:2.f];
+  [self performSelector:@selector(enemyDetected) withObject:nil afterDelay:5.f];
 }
 
 - (void)enemyDetected {

@@ -7,34 +7,40 @@
 //
 
 #import "Robot.h"
+#import "RobotOperation.h"
 
 static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
+
+@interface Robot ()
+
+@end
 
 @implementation Robot {
   CCNode *_barell;
   CCNode *_body;
+  RobotOperation *_moveOperation;
+  RobotOperation *_gunRotationOperation;
 }
 
-- (void)performRobotAction:(CCActionFiniteTime *)action target:(CCNode *)target  {
-  // each robot can only perform operations on his own queue!
-  NSAssert(dispatch_get_current_queue() == self.basicMovementQueue || dispatch_get_current_queue() == self.eventResponseQueue, @"You're trying to cheat? Your robot is only allowed to use his own queue!");
-
-  dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+- (void)performRobotAction:(CCActionFiniteTime *)action target:(CCNode *)target actionSlot:(__strong RobotOperation **)actionSlot {
   
-  CCActionCallBlock *actionCallBlock = [CCActionCallBlock actionWithBlock:^{
-    dispatch_semaphore_signal(sema);
-  }];
-
-  CCActionSequence *sequence = [CCActionSequence actionOne:action two:actionCallBlock];
-
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [target runAction:sequence];
-  });
-  
-  dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-  dispatch_release(sema);
-
-  return;
+    // each robot can only perform operations on his own queue!
+    NSAssert(dispatch_get_current_queue() == self.basicMovementQueue || dispatch_get_current_queue() == self.eventResponseQueue, @"You're trying to cheat? Your robot is only allowed to use his own queue!");
+    
+    if (*actionSlot != nil) {
+      [(*actionSlot) cancel];
+    }
+    
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    
+    *actionSlot = [[RobotOperation alloc] init];
+    (*actionSlot).action = action;
+    (*actionSlot).target = target;
+    (*actionSlot).semaphore = sema;
+    [(*actionSlot) start];
+    
+    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    dispatch_release(sema);
 }
 
 - (void)turnGunLeft:(NSInteger)degree {
@@ -42,7 +48,7 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND;
 
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation-degree];
-  [self performRobotAction:rotateTo target:_barell];
+  [self performRobotAction:rotateTo target:_barell actionSlot:&_gunRotationOperation];
 }
 
 - (void)turnGunRight:(NSInteger)degree {
@@ -50,12 +56,12 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND;
 
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation+degree];
-  [self performRobotAction:rotateTo target:_barell];
+  [self performRobotAction:rotateTo target:_barell actionSlot:&_gunRotationOperation];
 }
 
 - (void)moveAhead:(NSInteger)distance {
   CCActionMoveBy *moveBy = [CCActionMoveBy actionWithDuration:1.f position:ccp(10.f, 10.f)];
-  [self performRobotAction:moveBy target:_body];
+  [self performRobotAction:moveBy target:_body actionSlot:&_moveOperation];
 }
 
 #pragma mark - Override setters

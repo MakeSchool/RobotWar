@@ -36,7 +36,7 @@
     [self turnGunLeft:15];
   });
   
-  self.basicMovementDeactivated = TRUE;
+  self.basicMovementDeactivated = !self.basicMovementDeactivated;
 }
 
 @end
