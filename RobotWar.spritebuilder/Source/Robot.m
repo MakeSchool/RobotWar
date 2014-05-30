@@ -58,4 +58,12 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   NSLog(@"Turn completed");
 }
 
+#pragma mark - Override setters
+
+- (void)setOperationQueue:(dispatch_queue_t)operationQueue {
+  NSAssert(_operationQueue == NULL, @"Operation queue can only be set once and never alternated!");
+  
+  _operationQueue = operationQueue;
+}
+
 @end
