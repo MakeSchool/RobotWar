@@ -8,8 +8,12 @@
 
 #import "CCNode.h"
 
-@interface Robot : CCNode
+@interface Robot : NSObject
 
 - (void)turnGunLeft:(NSInteger)degree;
+- (void)turnGunRight:(NSInteger)degree;
+- (void)performAction;
+
+@property (nonatomic, assign) dispatch_queue_t operationQueue;
 
 @end
