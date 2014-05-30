@@ -18,10 +18,10 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   // each robot can only perform operations on his own queue!
   NSAssert(dispatch_get_current_queue() == self.operationQueue, @"You're trying to cheat? Your robot is only allowed to use his own queue!");
 
-  __block BOOL complete = FALSE;
+  dispatch_semaphore_t sema = dispatch_semaphore_create(0);
   
   CCActionCallBlock *actionCallBlock = [CCActionCallBlock actionWithBlock:^{
-    complete = TRUE;
+    dispatch_semaphore_signal(sema);
   }];
 
   CCActionSequence *sequence = [CCActionSequence actionOne:action two:actionCallBlock];
@@ -29,8 +29,9 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   dispatch_async(dispatch_get_main_queue(), ^{
     [_barell runAction:sequence];
   });
-
-  while (!complete) ;
+  
+  dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+  dispatch_release(sema);
 
   return;
 }
