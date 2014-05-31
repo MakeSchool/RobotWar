@@ -14,11 +14,10 @@
 }
 
 - (void)run {
-  __block dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-  _currentActionSemaphore = sema;
+  _currentActionSemaphore = dispatch_semaphore_create(0);
   
   CCActionCallBlock *callback = [CCActionCallBlock actionWithBlock:^{
-    dispatch_semaphore_signal(sema);
+    dispatch_semaphore_signal(_currentActionSemaphore);
   }];
   
   _sequence = [CCActionSequence actionWithArray:@[self.action, callback]];
@@ -26,13 +25,15 @@
     [self.target runAction:_sequence];
   });
   
-  dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-  dispatch_release(sema);
+  dispatch_semaphore_wait(_currentActionSemaphore, DISPATCH_TIME_FOREVER);
+  dispatch_release(_currentActionSemaphore);
 }
 
 - (void)cancel {
   [self.target stopAction:_sequence];
   dispatch_semaphore_signal(_currentActionSemaphore);
+
+  NSLog(@"Cancel, Cancel");
 }
 
 @end
