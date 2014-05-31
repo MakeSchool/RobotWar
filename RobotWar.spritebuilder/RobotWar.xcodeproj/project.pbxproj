@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6244629A1937DDD300895F2D /* Robot.m in Sources */ = {isa = PBXBuildFile; fileRef = 624462991937DDD300895F2D /* Robot.m */; };
+		62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E3A32319397BE400BD3F0F /* RobotAction.m */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
 		B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5908188484E7003F4D28 /* iPad-old@2x.png */; };
 		B71F5913188484E7003F4D28 /* iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5909188484E7003F4D28 /* iPad.png */; };
@@ -58,6 +59,8 @@
 /* Begin PBXFileReference section */
 		624462981937DDD300895F2D /* Robot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Robot.h; path = Source/Robot.h; sourceTree = "<group>"; };
 		624462991937DDD300895F2D /* Robot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Robot.m; path = Source/Robot.m; sourceTree = "<group>"; };
+		62E3A32219397BE400BD3F0F /* RobotAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RobotAction.h; path = Source/RobotAction.h; sourceTree = "<group>"; };
+		62E3A32319397BE400BD3F0F /* RobotAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RobotAction.m; path = Source/RobotAction.m; sourceTree = "<group>"; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
 		B71F5908188484E7003F4D28 /* iPad-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old@2x.png"; path = "Icons/iPad-old@2x.png"; sourceTree = "<group>"; };
 		B71F5909188484E7003F4D28 /* iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPad.png; path = Icons/iPad.png; sourceTree = "<group>"; };
@@ -131,6 +134,8 @@
 				B7378993180767190076A88C /* MainScene.m */,
 				624462981937DDD300895F2D /* Robot.h */,
 				624462991937DDD300895F2D /* Robot.m */,
+				62E3A32219397BE400BD3F0F /* RobotAction.h */,
+				62E3A32319397BE400BD3F0F /* RobotAction.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
+				62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

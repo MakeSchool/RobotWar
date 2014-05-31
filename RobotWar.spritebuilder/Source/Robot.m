@@ -7,6 +7,7 @@
 //
 
 #import "Robot.h"
+#import "RobotAction.h"
 
 static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
 
@@ -22,8 +23,8 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   dispatch_queue_t _mainQueue;
   
   dispatch_group_t mainQueueGroup;
-  dispatch_semaphore_t _currentActionSemaphore;
 
+  RobotAction *_currentRobotAction;
 }
 
 - (instancetype)init {
@@ -46,21 +47,14 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
 }
 
 - (void)runRobotAction:(CCActionRotateTo *)rotateTo {
+  RobotAction *robotAction = [[RobotAction alloc] init];
+  robotAction.target = _barell;
+  robotAction.action = rotateTo;
+  _currentRobotAction = robotAction;
   
-  __block dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-  _currentActionSemaphore = sema;
+  [robotAction run];
   
-  CCActionCallBlock *callback = [CCActionCallBlock actionWithBlock:^{
-    dispatch_semaphore_signal(sema);
-  }];
-  
-  CCActionSequence *sequence = [CCActionSequence actionWithArray:@[rotateTo, callback]];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [_barell runAction:sequence];
-  });
-  
-  dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-  dispatch_release(sema);
+  _currentRobotAction = nil;
 }
 
 - (void)turnGunRight:(NSInteger)degree {
@@ -91,12 +85,8 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   }
   
   dispatch_group_async(mainQueueGroup, _mainQueue, ^{
-    // pause background queue and run whatever we want to run here
-    [_body stopAllActions];
-    [_barell stopAllActions];
-
-    if (_currentActionSemaphore != NULL) {
-      dispatch_semaphore_signal(_currentActionSemaphore);
+    if (_currentRobotAction != nil) {
+      [_currentRobotAction cancel];
     }
     
     [self scannedRobotEvent];
