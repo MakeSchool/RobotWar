@@ -33,6 +33,9 @@
   [robot2 run];
   
   [robot1 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
+  [robot1 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
+  [robot1 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
+  [robot1 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
 }
 
 @end

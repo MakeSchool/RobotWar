@@ -21,7 +21,7 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   dispatch_queue_t _backgroundQueue;
   dispatch_queue_t _mainQueue;
   
-  dispatch_semaphore_t _mainQueueSemaphore;
+  dispatch_group_t mainQueueGroup;
   dispatch_semaphore_t _currentActionSemaphore;
 
 }
@@ -86,20 +86,22 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
     while (true) {
       [self turnGunLeft:2000];
       
-      if (_mainQueueSemaphore != NULL) {
-        dispatch_semaphore_wait(_mainQueueSemaphore, DISPATCH_TIME_FOREVER);
-        dispatch_release(_mainQueueSemaphore);
-        _mainQueueSemaphore = NULL;
+      if (mainQueueGroup != NULL) {
+        dispatch_group_wait(mainQueueGroup, DISPATCH_TIME_FOREVER);
+        dispatch_release(mainQueueGroup);
+        mainQueueGroup = NULL;
       }
     }
   });
 }
 
 - (void)scannedRobot {
-  // pause background queue and run whatever we want to run here
-  _mainQueueSemaphore = dispatch_semaphore_create(0);
-  dispatch_async(_mainQueue, ^{
-    
+  if (mainQueueGroup == NULL) {
+    mainQueueGroup = dispatch_group_create();
+  }
+  
+  dispatch_group_async(mainQueueGroup, _mainQueue, ^{
+    // pause background queue and run whatever we want to run here
     [_body stopAllActions];
     [_barell stopAllActions];
 
@@ -107,11 +109,14 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
       dispatch_semaphore_signal(_currentActionSemaphore);
     }
     
-    [self turnGunRight:90];
-    [self turnGunLeft:10];
-    [self turnGunRight:10];
-    dispatch_semaphore_signal(_mainQueueSemaphore);
+    [self scannedRobotEvent];
   });
+}
+
+- (void)scannedRobotEvent {
+  [self turnGunRight:90];
+  [self turnGunLeft:10];
+  [self turnGunRight:10];
 }
 
 @end
