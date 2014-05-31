@@ -18,12 +18,8 @@
 
 - (void)turnGunLeft:(NSInteger)degree;
 - (void)turnGunRight:(NSInteger)degree;
-
 - (void)moveAhead:(NSInteger)distance;
 
 - (void)run;
-
-@property (nonatomic, assign) dispatch_queue_t basicMovementQueue;
-@property (nonatomic, assign) dispatch_queue_t eventResponseQueue;
 
 @end

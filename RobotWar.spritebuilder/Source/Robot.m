@@ -7,7 +7,6 @@
 //
 
 #import "Robot.h"
-#import "RobotOperation.h"
 
 static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
 
@@ -18,64 +17,101 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
 @implementation Robot {
   CCNode *_barell;
   CCNode *_body;
-  RobotOperation *_moveOperation;
-  RobotOperation *_gunRotationOperation;
+  
+  dispatch_queue_t _backgroundQueue;
+  dispatch_queue_t _mainQueue;
+  
+  dispatch_semaphore_t _mainQueueSemaphore;
+  dispatch_semaphore_t _currentActionSemaphore;
+
 }
 
-- (void)performRobotAction:(CCActionFiniteTime *)action target:(CCNode *)target actionSlot:(__strong RobotOperation **)actionSlot {
+- (instancetype)init {
+  self = [super init];
   
-    // each robot can only perform operations on his own queue!
-    NSAssert(dispatch_get_current_queue() == self.basicMovementQueue || dispatch_get_current_queue() == self.eventResponseQueue, @"You're trying to cheat? Your robot is only allowed to use his own queue!");
-    
-    if (*actionSlot != nil) {
-      [(*actionSlot) cancel];
-    }
-    
-    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-    
-    *actionSlot = [[RobotOperation alloc] init];
-    (*actionSlot).action = action;
-    (*actionSlot).target = target;
-    (*actionSlot).semaphore = sema;
-    [(*actionSlot) start];
-    
-    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-    dispatch_release(sema);
+  if (self) {
+    _backgroundQueue = dispatch_queue_create("backgroundQueue", DISPATCH_QUEUE_SERIAL);
+    _mainQueue = dispatch_queue_create("mainQueue", DISPATCH_QUEUE_SERIAL);
+  }
+  
+  return self;
 }
 
 - (void)turnGunLeft:(NSInteger)degree {
   CGFloat currentRotation = _barell.rotation;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND;
-
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation-degree];
-  [self performRobotAction:rotateTo target:_barell actionSlot:&_gunRotationOperation];
+  
+  __block dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+
+  _currentActionSemaphore = sema;
+  
+  CCActionCallBlock *callback = [CCActionCallBlock actionWithBlock:^{
+    dispatch_semaphore_signal(sema);
+  }];
+  
+  CCActionSequence *sequence = [CCActionSequence actionWithArray:@[rotateTo, callback]];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [_barell runAction:sequence];
+  });
+  
+  dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+  dispatch_release(sema);
+  _currentActionSemaphore = NULL;
 }
 
 - (void)turnGunRight:(NSInteger)degree {
   CGFloat currentRotation = _barell.rotation;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND;
-
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation+degree];
-  [self performRobotAction:rotateTo target:_barell actionSlot:&_gunRotationOperation];
-}
-
-- (void)moveAhead:(NSInteger)distance {
-  CCActionMoveBy *moveBy = [CCActionMoveBy actionWithDuration:1.f position:ccp(10.f, 10.f)];
-  [self performRobotAction:moveBy target:_body actionSlot:&_moveOperation];
-}
-
-#pragma mark - Override setters
-
-- (void)setBasicMovementQueue:(dispatch_queue_t)basicMovementQueue {
-  NSAssert(_basicMovementQueue == NULL, @"Operation queue can only be set once and never alternated!");
   
-  _basicMovementQueue = basicMovementQueue;
+  __block dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+  
+  
+  CCActionCallBlock *callback = [CCActionCallBlock actionWithBlock:^{
+    dispatch_semaphore_signal(sema);
+  }];
+  
+  CCActionSequence *sequence = [CCActionSequence actionWithArray:@[rotateTo, callback]];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [_barell runAction:sequence];
+  });
+  
+  dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+  dispatch_release(sema);
 }
 
-- (void)setEventResponseQueue:(dispatch_queue_t)eventResponseQueue {
-  NSAssert(_eventResponseQueue == NULL, @"Operation queue can only be set once and never alternated!");
-  
-  _eventResponseQueue = eventResponseQueue;
+- (void)run {
+  dispatch_async(_backgroundQueue, ^{
+    while (true) {
+      [self turnGunLeft:2000];
+      
+      if (_mainQueueSemaphore != NULL) {
+        dispatch_semaphore_wait(_mainQueueSemaphore, DISPATCH_TIME_FOREVER);
+        dispatch_release(_mainQueueSemaphore);
+        _mainQueueSemaphore = NULL;
+      }
+    }
+  });
+}
+
+- (void)scannedRobot {
+  // pause background queue and run whatever we want to run here
+  _mainQueueSemaphore = dispatch_semaphore_create(0);
+  dispatch_async(_mainQueue, ^{
+    
+    [_body stopAllActions];
+    [_barell stopAllActions];
+
+    if (_currentActionSemaphore != NULL) {
+      dispatch_semaphore_signal(_currentActionSemaphore);
+    }
+    
+    [self turnGunRight:90];
+    [self turnGunLeft:10];
+    [self turnGunRight:10];
+    dispatch_semaphore_signal(_mainQueueSemaphore);
+  });
 }
 
 @end

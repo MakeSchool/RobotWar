@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6244629A1937DDD300895F2D /* Robot.m in Sources */ = {isa = PBXBuildFile; fileRef = 624462991937DDD300895F2D /* Robot.m */; };
-		624462A11938EF4700895F2D /* BasicRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = 624462A01938EF4700895F2D /* BasicRobot.m */; };
-		62E50B9F19391DEF00F67E1A /* RobotOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E50B9E19391DEF00F67E1A /* RobotOperation.m */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
 		B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5908188484E7003F4D28 /* iPad-old@2x.png */; };
 		B71F5913188484E7003F4D28 /* iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5909188484E7003F4D28 /* iPad.png */; };
@@ -60,11 +58,6 @@
 /* Begin PBXFileReference section */
 		624462981937DDD300895F2D /* Robot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Robot.h; path = Source/Robot.h; sourceTree = "<group>"; };
 		624462991937DDD300895F2D /* Robot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Robot.m; path = Source/Robot.m; sourceTree = "<group>"; };
-		6244629C1937DE5500895F2D /* Robot_Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Robot_Protected.h; path = Source/Robot_Protected.h; sourceTree = "<group>"; };
-		6244629F1938EF4700895F2D /* BasicRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasicRobot.h; path = Source/BasicRobot.h; sourceTree = "<group>"; };
-		624462A01938EF4700895F2D /* BasicRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasicRobot.m; path = Source/BasicRobot.m; sourceTree = "<group>"; };
-		62E50B9D19391DEF00F67E1A /* RobotOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RobotOperation.h; path = Source/RobotOperation.h; sourceTree = "<group>"; };
-		62E50B9E19391DEF00F67E1A /* RobotOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RobotOperation.m; path = Source/RobotOperation.m; sourceTree = "<group>"; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
 		B71F5908188484E7003F4D28 /* iPad-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old@2x.png"; path = "Icons/iPad-old@2x.png"; sourceTree = "<group>"; };
 		B71F5909188484E7003F4D28 /* iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPad.png; path = Icons/iPad.png; sourceTree = "<group>"; };
@@ -136,13 +129,8 @@
 				B737893E1807617C0076A88C /* AppDelegate.m */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
-				6244629C1937DE5500895F2D /* Robot_Protected.h */,
 				624462981937DDD300895F2D /* Robot.h */,
 				624462991937DDD300895F2D /* Robot.m */,
-				6244629F1938EF4700895F2D /* BasicRobot.h */,
-				624462A01938EF4700895F2D /* BasicRobot.m */,
-				62E50B9D19391DEF00F67E1A /* RobotOperation.h */,
-				62E50B9E19391DEF00F67E1A /* RobotOperation.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -337,10 +325,8 @@
 			files = (
 				6244629A1937DDD300895F2D /* Robot.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
-				62E50B9F19391DEF00F67E1A /* RobotOperation.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
-				624462A11938EF4700895F2D /* BasicRobot.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
