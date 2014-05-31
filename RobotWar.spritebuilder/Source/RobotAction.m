@@ -32,12 +32,10 @@
 
 - (void)cancel {
   dispatch_sync(dispatch_get_main_queue(), ^{
-
     [self.target stopAction:_sequence];
-    dispatch_semaphore_signal(_currentActionSemaphore);
-
-    NSLog(@"Cancel, Cancel");
   });
+  
+  dispatch_semaphore_signal(_currentActionSemaphore);
 }
 
 @end
