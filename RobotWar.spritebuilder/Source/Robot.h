@@ -11,6 +11,7 @@
 @protocol RobotProtocol <NSObject>
 
 - (void)scannedRobot;
+- (void)hitWall;
 
 @end
 

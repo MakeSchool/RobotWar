@@ -21,7 +21,8 @@
   }];
   
   _sequence = [CCActionSequence actionWithArray:@[self.action, callback]];
-  dispatch_async(dispatch_get_main_queue(), ^{
+    
+  dispatch_sync(dispatch_get_main_queue(), ^{
     [self.target runAction:_sequence];
   });
   
@@ -30,10 +31,13 @@
 }
 
 - (void)cancel {
-  [self.target stopAction:_sequence];
-  dispatch_semaphore_signal(_currentActionSemaphore);
+  dispatch_sync(dispatch_get_main_queue(), ^{
 
-  NSLog(@"Cancel, Cancel");
+    [self.target stopAction:_sequence];
+    dispatch_semaphore_signal(_currentActionSemaphore);
+
+    NSLog(@"Cancel, Cancel");
+  });
 }
 
 @end
