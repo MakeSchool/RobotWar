@@ -42,8 +42,12 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation-degree];
   
-  __block dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+  [self runRobotAction:rotateTo];
+}
 
+- (void)runRobotAction:(CCActionRotateTo *)rotateTo {
+  
+  __block dispatch_semaphore_t sema = dispatch_semaphore_create(0);
   _currentActionSemaphore = sema;
   
   CCActionCallBlock *callback = [CCActionCallBlock actionWithBlock:^{
@@ -57,7 +61,6 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   
   dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
   dispatch_release(sema);
-  _currentActionSemaphore = NULL;
 }
 
 - (void)turnGunRight:(NSInteger)degree {
@@ -65,20 +68,7 @@ static CGFloat const ROBOT_DEGREES_PER_SECOND = 60;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation+degree];
   
-  __block dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-  
-  
-  CCActionCallBlock *callback = [CCActionCallBlock actionWithBlock:^{
-    dispatch_semaphore_signal(sema);
-  }];
-  
-  CCActionSequence *sequence = [CCActionSequence actionWithArray:@[rotateTo, callback]];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [_barell runAction:sequence];
-  });
-  
-  dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-  dispatch_release(sema);
+  [self runRobotAction:rotateTo];
 }
 
 - (void)run {
