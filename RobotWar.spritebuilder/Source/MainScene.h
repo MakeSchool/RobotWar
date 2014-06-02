@@ -11,7 +11,7 @@
 @protocol GameBoard <NSObject>
 
 // direction should be normalized
-- (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction;
+- (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction bulletOwner:(id)owner;
 
 @end
 

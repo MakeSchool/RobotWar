@@ -14,6 +14,8 @@ static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
 
 @interface Robot ()
 
+@property (nonatomic, assign) NSInteger health;
+
 @end
 
 @implementation Robot {
@@ -36,6 +38,8 @@ static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
   self = [super init];
   
   if (self) {
+    self.health = 3;
+    
     _backgroundQueue = dispatch_queue_create("backgroundQueue", DISPATCH_QUEUE_SERIAL);
     _mainQueue = dispatch_queue_create("mainQueue", DISPATCH_QUEUE_SERIAL);
     mainQueueGroup = dispatch_group_create();
@@ -90,7 +94,7 @@ static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
   CGPoint direction = [self directionFromRotation:(_barell.rotation)];
   
   dispatch_sync(dispatch_get_main_queue(), ^{
-    [self.gameBoard fireBulletFromPosition:_body.position inDirection:direction];
+    [self.gameBoard fireBulletFromPosition:_body.position inDirection:direction bulletOwner:self];
   });
 }
 
@@ -129,6 +133,15 @@ static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
     
     [self hitWallEvent];
   });
+}
+
+- (void)gotHit:(Bullet*)bullet {
+  self.health--;
+  if (self.health <= 0) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self.robotNode removeFromParent];
+    });
+  }
 }
 
 - (void)scannedRobotEvent {

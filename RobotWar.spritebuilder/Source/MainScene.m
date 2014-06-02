@@ -8,37 +8,39 @@
 
 #import "MainScene.h"
 #import "Robot.h"
+#import "Bullet.h"
 
 @implementation MainScene {
-  Robot *robot1;
-  Robot *robot2;
-  
-  CCNode *robotNode1;
-  CCNode *robotNode2;
-  
   CGFloat timeSinceLastEvent;
   NSMutableArray *_bullets;
+  NSArray *_robots;
 }
 
 - (void)didLoadFromCCB {
   _bullets = [NSMutableArray array];
+
+  _robots = [NSMutableArray array];
   
   // intantiate two AIs
-  robot1 = [[Robot alloc]init];
-  robot2 = [[Robot alloc]init];
+  Robot *robot1 = [[Robot alloc]init];
+  Robot *robot2 = [[Robot alloc]init];
+  _robots = @[robot1, robot2];
+  
 
   //spawn two robots
-  robotNode1 = [CCBReader load:@"Robot" owner:robot1];
-  robotNode1.position = ccp(50, 200);
-  [self addChild:robotNode1];
+  robot1.robotNode = [CCBReader load:@"Robot" owner:robot1];
+  robot1.robotNode.position = ccp(50, 200);
+  [self addChild:robot1.robotNode];
   robot1.gameBoard = self;
   [robot1 run];
+  robot1.name = @"Robo 1";
   
-  robotNode2 = [CCBReader load:@"Robot" owner:robot2];
-  robotNode2.position = ccp(200,200);
-  [self addChild:robotNode2];
+  robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
+  robot2.robotNode.position = ccp(200,200);
+  [self addChild:robot2.robotNode];
   robot2.gameBoard = self;
   [robot2 run];
+  robot2.name = @"Robo 2";
   
   [robot1 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
   [robot1 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
@@ -59,25 +61,38 @@
     return;
   }
   
-  if (!CGRectContainsRect(self.boundingBox, robotNode1.boundingBox)) {
-    [robot1 hitWall];
-    timeSinceLastEvent = 0.f;
-  }
-  
-  if (!CGRectContainsRect(self.boundingBox, robotNode2.boundingBox)) {
-    [robot2 hitWall];
-    timeSinceLastEvent = 0.f;
-  }
-  
-  for (CCNode *bullet in _bullets) {
-    if (CGRectIntersectsRect(bullet.boundingBox, robotNode1.boundingBox)) {
-      CCLOG(@"Kill Robot1");
-      
-    } else {
-      CCLOG(@"Kill Robot2");
+  for (Robot *robot in _robots) {
+    if (!CGRectContainsRect(self.boundingBox, robot.robotNode.boundingBox)) {
+      [robot hitWall];
+      timeSinceLastEvent = 0.f;
     }
   }
-
+  
+  NSMutableArray *cleanupBullets = nil;
+  
+  for (Bullet *bullet in _bullets) {
+    
+    for (Robot *robot in _robots) {
+      if (bullet.bulletOwner == robot) {
+        continue;
+      } else if (CGRectIntersectsRect(bullet.boundingBox, robot.robotNode.boundingBox)) {
+        [robot gotHit:bullet];
+        
+        if (!cleanupBullets) {
+          cleanupBullets = [NSMutableArray array];
+        }
+      
+        [cleanupBullets addObject:bullet];
+      }
+    }
+  }
+  
+  for (Bullet *bullet in cleanupBullets) {
+    [self cleanupBullet:bullet];
+  }
+  
+  
+  
 }
 
 - (void)cleanupBullet:(CCNode *)bullet {
@@ -87,12 +102,14 @@
 
 #pragma mark - GameBoard Protocol
 
-- (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction {
-  CCNodeColor *bullet = [CCNodeColor nodeWithColor:[CCColor redColor]];
+- (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction bulletOwner:(id)owner {
+  Bullet *bullet = [Bullet nodeWithColor:[CCColor redColor]];
   bullet.contentSize = CGSizeMake(5.f, 5.f);
   CCActionMoveBy *moveBy = [CCActionMoveBy actionWithDuration:0.1f position:ccpMult(direction, 20)];
   CCActionRepeatForever *repeat = [CCActionRepeatForever actionWithAction:moveBy];
   
+  bullet.bulletOwner = owner;
+  [_bullets addObject:bullet];
   [self addChild:bullet];
   bullet.position = position;
   [bullet runAction:repeat];
