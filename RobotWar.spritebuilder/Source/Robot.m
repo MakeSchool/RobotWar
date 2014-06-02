@@ -86,6 +86,14 @@ static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
   [self runRobotAction:actionMoveBy target:_body];
 }
 
+- (void)shoot {
+  CGPoint direction = [self directionFromRotation:(_barell.rotation)];
+  
+  dispatch_sync(dispatch_get_main_queue(), ^{
+    [self.gameBoard fireBulletFromPosition:_body.position inDirection:direction];
+  });
+}
+
 - (void)moveBack:(NSInteger)distance {
   CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND;
   CCActionMoveBy *actionMoveBy = [CCActionMoveBy actionWithDuration:duration position:ccp(0, -distance)];
@@ -96,7 +104,8 @@ static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
 - (void)run {
   dispatch_async(_backgroundQueue, ^{
     while (true) {
-      [self turnGunLeft:10];
+      [self turnGunLeft:25];
+      [self shoot];
       [self moveAhead:70];
     }
   });
@@ -130,6 +139,16 @@ static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
 
 - (void)hitWallEvent {
   [self moveBack:100];
+}
+
+#pragma mark - Utils
+
+- (CGPoint)directionFromRotation:(CGFloat)objectRotation {
+  CGFloat rotation = (objectRotation) * (M_PI / 180.f);
+  CGFloat x = cos(rotation);
+  CGFloat y = sin(rotation);
+  
+  return ccp(x, (-1)*y);
 }
 
 @end

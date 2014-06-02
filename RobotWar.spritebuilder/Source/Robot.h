@@ -7,6 +7,7 @@
 //
 
 #import "CCNode.h"
+#import "MainScene.h"
 
 @protocol RobotProtocol <NSObject>
 
@@ -16,6 +17,8 @@
 @end
 
 @interface Robot : NSObject <RobotProtocol>
+
+@property (weak, nonatomic) id<GameBoard> gameBoard;
 
 - (void)turnGunLeft:(NSInteger)degree;
 - (void)turnGunRight:(NSInteger)degree;

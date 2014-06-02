@@ -59,8 +59,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>18</real>
-									<real>22</real>
+									<real>19</real>
+									<real>23</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -73,8 +73,8 @@
 								<string>Size</string>
 								<key>value</key>
 								<array>
-									<real>10</real>
 									<real>40</real>
+									<real>10</real>
 									<integer>0</integer>
 									<integer>0</integer>
 								</array>
@@ -86,8 +86,8 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
-									<real>0.0</real>
+									<real>0.125</real>
+									<real>0.40000000596046448</real>
 								</array>
 							</dict>
 							<dict>

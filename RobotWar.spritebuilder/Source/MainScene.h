@@ -8,6 +8,13 @@
 
 #import "CCNode.h"
 
-@interface MainScene : CCNode
+@protocol GameBoard <NSObject>
+
+// direction should be normalized
+- (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction;
+
+@end
+
+@interface MainScene : CCNode <GameBoard>
 
 @end
