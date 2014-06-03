@@ -12,6 +12,7 @@
 #import "GameOverScene.h"
 #import "Robot_Framework.h"
 #import "SimpleRobot.h"
+#import "GameConstants.h"
 
 @implementation MainScene {
   CGFloat timeSinceLastEvent;
@@ -72,12 +73,11 @@
     if (!CGRectContainsRect(self.boundingBox, robot.robotNode.boundingBox)) {
       [robot _hitWall];
       timeSinceLastEvent = 0.f;
-      
-      CGFloat maxX = CGRectGetMaxX([robot.robotNode boundingBox]);
-      CGFloat minY = CGRectGetMinY([robot.robotNode boundingBox]);
-      CGFloat minX = CGRectGetMinX([robot.robotNode boundingBox]);
-      CGFloat maxY = CGRectGetMaxY([robot.robotNode boundingBox]);
 
+      
+      /**
+       Don't permit robots to leave the arena
+       */
       while (CGRectGetMaxX([robot.robotNode boundingBox]) > self.contentSizeInPoints.width) {
         robot.robotNode.position = ccp(robot.robotNode.position.x-1, robot.robotNode.position.y);
       }
@@ -128,7 +128,7 @@
 - (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction bulletOwner:(id)owner {
   Bullet *bullet = [Bullet nodeWithColor:[CCColor redColor]];
   bullet.contentSize = CGSizeMake(5.f, 5.f);
-  CCActionMoveBy *moveBy = [CCActionMoveBy actionWithDuration:0.1f position:ccpMult(direction, 20)];
+  CCActionMoveBy *moveBy = [CCActionMoveBy actionWithDuration:0.1f/GAME_SPEED position:ccpMult(direction, 20)];
   CCActionRepeatForever *repeat = [CCActionRepeatForever actionWithAction:moveBy];
   
   bullet.bulletOwner = owner;

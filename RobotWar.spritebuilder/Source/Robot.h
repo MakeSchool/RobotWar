@@ -26,8 +26,13 @@
 
 - (void)turnGunLeft:(NSInteger)degree;
 - (void)turnGunRight:(NSInteger)degree;
+
+- (void)turnRobotLeft:(NSInteger)degree;
+- (void)turnRobotRight:(NSInteger)degree;
+
 - (void)moveAhead:(NSInteger)distance;
 - (void)moveBack:(NSInteger)distance;
+
 - (void)shoot;
 
 @end

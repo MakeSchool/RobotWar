@@ -65,6 +65,7 @@
 		624A3880193E79620054705C /* Robot_Framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Robot_Framework.h; path = Source/Robot_Framework.h; sourceTree = "<group>"; };
 		624A3883193E7B1D0054705C /* SimpleRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleRobot.h; path = Robot/SimpleRobot.h; sourceTree = "<group>"; };
 		624A3884193E7B1D0054705C /* SimpleRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleRobot.m; path = Robot/SimpleRobot.m; sourceTree = "<group>"; };
+		624A3886193E86140054705C /* GameConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameConstants.h; path = Source/GameConstants.h; sourceTree = "<group>"; };
 		629FCFF2193E71C300896E8C /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverScene.h; path = Source/GameOverScene.h; sourceTree = "<group>"; };
 		629FCFF3193E71C300896E8C /* GameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameOverScene.m; path = Source/GameOverScene.m; sourceTree = "<group>"; };
 		62E3A32219397BE400BD3F0F /* RobotAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RobotAction.h; path = Source/RobotAction.h; sourceTree = "<group>"; };
@@ -150,6 +151,7 @@
 				624A3882193E7AF90054705C /* Robots */,
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
+				624A3886193E86140054705C /* GameConstants.h */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
 				62E3A32E193D3F3B00BD3F0F /* Bullet.h */,

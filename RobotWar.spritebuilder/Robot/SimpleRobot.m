@@ -17,7 +17,8 @@
 }
 
 - (void)hitWall {
-//  [self moveBack:100];
+  [self moveBack:100];
+  [self turnRobotRight:45];
 }
 
 - (void)gotHit:(Bullet *)bullet {

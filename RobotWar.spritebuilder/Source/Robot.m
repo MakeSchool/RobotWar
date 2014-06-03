@@ -9,6 +9,7 @@
 #import "Robot.h"
 #import "RobotAction.h"
 #import "Robot_Framework.h"
+#import "GameConstants.h"
 
 static CGFloat const ROBOT_DEGREES_PER_SECOND = 100;
 static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
@@ -73,7 +74,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 
 - (void)turnGunLeft:(NSInteger)degree {
   CGFloat currentRotation = _barell.rotation;
-  CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND;
+  CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation-degree];
   
   [self runRobotAction:rotateTo target:_barell];
@@ -81,29 +82,50 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 
 - (void)turnGunRight:(NSInteger)degree {
   CGFloat currentRotation = _barell.rotation;
-  CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND;
+  CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation+degree];
   
   [self runRobotAction:rotateTo target:_barell];
 }
 
+- (void)turnRobotLeft:(NSInteger)degree {
+  CGFloat currentRotation = _body.rotation;
+  CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
+  CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation-degree];
+  
+  [self runRobotAction:rotateTo target:_body];
+}
+
+
+- (void)turnRobotRight:(NSInteger)degree {
+  CGFloat currentRotation = _body.rotation;
+  CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
+  CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation+degree];
+  
+  [self runRobotAction:rotateTo target:_body];
+}
+
 - (void)moveAhead:(NSInteger)distance {
-  CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND;
+  CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND / GAME_SPEED;
   CCActionMoveBy *actionMoveBy = [CCActionMoveBy actionWithDuration:duration position:ccp(0, distance)];
   
   [self runRobotAction:actionMoveBy target:_body];
 }
 
 - (void)shoot {
-  CGPoint direction = [self directionFromRotation:(_barell.rotation)];
+  CGFloat combinedRotation = _body.rotation + _barell.rotation;
+  CGPoint direction = [self directionFromRotation:(combinedRotation)];
   
   dispatch_sync(dispatch_get_main_queue(), ^{
     [self.gameBoard fireBulletFromPosition:_body.position inDirection:direction bulletOwner:self];
   });
+  
+  CCActionDelay *delay = [CCActionDelay actionWithDuration:0.5f/GAME_SPEED];
+  [self runRobotAction:delay target:_body];
 }
 
 - (void)moveBack:(NSInteger)distance {
-  CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND;
+  CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND / GAME_SPEED;
   CCActionMoveBy *actionMoveBy = [CCActionMoveBy actionWithDuration:duration position:ccp(0, -distance)];
   
   [self runRobotAction:actionMoveBy target:_body];
