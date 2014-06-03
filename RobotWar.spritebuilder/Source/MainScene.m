@@ -10,6 +10,8 @@
 #import "Robot.h"
 #import "Bullet.h"
 #import "GameOverScene.h"
+#import "Robot_Framework.h"
+#import "SimpleRobot.h"
 
 @implementation MainScene {
   CGFloat timeSinceLastEvent;
@@ -24,7 +26,7 @@
   
   // intantiate two AIs
   Robot *robot1 = [[Robot alloc]init];
-  Robot *robot2 = [[Robot alloc]init];
+  Robot *robot2 = [[SimpleRobot alloc]init];
   _robots = [NSMutableArray arrayWithArray:@[robot1, robot2]];
   
   //spawn two robots
@@ -32,14 +34,14 @@
   robot1.robotNode.position = ccp(50, 200);
   [self addChild:robot1.robotNode];
   robot1.gameBoard = self;
-  [robot1 run];
+  [robot1 _run];
   robot1.name = @"Benji's Robot";
   
   robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
   robot2.robotNode.position = ccp(200,200);
   [self addChild:robot2.robotNode];
   robot2.gameBoard = self;
-  [robot2 run];
+  [robot2 _run];
   robot2.name = @"Jeremy's Robot";
 }
 
@@ -52,7 +54,7 @@
   
   for (Robot *robot in _robots) {
     if (!CGRectContainsRect(self.boundingBox, robot.robotNode.boundingBox)) {
-      [robot hitWall];
+      [robot _hitWall];
       timeSinceLastEvent = 0.f;
     }
   }
@@ -65,7 +67,7 @@
       if (bullet.bulletOwner == robot) {
         continue;
       } else if (CGRectIntersectsRect(bullet.boundingBox, robot.robotNode.boundingBox)) {
-        [robot gotHit:bullet];
+        [robot _gotHit:bullet];
         
         if (!cleanupBullets) {
           cleanupBullets = [NSMutableArray array];

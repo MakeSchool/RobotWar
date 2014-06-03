@@ -8,6 +8,7 @@
 
 #import "Robot.h"
 #import "RobotAction.h"
+#import "Robot_Framework.h"
 
 static CGFloat const ROBOT_DEGREES_PER_SECOND = 100;
 static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
@@ -108,54 +109,51 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
   [self runRobotAction:actionMoveBy target:_body];
 }
 
-- (void)run {
+- (void)_run {
   dispatch_async(_backgroundQueue, ^{
-    while (true) {
-      [self turnGunLeft:25];
-      [self shoot];
-      [self moveAhead:70];
-    }
+    [self run];
   });
 }
 
-- (void)scannedRobot {
+#pragma mark - Events
+
+- (void)_scannedRobot {
   dispatch_group_async(mainQueueGroup, _mainQueue, ^{
     if (_currentRobotAction != nil) {
         [_currentRobotAction cancel];
     }
     
-    [self scannedRobotEvent];
+    [self scannedRobot];
   });
 }
 
-- (void)hitWall {
+- (void)_hitWall {
   dispatch_group_async(mainQueueGroup, _mainQueue, ^{
     if (_currentRobotAction != nil) {
         [_currentRobotAction cancel];
     }
     
-    [self hitWallEvent];
+    [self hitWall];
   });
 }
 
-- (void)gotHit:(Bullet*)bullet {
+- (void)_gotHit:(Bullet*)bullet {
   self.health--;
   [self updateHealthBar];
 
   if (self.health <= 0) {
       [self.gameBoard robotDied:self];
+  } else {
+    [self gotHit:bullet];
   }
 }
 
-- (void)scannedRobotEvent {
-  [self turnGunRight:90];
-  [self turnGunLeft:10];
-  [self turnGunRight:10];
-}
+#pragma mark - Event Handlers
 
-- (void)hitWallEvent {
-  [self moveBack:100];
-}
+- (void)gotHit:(Bullet *)bullet {};
+- (void)hitWall {};
+- (void)scannedRobot {};
+- (void)run {};
 
 #pragma mark - UI Updates
 
