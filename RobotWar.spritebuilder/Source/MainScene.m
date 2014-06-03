@@ -19,6 +19,12 @@
   NSMutableArray *_robots;
 }
 
+#pragma mark - Lifecycle / Scene Transitions
+
+- (void)dealloc {
+  NSLog(@"Game Over!");
+}
+
 - (void)didLoadFromCCB {
   _bullets = [NSMutableArray array];
 
@@ -45,6 +51,16 @@
   robot2.name = @"Jeremy's Robot";
 }
 
+- (void)transitionToGameOverScreen:(Robot *)robot {
+  CCScene *gameOverSceneWrapper = [CCBReader loadAsScene:@"GameOverScene"];
+  GameOverScene *gameOverScene = gameOverSceneWrapper.children[0];
+  gameOverScene.winnerName = robot.name;
+  CCTransition *transition = [CCTransition transitionCrossFadeWithDuration:0.3f];
+  [[CCDirector sharedDirector] replaceScene:gameOverSceneWrapper withTransition:transition];
+}
+
+#pragma mark - Update Loop
+
 - (void)update:(CCTime)delta {
   timeSinceLastEvent += delta;
   
@@ -56,6 +72,28 @@
     if (!CGRectContainsRect(self.boundingBox, robot.robotNode.boundingBox)) {
       [robot _hitWall];
       timeSinceLastEvent = 0.f;
+      
+      CGFloat maxX = CGRectGetMaxX([robot.robotNode boundingBox]);
+      CGFloat minY = CGRectGetMinY([robot.robotNode boundingBox]);
+      CGFloat minX = CGRectGetMinX([robot.robotNode boundingBox]);
+      CGFloat maxY = CGRectGetMaxY([robot.robotNode boundingBox]);
+
+      while (CGRectGetMaxX([robot.robotNode boundingBox]) > self.contentSizeInPoints.width) {
+        robot.robotNode.position = ccp(robot.robotNode.position.x-1, robot.robotNode.position.y);
+      }
+      
+      while (CGRectGetMaxY([robot.robotNode boundingBox]) > self.contentSizeInPoints.height) {
+        robot.robotNode.position = ccp(robot.robotNode.position.x, robot.robotNode.position.y-1);
+      }
+      
+      while (CGRectGetMinX([robot.robotNode boundingBox]) < 0) {
+        robot.robotNode.position = ccp(robot.robotNode.position.x+1, robot.robotNode.position.y);
+      }
+      
+      while (CGRectGetMinY([robot.robotNode boundingBox]) < 0) {
+        robot.robotNode.position = ccp(robot.robotNode.position.x, robot.robotNode.position.y+1);
+      }
+      
     }
   }
   
@@ -81,11 +119,8 @@
   for (Bullet *bullet in cleanupBullets) {
     [self cleanupBullet:bullet];
   }
-}
-
-- (void)cleanupBullet:(CCNode *)bullet {
-  [bullet removeFromParent];
-  [_bullets removeObject:bullet];
+  
+  
 }
 
 #pragma mark - GameBoard Protocol
@@ -113,18 +148,15 @@
     [robot.robotNode removeFromParent];
     [_robots removeObject:robot];
     
-    [self performSelector:@selector(transitionToGameOverSceen:) withObject:robot afterDelay:1.f];
+    [self performSelector:@selector(transitionToGameOverScreen:) withObject:robot afterDelay:1.f];
   });
 }
 
-#pragma mark - Game Over
+#pragma mark - Util Methods
 
-- (void)transitionToGameOverSceen:(Robot *)robot {
-  CCScene *gameOverSceneWrapper = [CCBReader loadAsScene:@"GameOverScene"];
-  GameOverScene *gameOverScene = gameOverSceneWrapper.children[0];
-  gameOverScene.winnerName = robot.name;
-  CCTransition *transition = [CCTransition transitionCrossFadeWithDuration:0.3f];
-  [[CCDirector sharedDirector] replaceScene:gameOverSceneWrapper withTransition:transition];
+- (void)cleanupBullet:(CCNode *)bullet {
+  [bullet removeFromParent];
+  [_bullets removeObject:bullet];
 }
 
 @end
