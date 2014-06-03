@@ -21,8 +21,10 @@
   [self turnRobotRight:45];
 }
 
-- (void)gotHit:(Bullet *)bullet {
-  
+- (void)scannedRobot:(Robot *)robot {
+  NSLog(@"Escape!");
+  [self turnRobotLeft:20];
+  [self moveBack:80];
 }
 
 - (void)run {

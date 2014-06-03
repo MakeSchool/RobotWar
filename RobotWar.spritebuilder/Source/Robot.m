@@ -107,7 +107,19 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 
 - (void)moveAhead:(NSInteger)distance {
   CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND / GAME_SPEED;
-  CCActionMoveBy *actionMoveBy = [CCActionMoveBy actionWithDuration:duration position:ccp(0, distance)];
+  CGPoint direction = [self directionFromRotation:_robotNode.rotation];
+  CGPoint targetPoint = ccpMult(direction, distance);
+  CCActionMoveBy *actionMoveBy = [CCActionMoveBy actionWithDuration:duration position:targetPoint];
+
+  [self runRobotAction:actionMoveBy target:_body];
+}
+
+
+- (void)moveBack:(NSInteger)distance {
+  CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND / GAME_SPEED;
+  CGPoint direction = [self directionFromRotation:_robotNode.rotation];
+  CGPoint targetPoint = ccpMult(direction, -distance);
+  CCActionMoveBy *actionMoveBy = [CCActionMoveBy actionWithDuration:duration position:targetPoint];
   
   [self runRobotAction:actionMoveBy target:_body];
 }
@@ -124,12 +136,6 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
   [self runRobotAction:delay target:_body];
 }
 
-- (void)moveBack:(NSInteger)distance {
-  CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND / GAME_SPEED;
-  CCActionMoveBy *actionMoveBy = [CCActionMoveBy actionWithDuration:duration position:ccp(0, -distance)];
-  
-  [self runRobotAction:actionMoveBy target:_body];
-}
 
 - (void)_run {
   dispatch_async(_backgroundQueue, ^{
@@ -139,13 +145,13 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 
 #pragma mark - Events
 
-- (void)_scannedRobot {
+- (void)_scannedRobot:(Robot*)robot {
   dispatch_group_async(mainQueueGroup, _mainQueue, ^{
     if (_currentRobotAction != nil) {
         [_currentRobotAction cancel];
     }
     
-    [self scannedRobot];
+    [self scannedRobot:robot];
   });
 }
 
@@ -172,9 +178,9 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 
 #pragma mark - Event Handlers
 
-- (void)gotHit:(Bullet *)bullet {};
+- (void)gotHit:(Bullet*)bullet {};
 - (void)hitWall {};
-- (void)scannedRobot {};
+- (void)scannedRobot:(Robot*)robot {};
 - (void)run {};
 
 #pragma mark - UI Updates

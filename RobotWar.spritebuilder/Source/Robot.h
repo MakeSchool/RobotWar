@@ -13,7 +13,7 @@
 
 @protocol RobotProtocol <NSObject>
 
-- (void)scannedRobot;
+- (void)scannedRobot:(Robot*)robot;
 - (void)hitWall;
 - (void)gotHit:(Bullet*)bullet;
 - (void)run;

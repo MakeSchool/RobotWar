@@ -9,6 +9,6 @@
 #ifndef RobotWar_GameConstants_h
 #define RobotWar_GameConstants_h
 
-static CGFloat const GAME_SPEED = 1.f;
+static CGFloat const GAME_SPEED = 2.f;
 
 #endif

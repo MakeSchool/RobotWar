@@ -45,10 +45,11 @@
   robot1.name = @"Benji's Robot";
   
   robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
-  robot2.robotNode.position = ccp(200,200);
+  robot2.robotNode.position = ccp(240,200);
   [self addChild:robot2.robotNode];
   robot2.gameBoard = self;
   [robot2 _run];
+  robot2.robotNode.rotation = 180;
   robot2.name = @"Jeremy's Robot";
 }
 
@@ -65,15 +66,13 @@
 - (void)update:(CCTime)delta {
   timeSinceLastEvent += delta;
   
-  if (timeSinceLastEvent < 0.1f) {
-    return;
-  }
-  
   for (Robot *robot in _robots) {
     if (!CGRectContainsRect(self.boundingBox, robot.robotNode.boundingBox)) {
-      [robot _hitWall];
-      timeSinceLastEvent = 0.f;
 
+      if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
+        [robot _hitWall];
+        timeSinceLastEvent = 0.f;
+      }
       
       /**
        Don't permit robots to leave the arena
@@ -120,6 +119,21 @@
     [self cleanupBullet:bullet];
   }
   
+  // Robot Detection
+  for (Robot *robot in _robots) {
+    for (Robot *otherRobot in _robots) {
+      if (otherRobot == robot) {
+        continue;
+      } else if (ccpDistance(robot.robotNode.position, otherRobot.robotNode.position)  < 100) {
+        if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
+          [robot _scannedRobot:otherRobot];
+          [otherRobot _scannedRobot:robot];
+          timeSinceLastEvent = 0.f;
+        }
+      }
+    }
+    
+  }
   
 }
 
