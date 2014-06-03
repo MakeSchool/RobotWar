@@ -8,10 +8,13 @@
 
 #import "CCNode.h"
 
+@class Robot;
+
 @protocol GameBoard <NSObject>
 
 // direction should be normalized
 - (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction bulletOwner:(id)owner;
+- (void)robotDied:(Robot*)robot;
 
 @end
 

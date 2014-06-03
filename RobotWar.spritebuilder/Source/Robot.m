@@ -12,6 +12,8 @@
 static CGFloat const ROBOT_DEGREES_PER_SECOND = 100;
 static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
 
+static NSInteger const ROBOT_INITIAL_LIFES = 3;
+
 @interface Robot ()
 
 @property (nonatomic, assign) NSInteger health;
@@ -21,6 +23,7 @@ static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
 @implementation Robot {
   CCNode *_barell;
   CCNode *_body;
+  CCNode *_healthBar;
   
   dispatch_queue_t _backgroundQueue;
   dispatch_queue_t _mainQueue;
@@ -38,7 +41,7 @@ static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
   self = [super init];
   
   if (self) {
-    self.health = 3;
+    self.health = ROBOT_INITIAL_LIFES;
     
     _backgroundQueue = dispatch_queue_create("backgroundQueue", DISPATCH_QUEUE_SERIAL);
     _mainQueue = dispatch_queue_create("mainQueue", DISPATCH_QUEUE_SERIAL);
@@ -137,10 +140,10 @@ static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
 
 - (void)gotHit:(Bullet*)bullet {
   self.health--;
+  [self updateHealthBar];
+
   if (self.health <= 0) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [self.robotNode removeFromParent];
-    });
+      [self.gameBoard robotDied:self];
   }
 }
 
@@ -152,6 +155,19 @@ static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
 
 - (void)hitWallEvent {
   [self moveBack:100];
+}
+
+#pragma mark - UI Updates
+
+- (void)updateHealthBar {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    if (self.health > 0) {
+      _healthBar.visible = TRUE;
+      _healthBar.scaleX = self.health / (ROBOT_INITIAL_LIFES * 1.f);
+    } else {
+      _healthBar.visible = FALSE;
+    }
+  });
 }
 
 #pragma mark - Utils

@@ -9,11 +9,12 @@
 #import "MainScene.h"
 #import "Robot.h"
 #import "Bullet.h"
+#import "GameOverScene.h"
 
 @implementation MainScene {
   CGFloat timeSinceLastEvent;
   NSMutableArray *_bullets;
-  NSArray *_robots;
+  NSMutableArray *_robots;
 }
 
 - (void)didLoadFromCCB {
@@ -24,34 +25,22 @@
   // intantiate two AIs
   Robot *robot1 = [[Robot alloc]init];
   Robot *robot2 = [[Robot alloc]init];
-  _robots = @[robot1, robot2];
+  _robots = [NSMutableArray arrayWithArray:@[robot1, robot2]];
   
-
   //spawn two robots
   robot1.robotNode = [CCBReader load:@"Robot" owner:robot1];
   robot1.robotNode.position = ccp(50, 200);
   [self addChild:robot1.robotNode];
   robot1.gameBoard = self;
   [robot1 run];
-  robot1.name = @"Robo 1";
+  robot1.name = @"Benji's Robot";
   
   robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
   robot2.robotNode.position = ccp(200,200);
   [self addChild:robot2.robotNode];
   robot2.gameBoard = self;
   [robot2 run];
-  robot2.name = @"Robo 2";
-  
-  [robot1 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
-  [robot1 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
-  [robot1 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
-  [robot1 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
-  
-  
-  [robot2 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
-  [robot2 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
-  [robot2 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
-  [robot2 performSelector:@selector(scannedRobot) withObject:nil afterDelay:2.f];
+  robot2.name = @"Jeremy's Robot";
 }
 
 - (void)update:(CCTime)delta {
@@ -90,9 +79,6 @@
   for (Bullet *bullet in cleanupBullets) {
     [self cleanupBullet:bullet];
   }
-  
-  
-  
 }
 
 - (void)cleanupBullet:(CCNode *)bullet {
@@ -113,6 +99,30 @@
   [self addChild:bullet];
   bullet.position = position;
   [bullet runAction:repeat];
+}
+
+- (void)robotDied:(Robot *)robot {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    
+    CCParticleSystem *explosion = (CCParticleSystem *) [CCBReader load:@"RobotExplosion"];
+    [self addChild:explosion];
+    explosion.position = robot.robotNode.positionInPoints;
+    
+    [robot.robotNode removeFromParent];
+    [_robots removeObject:robot];
+    
+    [self performSelector:@selector(transitionToGameOverSceen:) withObject:robot afterDelay:1.f];
+  });
+}
+
+#pragma mark - Game Over
+
+- (void)transitionToGameOverSceen:(Robot *)robot {
+  CCScene *gameOverSceneWrapper = [CCBReader loadAsScene:@"GameOverScene"];
+  GameOverScene *gameOverScene = gameOverSceneWrapper.children[0];
+  gameOverScene.winnerName = robot.name;
+  CCTransition *transition = [CCTransition transitionCrossFadeWithDuration:0.3f];
+  [[CCDirector sharedDirector] replaceScene:gameOverSceneWrapper withTransition:transition];
 }
 
 @end
