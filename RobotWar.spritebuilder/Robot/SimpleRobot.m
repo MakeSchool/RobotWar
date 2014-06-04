@@ -8,30 +8,55 @@
 
 #import "SimpleRobot.h"
 
-@implementation SimpleRobot
+typedef NS_ENUM(NSInteger, RobotAction) {
+  RobotActionDefault,
+  RobotActionTurnaround
+};
 
-- (void)scannedRobotEvent {
-  [self shoot];
-  [self turnGunRight:10];
-  [self shoot];
-  [self turnGunLeft:10];
+@implementation SimpleRobot {
+  RobotAction _currentRobotAction;
 }
 
-- (void)hitWall {
-  [self moveBack:100];
-  [self turnRobotRight:45];
+- (void)hitWall:(RobotWallHitDirection)hitDirection {
+  [self cancelActiveAction];
+  
+  _currentRobotAction = RobotActionTurnaround;
+  
+  switch (hitDirection) {
+    case RobotWallHitDirectionFront:
+      [self turnRobotRight:180];
+      [self moveAhead:20];
+      break;
+    case RobotWallHitDirectionRear:
+      [self moveAhead:80];
+      break;
+    case RobotWallHitDirectionLeft:
+      [self turnRobotRight:90];
+      [self moveAhead:20];
+      break;
+    case RobotWallHitDirectionRight:
+      [self turnRobotLeft:90];
+      [self moveAhead:20];
+      break;
+  }
+  
+  _currentRobotAction = RobotActionDefault;
+  
 }
-
-- (void)scannedRobot:(Robot *)robot {
-  [self turnRobotLeft:20];
-  [self moveBack:80];
-}
+//
+//- (void)scannedRobot:(Robot *)robot atPosition:(CGPoint)position {
+//  if (_currentRobotAction != RobotActionTurnaround) {
+//    [self cancelActiveAction];
+//    
+//    [self turnRobotLeft:20];
+//    [self moveBack:80];
+//  }
+//}
 
 - (void)run {
   while (true) {
-    [self moveBack:40];
-    [self moveAhead:40];
-    [self turnRobotLeft:90];
+    [self moveAhead:80];
+    [self turnRobotLeft:10];
   }
 }
 

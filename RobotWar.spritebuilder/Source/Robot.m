@@ -159,6 +159,12 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
   });
 }
 
+#pragma mark - Info
+
+- (CGPoint)headingDirection {
+  return [self directionFromRotation:_body.rotation];
+}
+
 #pragma mark - Events
 
 - (void)_scannedRobot:(Robot*)robot atPosition:(CGPoint)position {
@@ -167,9 +173,9 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
   });
 }
 
-- (void)_hitWall {
+- (void)_hitWall:(RobotWallHitDirection)hitDirection {
   dispatch_group_async(mainQueueGroup, _mainQueue, ^{
-    [self hitWall];
+    [self hitWall:hitDirection];
   });
 }
 

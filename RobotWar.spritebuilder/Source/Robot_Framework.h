@@ -16,7 +16,7 @@
 //- (void)_bulletMissed
 // bulletHit
 - (void)_scannedRobot:(Robot*)robot atPosition:(CGPoint)position;
-- (void)_hitWall;
+- (void)_hitWall:(RobotWallHitDirection)hitDirection;
 - (void)_gotHit:(Bullet*)bullet;
 - (void)_run;
 

@@ -11,6 +11,13 @@
 
 @class Bullet;
 
+typedef NS_ENUM(NSInteger, RobotWallHitDirection) {
+  RobotWallHitDirectionFront,
+  RobotWallHitDirectionLeft,
+  RobotWallHitDirectionRear,
+  RobotWallHitDirectionRight
+};
+
 @protocol RobotProtocol <NSObject>
 
 /** ------Event Handler------- 
@@ -22,9 +29,10 @@
  **/
 
 - (void)scannedRobot:(Robot*)robot atPosition:(CGPoint)position;
-- (void)hitWall;
 - (void)gotHit:(Bullet*)bullet;
 - (void)run;
+
+- (void)hitWall:(RobotWallHitDirection)hitDirection;
 
 @end
 
@@ -44,5 +52,9 @@
 - (void)shoot;
 
 - (void)cancelActiveAction;
+
+// info: Heading Direction
+
+- (CGPoint)headingDirection;
 
 @end

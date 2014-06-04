@@ -14,6 +14,7 @@
 #import "SimpleRobot.h"
 #import "GameConstants.h"
 #import "AdvancedRobot.h"
+#import "Helpers.h"
 
 @implementation MainScene {
   CGFloat timeSinceLastEvent;
@@ -38,20 +39,20 @@
   _robots = [NSMutableArray arrayWithArray:@[robot1, robot2]];
   
   //spawn two robots
-  robot1.robotNode = [CCBReader load:@"Robot" owner:robot1];
-  robot1.robotNode.position = ccp(50, 200);
-  [self addChild:robot1.robotNode];
-  robot1.gameBoard = self;
-  [robot1 _run];
-  robot1.name = @"Benji's Robot";
+//  robot1.robotNode = [CCBReader load:@"Robot" owner:robot1];
+//  robot1.robotNode.position = ccp(50, 200);
+//  [self addChild:robot1.robotNode];
+//  robot1.gameBoard = self;
+//  [robot1 _run];
+//  robot1.name = @"Benji's Robot";
   
-//  robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
-//  robot2.robotNode.position = ccp(240,200);
-//  [self addChild:robot2.robotNode];
-//  robot2.gameBoard = self;
-//  [robot2 _run];
-//  robot2.robotNode.rotation = 180;
-//  robot2.name = @"Jeremy's Robot";
+  robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
+  robot2.robotNode.position = ccp(240,200);
+  [self addChild:robot2.robotNode];
+  robot2.gameBoard = self;
+  [robot2 _run];
+  robot2.robotNode.rotation = 180;
+  robot2.name = @"Jeremy's Robot";
 }
 
 - (void)transitionToGameOverScreen:(Robot *)robot {
@@ -69,29 +70,56 @@
   
   for (Robot *robot in _robots) {
     if (!CGRectContainsRect(self.boundingBox, robot.robotNode.boundingBox)) {
-
-      if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
-        [robot _hitWall];
-        timeSinceLastEvent = 0.f;
-      }
       
       /**
        Don't permit robots to leave the arena
        */
       while (CGRectGetMaxX([robot.robotNode boundingBox]) > self.contentSizeInPoints.width) {
         robot.robotNode.position = ccp(robot.robotNode.position.x-1, robot.robotNode.position.y);
+        // Calculate Collision Angle
+        CGFloat collisionAngle = ccpAngle([robot headingDirection], ccp(-1, 0));
+        collisionAngle = radToDeg(collisionAngle);
+       
+        if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
+          [robot _hitWall:radAngleToRobotWallHitDirection(collisionAngle)];
+          timeSinceLastEvent = 0.f;
+        }
       }
       
       while (CGRectGetMaxY([robot.robotNode boundingBox]) > self.contentSizeInPoints.height) {
         robot.robotNode.position = ccp(robot.robotNode.position.x, robot.robotNode.position.y-1);
+        // Calculate Collision Angle
+        CGFloat collisionAngle = ccpAngle([robot headingDirection], ccp(0, -1));
+        collisionAngle = radToDeg(collisionAngle);
+
+        if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
+          [robot _hitWall:radAngleToRobotWallHitDirection(collisionAngle)];
+          timeSinceLastEvent = 0.f;
+        }
       }
       
       while (CGRectGetMinX([robot.robotNode boundingBox]) < 0) {
         robot.robotNode.position = ccp(robot.robotNode.position.x+1, robot.robotNode.position.y);
+        // Calculate Collision Angle
+        CGFloat collisionAngle = ccpAngle([robot headingDirection], ccp(+1, 0));
+        collisionAngle = radToDeg(collisionAngle);
+        
+        if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
+          [robot _hitWall:radAngleToRobotWallHitDirection(collisionAngle)];
+          timeSinceLastEvent = 0.f;
+        }
       }
       
       while (CGRectGetMinY([robot.robotNode boundingBox]) < 0) {
         robot.robotNode.position = ccp(robot.robotNode.position.x, robot.robotNode.position.y+1);
+        // Calculate Collision Angle
+        CGFloat collisionAngle = ccpAngle([robot headingDirection], ccp(0, +1));
+        collisionAngle = radToDeg(collisionAngle);
+
+        if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
+          [robot _hitWall:radAngleToRobotWallHitDirection(collisionAngle)];
+          timeSinceLastEvent = 0.f;
+        }
       }
       
     }

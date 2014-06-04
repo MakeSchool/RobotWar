@@ -9,8 +9,8 @@
 #import "AdvancedRobot.h"
 
 typedef NS_ENUM(NSInteger, RobotAction) {
-  RobotActionTurnaround,
-  RobotActionDefault
+  RobotActionDefault,
+  RobotActionTurnaround
 };
 
 @implementation AdvancedRobot {
@@ -27,17 +27,16 @@ typedef NS_ENUM(NSInteger, RobotAction) {
 }
 
 - (void)scannedRobot:(Robot *)robot atPosition:(CGPoint)position {
-//  [self cancelActiveAction];
+ [self cancelActiveAction];
   CCLOG(@"Scanned Robot!");
 }
 
-- (void)hitWall {
+- (void)hitWall:(RobotWallHitDirection)hitDirection {
   if (_currentRobotAction != RobotActionTurnaround) {
     [self cancelActiveAction];
     CCLOG(@"Turn around - START");
 
     _currentRobotAction = RobotActionTurnaround;
-    [self moveBack:100];
     [self turnRobotRight:180];
     CCLOG(@"Turn around - END");
   }
