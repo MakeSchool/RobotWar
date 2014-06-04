@@ -101,6 +101,15 @@
   
   for (Bullet *bullet in _bullets) {
     
+    if (!CGRectContainsRect(self.boundingBox, bullet.boundingBox)) {
+      if (!cleanupBullets) {
+        cleanupBullets = [NSMutableArray array];
+      }
+      
+      [cleanupBullets addObject:bullet];
+      continue;
+    }
+    
     for (Robot *robot in _robots) {
       if (bullet.bulletOwner == robot) {
         continue;
@@ -133,54 +142,17 @@
         }
       }
     }
-    
   }
-  
 }
 
 - (void)calculateCollisionAngleWithWallNormalVector:(CGPoint)wallNormalVector notifyRobot:(Robot*)robot {
-
   if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
-    // Calculate Collision Angle
-    CGFloat collisionAngle = ccpAngleSigned([robot headingDirection], wallNormalVector);
-    collisionAngle = roundf(radToDeg(collisionAngle));
+    CGFloat collisionAngle;
+    RobotWallHitDirection direction;
+    calc_collisionAngle_WallHitDirection(wallNormalVector, robot, &collisionAngle, &direction);
     
-    [robot _hitWall:radAngleToRobotWallHitDirection(collisionAngle) hitAngle:collisionAngle];
+    [robot _hitWall:direction hitAngle:collisionAngle];
     timeSinceLastEvent = 0.f;
-  }
-  
-}
-
-
-- (RobotWallHitDirection)currentWallHitDirectionForRobot:(Robot*)robot {
-  static NSInteger toleranceMargin = 5;
-  
-  if (CGRectGetMaxX([robot.robotNode boundingBox]) >= self.contentSizeInPoints.width - toleranceMargin) {
-    // Calculate Collision Angle
-    CGFloat collisionAngle = ccpAngleSigned([robot headingDirection], ccp(-1, 0));
-    collisionAngle = roundf(radToDeg(collisionAngle));
-    
-    return radAngleToRobotWallHitDirection(collisionAngle);
-  } else if (CGRectGetMaxY([robot.robotNode boundingBox]) >= self.contentSizeInPoints.height -toleranceMargin) {
-    // Calculate Collision Angle
-    CGFloat collisionAngle = ccpAngleSigned([robot headingDirection], ccp(0, -1));
-    collisionAngle = roundf(radToDeg(collisionAngle));
-    
-    return radAngleToRobotWallHitDirection(collisionAngle);
-  } else if (CGRectGetMinX([robot.robotNode boundingBox]) <= toleranceMargin) {
-    // Calculate Collision Angle
-    CGFloat collisionAngle = ccpAngleSigned([robot headingDirection], ccp(+1, 0));
-    collisionAngle = roundf(radToDeg(collisionAngle));
-    
-    return radAngleToRobotWallHitDirection(collisionAngle);
-  } else if (CGRectGetMinY([robot.robotNode boundingBox]) <= toleranceMargin) {
-    // Calculate Collision Angle
-    CGFloat collisionAngle = ccpAngleSigned([robot headingDirection], ccp(0, +1));
-    collisionAngle = roundf(radToDeg(collisionAngle));
-
-    return radAngleToRobotWallHitDirection(collisionAngle);
-  } else {
-    return RobotWallHitDirectionNone;
   }
 }
 
@@ -213,11 +185,43 @@
   });
 }
 
-#pragma mark - Util Methods
+- (RobotWallHitDirection)currentWallHitDirectionForRobot:(Robot*)robot {
+  static NSInteger toleranceMargin = 5;
+  
+  CGPoint wallNormalVector = CGPointZero;
+  
+  if (CGRectGetMaxX([robot.robotNode boundingBox]) >= self.contentSizeInPoints.width - toleranceMargin) {
+    wallNormalVector = ccp(-1, 0);
+  } else if (CGRectGetMaxY([robot.robotNode boundingBox]) >= self.contentSizeInPoints.height -toleranceMargin) {
+    wallNormalVector = ccp(0, -1);
+  } else if (CGRectGetMinX([robot.robotNode boundingBox]) <= toleranceMargin) {
+    wallNormalVector = ccp(+1, 0);
+  } else if (CGRectGetMinY([robot.robotNode boundingBox]) <= toleranceMargin) {
+    wallNormalVector = ccp(0, +1);
+  }
+  
+  if (CGPointEqualToPoint(wallNormalVector, CGPointZero)) {
+    return RobotWallHitDirectionNone;
+  } else {
+    CGFloat collisionAngle;
+    RobotWallHitDirection wallHitDirection;
+    calc_collisionAngle_WallHitDirection(wallNormalVector, robot, &collisionAngle, &wallHitDirection);
+    return wallHitDirection;
+  }
+}
+
+#pragma mark - Util Methods/Functions
 
 - (void)cleanupBullet:(CCNode *)bullet {
   [bullet removeFromParent];
   [_bullets removeObject:bullet];
+}
+
+void calc_collisionAngle_WallHitDirection(CGPoint wallNormalVector, Robot *robot, CGFloat *collisionAngle_p, RobotWallHitDirection *direction_p) {
+  // Calculate Collision Angle
+  *collisionAngle_p = ccpAngleSigned([robot headingDirection], wallNormalVector);
+  *collisionAngle_p = roundf(radToDeg(*collisionAngle_p));
+  *direction_p = radAngleToRobotWallHitDirection(*collisionAngle_p);
 }
 
 @end

@@ -179,7 +179,8 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 - (void)_hitWall:(RobotWallHitDirection)hitDirection hitAngle:(CGFloat)angle {
   dispatch_group_async(mainQueueGroup, _mainQueue, ^{
     // now that action is being executed, check if information about collision is still valid
-    if ([self.gameBoard currentWallHitDirectionForRobot:self] == RobotWallHitDirectionNone) {
+    RobotWallHitDirection currentWallHitDirection = [self.gameBoard currentWallHitDirectionForRobot:self];
+    if (currentWallHitDirection == RobotWallHitDirectionNone || currentWallHitDirection != hitDirection) {
       NSLog(@"Cancel Hit Wall Notification");
       return;
     } else {
