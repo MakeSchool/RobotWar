@@ -76,50 +76,22 @@
        */
       while (CGRectGetMaxX([robot.robotNode boundingBox]) > self.contentSizeInPoints.width) {
         robot.robotNode.position = ccp(robot.robotNode.position.x-1, robot.robotNode.position.y);
-        // Calculate Collision Angle
-        CGFloat collisionAngle = ccpAngleSigned([robot headingDirection], ccp(-1, 0));
-        collisionAngle = roundf(radToDeg(collisionAngle));
-       
-        if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
-          [robot _hitWall:radAngleToRobotWallHitDirection(collisionAngle) hitAngle:collisionAngle];
-          timeSinceLastEvent = 0.f;
-        }
+        [self calculateCollisionAngleWithWallNormalVector:ccp(-1, 0) notifyRobot:robot];
       }
       
       while (CGRectGetMaxY([robot.robotNode boundingBox]) > self.contentSizeInPoints.height) {
         robot.robotNode.position = ccp(robot.robotNode.position.x, robot.robotNode.position.y-1);
-        // Calculate Collision Angle
-        CGFloat collisionAngle = ccpAngleSigned([robot headingDirection], ccp(0, -1));
-        collisionAngle = roundf(radToDeg(collisionAngle));
-        
-        if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
-          [robot _hitWall:radAngleToRobotWallHitDirection(collisionAngle) hitAngle:collisionAngle];
-          timeSinceLastEvent = 0.f;
-        }
+        [self calculateCollisionAngleWithWallNormalVector:ccp(0, -1) notifyRobot:robot];
       }
       
       while (CGRectGetMinX([robot.robotNode boundingBox]) < 0) {
         robot.robotNode.position = ccp(robot.robotNode.position.x+1, robot.robotNode.position.y);
-        // Calculate Collision Angle
-        CGFloat collisionAngle = ccpAngleSigned([robot headingDirection], ccp(+1, 0));
-        collisionAngle = roundf(radToDeg(collisionAngle));
-        
-        if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
-          [robot _hitWall:radAngleToRobotWallHitDirection(collisionAngle) hitAngle:collisionAngle];
-          timeSinceLastEvent = 0.f;
-        }
+        [self calculateCollisionAngleWithWallNormalVector:ccp(+1, 0) notifyRobot:robot];
       }
       
       while (CGRectGetMinY([robot.robotNode boundingBox]) < 0) {
         robot.robotNode.position = ccp(robot.robotNode.position.x, robot.robotNode.position.y+1);
-        // Calculate Collision Angle
-        CGFloat collisionAngle = ccpAngleSigned([robot headingDirection], ccp(0, +1));
-        collisionAngle = roundf(radToDeg(collisionAngle));
-
-        if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
-          [robot _hitWall:radAngleToRobotWallHitDirection(collisionAngle) hitAngle:collisionAngle];
-          timeSinceLastEvent = 0.f;
-        }
+        [self calculateCollisionAngleWithWallNormalVector:ccp(0, +1) notifyRobot:robot];
       }
       
     }
@@ -162,6 +134,19 @@
       }
     }
     
+  }
+  
+}
+
+- (void)calculateCollisionAngleWithWallNormalVector:(CGPoint)wallNormalVector notifyRobot:(Robot*)robot {
+
+  if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
+    // Calculate Collision Angle
+    CGFloat collisionAngle = ccpAngleSigned([robot headingDirection], wallNormalVector);
+    collisionAngle = roundf(radToDeg(collisionAngle));
+    
+    [robot _hitWall:radAngleToRobotWallHitDirection(collisionAngle) hitAngle:collisionAngle];
+    timeSinceLastEvent = 0.f;
   }
   
 }

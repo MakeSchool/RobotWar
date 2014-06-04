@@ -62,7 +62,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
   robotAction.target = target;
   robotAction.action = action;
   _currentRobotAction = robotAction;
-  
+    
   [robotAction run];
   
   _currentRobotAction = nil;

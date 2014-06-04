@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger, RobotAction) {
       [self turnRobotLeft:90];
       [self moveAhead:20];
       break;
+    default:
+      break;
   }
   
   _currentRobotAction = RobotActionDefault;
