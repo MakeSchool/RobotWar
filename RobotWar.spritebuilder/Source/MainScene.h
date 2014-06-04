@@ -14,12 +14,17 @@
 
 @protocol GameBoard <NSObject>
 
+@property (atomic, assign) CGFloat currentTimestamp;
+
 // direction should be normalized
 - (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction bulletOwner:(id)owner;
 - (void)robotDied:(Robot*)robot;
 - (RobotWallHitDirection)currentWallHitDirectionForRobot:(Robot*)robot;
+
 @end
 
 @interface MainScene : CCNode <GameBoard>
+
+@property (atomic, assign) CGFloat currentTimestamp;
 
 @end

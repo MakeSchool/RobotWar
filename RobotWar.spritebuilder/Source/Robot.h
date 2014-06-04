@@ -57,5 +57,7 @@ typedef NS_ENUM(NSInteger, RobotWallHitDirection) {
 // info: Heading Direction
 
 - (CGPoint)headingDirection;
+- (CGFloat)angleBetweenHeadingDirectionAndWorldPosition:(CGPoint)position;
+- (CGFloat)currentTimestamp;
 
 @end

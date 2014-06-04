@@ -11,15 +11,15 @@
 
 #import "Robot.h"
 
-CGFloat radToDeg(CGFloat rad) {
+static CGFloat radToDeg(CGFloat rad) {
   return rad * (180/M_PI);
 }
 
-CGFloat degToRad(CGFloat deg) {
+static CGFloat degToRad(CGFloat deg) {
   return deg * (M_PI/180);
 }
 
-RobotWallHitDirection radAngleToRobotWallHitDirection(CGFloat rad) {
+static RobotWallHitDirection radAngleToRobotWallHitDirection(CGFloat rad) {
   if (rad >= -135 && rad <= -46) {
     return RobotWallHitDirectionLeft;
   } else if ((rad >= 136 && rad <= 180) || (rad >= -180 && rad <= -136)) {

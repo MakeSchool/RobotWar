@@ -8,39 +8,71 @@
 
 #import "AdvancedRobot.h"
 
-typedef NS_ENUM(NSInteger, RobotAction) {
-  RobotActionDefault,
-  RobotActionTurnaround
+typedef NS_ENUM(NSInteger, RobotState) {
+  RobotStateDefault,
+  RobotStateTurnaround,
+  RobotStateFiring,
+  RobotStateSearching
 };
 
 @implementation AdvancedRobot {
-  RobotAction _currentRobotAction;
+  RobotState _currentRobotState;
+  
+  CGPoint _lastKnownPosition;
+  CGFloat _lastKnownPositionTimestamp;
 }
 
 - (void)run {
-  while (true) {
-    _currentRobotAction = RobotActionDefault;
-    [self moveAhead:100];
-    [self turnRobotRight:20];
+  while (true) {    
+    if (_currentRobotState == RobotStateFiring) {
+      
+      if ((self.currentTimestamp - _lastKnownPositionTimestamp) > 1000.f) {
+        _currentRobotState = RobotStateSearching;
+      } else {
+        CGFloat angle = [self angleBetweenHeadingDirectionAndWorldPosition:_lastKnownPosition];
+        if (angle >= 0) {
+          [self turnRobotRight:abs(angle)];
+        } else {
+          [self turnRobotLeft:abs(angle)];
+        }
+        [self shoot];
+      }
+    }
+    
+    if (_currentRobotState == RobotStateSearching) {
+      [self moveAhead:50];
+      [self turnRobotLeft:20];
+      [self moveAhead:50];
+      [self turnRobotRight:20];
+    }
+    
+    if (_currentRobotState == RobotStateDefault) {
+      [self moveAhead:100];
+    }
   }
 }
 
 - (void)scannedRobot:(Robot *)robot atPosition:(CGPoint)position {
- [self cancelActiveAction];
-  CCLOG(@"Scanned Robot!");
+  _lastKnownPosition = position;
+  _lastKnownPositionTimestamp = self.currentTimestamp;
+  _currentRobotState = RobotStateFiring;
 }
 
 - (void)hitWall:(RobotWallHitDirection)hitDirection hitAngle:(CGFloat)angle {
-  if (_currentRobotAction != RobotActionTurnaround) {
+  if (_currentRobotState != RobotStateTurnaround) {
     [self cancelActiveAction];
-
+    
+    _currentRobotState = RobotStateTurnaround;
+    
     // always turn to head straigh away from the wall
     if (angle >= 0) {
       [self turnRobotLeft:abs(angle)];
     } else {
-      // TODO: breaks on negative value?
       [self turnRobotRight:abs(angle)];
+
     }
+    
+    [self moveAhead:20];
   }
 }
 

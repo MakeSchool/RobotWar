@@ -39,12 +39,12 @@
   _robots = [NSMutableArray arrayWithArray:@[robot1, robot2]];
   
   //spawn two robots
-//  robot1.robotNode = [CCBReader load:@"Robot" owner:robot1];
-//  robot1.robotNode.position = ccp(50, 200);
-//  [self addChild:robot1.robotNode];
-//  robot1.gameBoard = self;
-//  [robot1 _run];
-//  robot1.name = @"Benji's Robot";
+  robot1.robotNode = [CCBReader load:@"Robot" owner:robot1];
+  robot1.robotNode.position = ccp(50, 200);
+  [self addChild:robot1.robotNode];
+  robot1.gameBoard = self;
+  [robot1 _run];
+  robot1.name = @"Benji's Robot";
   
   robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
   robot2.robotNode.position = ccp(240,200);
@@ -67,6 +67,7 @@
 
 - (void)update:(CCTime)delta {
   timeSinceLastEvent += delta;
+  self.currentTimestamp += delta;
   
   for (Robot *robot in _robots) {
     if (!CGRectContainsRect(self.boundingBox, robot.robotNode.boundingBox)) {

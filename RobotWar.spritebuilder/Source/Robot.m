@@ -11,11 +11,12 @@
 #import "Robot_Framework.h"
 #import "GameConstants.h"
 #import "MainScene.h"
+#import "Helpers.h"
 
 static CGFloat const ROBOT_DEGREES_PER_SECOND = 100;
 static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
 
-static NSInteger const ROBOT_INITIAL_LIFES = 3;
+static NSInteger const ROBOT_INITIAL_LIFES = 20;
 
 @interface Robot ()
 
@@ -166,6 +167,20 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 
 - (CGPoint)headingDirection {
   return [self directionFromRotation:_body.rotation];
+}
+
+- (CGFloat)angleBetweenHeadingDirectionAndWorldPosition:(CGPoint)position {
+  // vector between robot position and target position
+  CGPoint directionVector = ccp(position.x - _body.position.x, position.y - _body.position.y);
+  CGPoint currentHeading = [self headingDirection];
+  
+  CGFloat angle = roundf(radToDeg(ccpAngleSigned(directionVector, currentHeading)));
+  
+  return angle;
+}
+
+- (CGFloat)currentTimestamp {
+  return self.gameBoard.currentTimestamp;
 }
 
 #pragma mark - Events
