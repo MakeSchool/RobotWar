@@ -13,7 +13,9 @@
 @property (weak, nonatomic) id<GameBoard> gameBoard;
 @property (weak, nonatomic) CCNode *robotNode;
 
-- (void)_scannedRobot:(Robot*)robot;
+//- (void)_bulletMissed
+// bulletHit
+- (void)_scannedRobot:(Robot*)robot atPosition:(CGPoint)position;
 - (void)_hitWall;
 - (void)_gotHit:(Bullet*)bullet;
 - (void)_run;

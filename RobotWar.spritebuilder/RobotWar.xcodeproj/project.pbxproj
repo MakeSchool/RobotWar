@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6244629A1937DDD300895F2D /* Robot.m in Sources */ = {isa = PBXBuildFile; fileRef = 624462991937DDD300895F2D /* Robot.m */; };
 		624A3885193E7B1D0054705C /* SimpleRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = 624A3884193E7B1D0054705C /* SimpleRobot.m */; };
+		624A3889193E9A320054705C /* AdvancedRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = 624A3888193E9A320054705C /* AdvancedRobot.m */; };
 		629FCFF4193E71C300896E8C /* GameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 629FCFF3193E71C300896E8C /* GameOverScene.m */; };
 		62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E3A32319397BE400BD3F0F /* RobotAction.m */; };
 		62E3A330193D3F3B00BD3F0F /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E3A32F193D3F3B00BD3F0F /* Bullet.m */; };
@@ -66,6 +67,8 @@
 		624A3883193E7B1D0054705C /* SimpleRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleRobot.h; path = Robot/SimpleRobot.h; sourceTree = "<group>"; };
 		624A3884193E7B1D0054705C /* SimpleRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleRobot.m; path = Robot/SimpleRobot.m; sourceTree = "<group>"; };
 		624A3886193E86140054705C /* GameConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameConstants.h; path = Source/GameConstants.h; sourceTree = "<group>"; };
+		624A3887193E9A320054705C /* AdvancedRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvancedRobot.h; path = Source/AdvancedRobot.h; sourceTree = "<group>"; };
+		624A3888193E9A320054705C /* AdvancedRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdvancedRobot.m; path = Source/AdvancedRobot.m; sourceTree = "<group>"; };
 		629FCFF2193E71C300896E8C /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverScene.h; path = Source/GameOverScene.h; sourceTree = "<group>"; };
 		629FCFF3193E71C300896E8C /* GameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameOverScene.m; path = Source/GameOverScene.m; sourceTree = "<group>"; };
 		62E3A32219397BE400BD3F0F /* RobotAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RobotAction.h; path = Source/RobotAction.h; sourceTree = "<group>"; };
@@ -133,6 +136,8 @@
 			children = (
 				624A3883193E7B1D0054705C /* SimpleRobot.h */,
 				624A3884193E7B1D0054705C /* SimpleRobot.m */,
+				624A3887193E9A320054705C /* AdvancedRobot.h */,
+				624A3888193E9A320054705C /* AdvancedRobot.m */,
 			);
 			name = Robots;
 			sourceTree = "<group>";
@@ -361,6 +366,7 @@
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
+				624A3889193E9A320054705C /* AdvancedRobot.m in Sources */,
 				62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */,
 				62E3A330193D3F3B00BD3F0F /* Bullet.m in Sources */,
 			);

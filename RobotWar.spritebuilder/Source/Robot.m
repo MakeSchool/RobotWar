@@ -145,22 +145,12 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 
 #pragma mark - Events
 
-- (void)_scannedRobot:(Robot*)robot {
-  dispatch_group_async(mainQueueGroup, _mainQueue, ^{
-    if (_currentRobotAction != nil) {
-        [_currentRobotAction cancel];
-    }
-    
-    [self scannedRobot:robot];
-  });
+- (void)_scannedRobot:(Robot*)robot atPosition:(CGPoint)position {
+    [self scannedRobot:robot atPosition:position];
 }
 
 - (void)_hitWall {
   dispatch_group_async(mainQueueGroup, _mainQueue, ^{
-    if (_currentRobotAction != nil) {
-        [_currentRobotAction cancel];
-    }
-    
     [self hitWall];
   });
 }
@@ -176,11 +166,17 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
   }
 }
 
+- (void)cancelActiveAction {
+  if (_currentRobotAction != nil) {
+    [_currentRobotAction cancel];
+  }
+}
+
 #pragma mark - Event Handlers
 
 - (void)gotHit:(Bullet*)bullet {};
 - (void)hitWall {};
-- (void)scannedRobot:(Robot*)robot {};
+- (void)scannedRobot:(Robot*)robot atPosition:(CGPoint)position {};
 - (void)run {};
 
 #pragma mark - UI Updates

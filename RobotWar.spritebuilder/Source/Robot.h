@@ -13,10 +13,11 @@
 
 @protocol RobotProtocol <NSObject>
 
-- (void)scannedRobot:(Robot*)robot;
+- (void)scannedRobot:(Robot*)robot atPosition:(CGPoint)position;
 - (void)hitWall;
 - (void)gotHit:(Bullet*)bullet;
 - (void)run;
+- (void)cancelActiveAction;
 
 @end
 

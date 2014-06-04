@@ -13,6 +13,7 @@
 #import "Robot_Framework.h"
 #import "SimpleRobot.h"
 #import "GameConstants.h"
+#import "AdvancedRobot.h"
 
 @implementation MainScene {
   CGFloat timeSinceLastEvent;
@@ -32,8 +33,8 @@
   _robots = [NSMutableArray array];
   
   // intantiate two AIs
-  Robot *robot1 = [[Robot alloc]init];
-  Robot *robot2 = [[SimpleRobot alloc]init];
+  Robot *robot1 = [[AdvancedRobot alloc] init];
+  Robot *robot2 = [[SimpleRobot alloc] init];
   _robots = [NSMutableArray arrayWithArray:@[robot1, robot2]];
   
   //spawn two robots
@@ -126,8 +127,8 @@
         continue;
       } else if (ccpDistance(robot.robotNode.position, otherRobot.robotNode.position)  < 100) {
         if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
-          [robot _scannedRobot:otherRobot];
-          [otherRobot _scannedRobot:robot];
+          [robot _scannedRobot:otherRobot atPosition:otherRobot.robotNode.positionInPoints];
+          [otherRobot _scannedRobot:robot atPosition:robot.robotNode.positionInPoints];
           timeSinceLastEvent = 0.f;
         }
       }

@@ -11,9 +11,10 @@
 @implementation SimpleRobot
 
 - (void)scannedRobotEvent {
-  [self turnGunRight:90];
-  [self turnGunLeft:10];
+  [self shoot];
   [self turnGunRight:10];
+  [self shoot];
+  [self turnGunLeft:10];
 }
 
 - (void)hitWall {
@@ -22,16 +23,15 @@
 }
 
 - (void)scannedRobot:(Robot *)robot {
-  NSLog(@"Escape!");
   [self turnRobotLeft:20];
   [self moveBack:80];
 }
 
 - (void)run {
   while (true) {
-    [self turnGunLeft:25];
-    [self shoot];
-    [self moveAhead:70];
+    [self moveBack:40];
+    [self moveAhead:40];
+    [self turnRobotLeft:90];
   }
 }
 
