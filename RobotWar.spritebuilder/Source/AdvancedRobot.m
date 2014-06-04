@@ -20,21 +20,26 @@ typedef NS_ENUM(NSInteger, RobotAction) {
 - (void)run {
   while (true) {
     _currentRobotAction = RobotActionDefault;
+    CCLOG(@"Move Ahead - START");
     [self moveAhead:100];
+    CCLOG(@"Move Ahead - END");
   }
 }
 
 - (void)scannedRobot:(Robot *)robot atPosition:(CGPoint)position {
+//  [self cancelActiveAction];
   CCLOG(@"Scanned Robot!");
 }
 
 - (void)hitWall {
   if (_currentRobotAction != RobotActionTurnaround) {
     [self cancelActiveAction];
+    CCLOG(@"Turn around - START");
 
     _currentRobotAction = RobotActionTurnaround;
     [self moveBack:100];
     [self turnRobotRight:180];
+    CCLOG(@"Turn around - END");
   }
 }
 

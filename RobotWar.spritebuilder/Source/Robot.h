@@ -13,11 +13,18 @@
 
 @protocol RobotProtocol <NSObject>
 
+/** ------Event Handler------- 
+ * 
+ *  All of the following event handler are called with a high priority. If an event handler calls 'cancelActiveAction'
+ *  the currently running action of a robot will be stopped immediately. Any commands to the robot after this cancellation
+ *  will also be performed immediately.
+ *
+ **/
+
 - (void)scannedRobot:(Robot*)robot atPosition:(CGPoint)position;
 - (void)hitWall;
 - (void)gotHit:(Bullet*)bullet;
 - (void)run;
-- (void)cancelActiveAction;
 
 @end
 
@@ -35,5 +42,7 @@
 - (void)moveBack:(NSInteger)distance;
 
 - (void)shoot;
+
+- (void)cancelActiveAction;
 
 @end

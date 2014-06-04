@@ -45,13 +45,13 @@
   [robot1 _run];
   robot1.name = @"Benji's Robot";
   
-  robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
-  robot2.robotNode.position = ccp(240,200);
-  [self addChild:robot2.robotNode];
-  robot2.gameBoard = self;
-  [robot2 _run];
-  robot2.robotNode.rotation = 180;
-  robot2.name = @"Jeremy's Robot";
+//  robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
+//  robot2.robotNode.position = ccp(240,200);
+//  [self addChild:robot2.robotNode];
+//  robot2.gameBoard = self;
+//  [robot2 _run];
+//  robot2.robotNode.rotation = 180;
+//  robot2.name = @"Jeremy's Robot";
 }
 
 - (void)transitionToGameOverScreen:(Robot *)robot {

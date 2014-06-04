@@ -54,14 +54,9 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 }
 
 - (void)runRobotAction:(CCActionFiniteTime *)action target:(CCNode*)target {
-  
   // ensure that background queue cannot spawn any actions will main queue is operating
-  if (dispatch_get_current_queue() == _backgroundQueue) {
-    if (mainQueueGroup != NULL) {
-      dispatch_group_wait(mainQueueGroup, DISPATCH_TIME_FOREVER);
-    }
-  }
-  
+  [self waitForMainQueue];
+
   RobotAction *robotAction = [[RobotAction alloc] init];
   robotAction.target = target;
   robotAction.action = action;
@@ -73,6 +68,8 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 }
 
 - (void)turnGunLeft:(NSInteger)degree {
+  [self waitForMainQueue];
+
   CGFloat currentRotation = _barell.rotation;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation-degree];
@@ -81,6 +78,8 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 }
 
 - (void)turnGunRight:(NSInteger)degree {
+  [self waitForMainQueue];
+
   CGFloat currentRotation = _barell.rotation;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation+degree];
@@ -89,6 +88,8 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 }
 
 - (void)turnRobotLeft:(NSInteger)degree {
+  [self waitForMainQueue];
+
   CGFloat currentRotation = _body.rotation;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation-degree];
@@ -98,6 +99,8 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 
 
 - (void)turnRobotRight:(NSInteger)degree {
+  [self waitForMainQueue];
+  
   CGFloat currentRotation = _body.rotation;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation+degree];
@@ -106,6 +109,8 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 }
 
 - (void)moveAhead:(NSInteger)distance {
+  [self waitForMainQueue];
+  
   CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND / GAME_SPEED;
   CGPoint direction = [self directionFromRotation:_robotNode.rotation];
   CGPoint targetPoint = ccpMult(direction, distance);
@@ -116,12 +121,23 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 
 
 - (void)moveBack:(NSInteger)distance {
+  [self waitForMainQueue];
+  
   CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND / GAME_SPEED;
   CGPoint direction = [self directionFromRotation:_robotNode.rotation];
   CGPoint targetPoint = ccpMult(direction, -distance);
   CCActionMoveBy *actionMoveBy = [CCActionMoveBy actionWithDuration:duration position:targetPoint];
   
   [self runRobotAction:actionMoveBy target:_body];
+}
+
+- (void)waitForMainQueue {
+  // ensure that background queue cannot spawn any actions will main queue is operating
+  if (dispatch_get_current_queue() == _backgroundQueue) {
+    if (mainQueueGroup != NULL) {
+      dispatch_group_wait(mainQueueGroup, DISPATCH_TIME_FOREVER);
+    }
+  }
 }
 
 - (void)shoot {
@@ -146,7 +162,9 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 #pragma mark - Events
 
 - (void)_scannedRobot:(Robot*)robot atPosition:(CGPoint)position {
+  dispatch_group_async(mainQueueGroup, _mainQueue, ^{
     [self scannedRobot:robot atPosition:position];
+  });
 }
 
 - (void)_hitWall {
