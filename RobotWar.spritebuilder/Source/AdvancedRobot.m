@@ -20,9 +20,8 @@ typedef NS_ENUM(NSInteger, RobotAction) {
 - (void)run {
   while (true) {
     _currentRobotAction = RobotActionDefault;
-    CCLOG(@"Move Ahead - START");
     [self moveAhead:100];
-    CCLOG(@"Move Ahead - END");
+    [self turnRobotRight:20];
   }
 }
 
@@ -31,14 +30,17 @@ typedef NS_ENUM(NSInteger, RobotAction) {
   CCLOG(@"Scanned Robot!");
 }
 
-- (void)hitWall:(RobotWallHitDirection)hitDirection {
+- (void)hitWall:(RobotWallHitDirection)hitDirection hitAngle:(CGFloat)angle {
   if (_currentRobotAction != RobotActionTurnaround) {
     [self cancelActiveAction];
-    CCLOG(@"Turn around - START");
 
-    _currentRobotAction = RobotActionTurnaround;
-    [self turnRobotRight:180];
-    CCLOG(@"Turn around - END");
+    // always turn to head straigh away from the wall
+    if (angle >= 0) {
+      [self turnRobotLeft:abs(angle)];
+    } else {
+      // TODO: breaks on negative value?
+      [self turnRobotRight:abs(angle)];
+    }
   }
 }
 

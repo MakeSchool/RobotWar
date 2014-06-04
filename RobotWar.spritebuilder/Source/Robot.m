@@ -89,6 +89,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 }
 
 - (void)turnRobotLeft:(NSInteger)degree {
+  NSAssert(degree >= 0, @"No negative values allowed!");
   [self waitForMainQueue];
 
   CGFloat currentRotation = _body.rotation;
@@ -100,6 +101,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 
 
 - (void)turnRobotRight:(NSInteger)degree {
+  NSAssert(degree >= 0, @"No negative values allowed!");
   [self waitForMainQueue];
   
   CGFloat currentRotation = _body.rotation;
@@ -174,14 +176,14 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
   });
 }
 
-- (void)_hitWall:(RobotWallHitDirection)hitDirection {
+- (void)_hitWall:(RobotWallHitDirection)hitDirection hitAngle:(CGFloat)angle {
   dispatch_group_async(mainQueueGroup, _mainQueue, ^{
     // now that action is being executed, check if information about collision is still valid
     if ([self.gameBoard currentWallHitDirectionForRobot:self] == RobotWallHitDirectionNone) {
       NSLog(@"Cancel Hit Wall Notification");
       return;
     } else {
-      [self hitWall:hitDirection];
+      [self hitWall:hitDirection hitAngle:angle];
     }
   });
 }
@@ -206,7 +208,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 #pragma mark - Event Handlers
 
 - (void)gotHit:(Bullet*)bullet {};
-- (void)hitWall {};
+- (void)hitWall:(RobotWallHitDirection)hitDirection hitAngle:(CGFloat)angle {};
 - (void)scannedRobot:(Robot*)robot atPosition:(CGPoint)position {};
 - (void)run {};
 

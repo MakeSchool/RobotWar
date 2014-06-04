@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, RobotAction) {
   RobotAction _currentRobotAction;
 }
 
-- (void)hitWall:(RobotWallHitDirection)hitDirection {
+- (void)hitWall:(RobotWallHitDirection)hitDirection hitAngle:(CGFloat)angle {
   [self cancelActiveAction];
   
   _currentRobotAction = RobotActionTurnaround;
@@ -56,7 +56,7 @@ typedef NS_ENUM(NSInteger, RobotAction) {
 - (void)run {
   while (true) {
     [self moveAhead:80];
-    [self turnRobotLeft:10];
+    [self turnRobotRight:10];
   }
 }
 

@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, RobotWallHitDirection) {
 - (void)gotHit:(Bullet*)bullet;
 - (void)run;
 
-- (void)hitWall:(RobotWallHitDirection)hitDirection;
+- (void)hitWall:(RobotWallHitDirection)hitDirection hitAngle:(CGFloat)angle;
 
 @end
 

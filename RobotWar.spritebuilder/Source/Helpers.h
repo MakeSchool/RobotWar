@@ -20,12 +20,12 @@ CGFloat degToRad(CGFloat deg) {
 }
 
 RobotWallHitDirection radAngleToRobotWallHitDirection(CGFloat rad) {
-  if (rad >= 226 && rad <= 315) {
-    return RobotWallHitDirectionRight;
-  } else if (rad >= 136 && rad <= 225) {
+  if (rad >= -135 && rad <= -46) {
+    return RobotWallHitDirectionLeft;
+  } else if ((rad >= 136 && rad <= 180) || (rad >= -180 && rad <= -136)) {
     return RobotWallHitDirectionFront;
   } else if  (rad >= 46 && rad <= 135){
-    return RobotWallHitDirectionLeft;
+    return RobotWallHitDirectionRight;
   } else  {
     return RobotWallHitDirectionRear;
   }
