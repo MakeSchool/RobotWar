@@ -10,6 +10,7 @@
 #import "RobotAction.h"
 #import "Robot_Framework.h"
 #import "GameConstants.h"
+#import "MainScene.h"
 
 static CGFloat const ROBOT_DEGREES_PER_SECOND = 100;
 static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
@@ -175,7 +176,13 @@ static NSInteger const ROBOT_INITIAL_LIFES = 3;
 
 - (void)_hitWall:(RobotWallHitDirection)hitDirection {
   dispatch_group_async(mainQueueGroup, _mainQueue, ^{
-    [self hitWall:hitDirection];
+    // now that action is being executed, check if information about collision is still valid
+    if ([self.gameBoard currentWallHitDirectionForRobot:self] == RobotWallHitDirectionNone) {
+      NSLog(@"Cancel Hit Wall Notification");
+      return;
+    } else {
+      [self hitWall:hitDirection];
+    }
   });
 }
 

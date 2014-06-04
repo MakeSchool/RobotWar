@@ -166,6 +166,39 @@
   
 }
 
+
+- (RobotWallHitDirection)currentWallHitDirectionForRobot:(Robot*)robot {
+  static NSInteger toleranceMargin = 5;
+  
+  if (CGRectGetMaxX([robot.robotNode boundingBox]) >= self.contentSizeInPoints.width - toleranceMargin) {
+    // Calculate Collision Angle
+    CGFloat collisionAngle = ccpAngle([robot headingDirection], ccp(-1, 0));
+    collisionAngle = radToDeg(collisionAngle);
+    
+    return radAngleToRobotWallHitDirection(collisionAngle);
+  } else if (CGRectGetMaxY([robot.robotNode boundingBox]) >= self.contentSizeInPoints.height -toleranceMargin) {
+    // Calculate Collision Angle
+    CGFloat collisionAngle = ccpAngle([robot headingDirection], ccp(0, -1));
+    collisionAngle = radToDeg(collisionAngle);
+    
+    return radAngleToRobotWallHitDirection(collisionAngle);
+  } else if (CGRectGetMinX([robot.robotNode boundingBox]) <= toleranceMargin) {
+    // Calculate Collision Angle
+    CGFloat collisionAngle = ccpAngle([robot headingDirection], ccp(+1, 0));
+    collisionAngle = radToDeg(collisionAngle);
+    
+    return radAngleToRobotWallHitDirection(collisionAngle);
+  } else if (CGRectGetMinY([robot.robotNode boundingBox]) <= toleranceMargin) {
+    // Calculate Collision Angle
+    CGFloat collisionAngle = ccpAngle([robot headingDirection], ccp(0, +1));
+    collisionAngle = radToDeg(collisionAngle);
+
+    return radAngleToRobotWallHitDirection(collisionAngle);
+  } else {
+    return RobotWallHitDirectionNone;
+  }
+}
+
 #pragma mark - GameBoard Protocol
 
 - (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction bulletOwner:(id)owner {

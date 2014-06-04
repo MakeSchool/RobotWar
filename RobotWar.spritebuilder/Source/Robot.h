@@ -7,11 +7,12 @@
 //
 
 #import "CCNode.h"
-#import "MainScene.h"
 
 @class Bullet;
+@class Robot;
 
 typedef NS_ENUM(NSInteger, RobotWallHitDirection) {
+  RobotWallHitDirectionNone,
   RobotWallHitDirectionFront,
   RobotWallHitDirectionLeft,
   RobotWallHitDirectionRear,

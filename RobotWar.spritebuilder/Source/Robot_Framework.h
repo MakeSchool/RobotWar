@@ -7,6 +7,7 @@
 //
 
 #import "Robot.h"
+#import "MainScene.h"
 
 @interface Robot ()
 
