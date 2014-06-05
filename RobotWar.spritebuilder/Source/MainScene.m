@@ -15,6 +15,7 @@
 #import "GameConstants.h"
 #import "AdvancedRobot.h"
 #import "Helpers.h"
+#import "Configuration.h"
 
 @implementation MainScene {
   CGFloat timeSinceLastEvent;
@@ -34,8 +35,8 @@
   _robots = [NSMutableArray array];
   
   // intantiate two AIs
-  Robot *robot1 = [[AdvancedRobot alloc] init];
-  Robot *robot2 = [[SimpleRobot alloc] init];
+  Robot *robot1 = (Robot*) [[NSClassFromString(robotClass1) alloc] init];
+  Robot *robot2 = (Robot*) [[NSClassFromString(robotClass2) alloc] init];
   _robots = [NSMutableArray arrayWithArray:@[robot1, robot2]];
   
   //spawn two robots
@@ -44,7 +45,7 @@
   [self addChild:robot1.robotNode];
   robot1.gameBoard = self;
   [robot1 _run];
-  robot1.name = @"Benji's Robot";
+  robot1.name = robotName1;
   
   robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
   robot2.robotNode.position = ccp(240,200);
@@ -52,7 +53,7 @@
   robot2.gameBoard = self;
   [robot2 _run];
   robot2.robotNode.rotation = 180;
-  robot2.name = @"Jeremy's Robot";
+  robot2.name = robotName2;
 }
 
 - (void)transitionToGameOverScreen:(Robot *)robot {
