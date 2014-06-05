@@ -70,6 +70,7 @@
 		624A3887193E9A320054705C /* AdvancedRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvancedRobot.h; path = Source/AdvancedRobot.h; sourceTree = "<group>"; };
 		624A3888193E9A320054705C /* AdvancedRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdvancedRobot.m; path = Source/AdvancedRobot.m; sourceTree = "<group>"; };
 		624B4492193F741B00A81B57 /* Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Helpers.h; path = Source/Helpers.h; sourceTree = "<group>"; };
+		624B45D019411F7600A81B57 /* Configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Configuration.h; path = Source/Configuration.h; sourceTree = "<group>"; };
 		629FCFF2193E71C300896E8C /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverScene.h; path = Source/GameOverScene.h; sourceTree = "<group>"; };
 		629FCFF3193E71C300896E8C /* GameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameOverScene.m; path = Source/GameOverScene.m; sourceTree = "<group>"; };
 		62E3A32219397BE400BD3F0F /* RobotAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RobotAction.h; path = Source/RobotAction.h; sourceTree = "<group>"; };
@@ -170,6 +171,7 @@
 				629FCFF2193E71C300896E8C /* GameOverScene.h */,
 				629FCFF3193E71C300896E8C /* GameOverScene.m */,
 				624B4492193F741B00A81B57 /* Helpers.h */,
+				624B45D019411F7600A81B57 /* Configuration.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
