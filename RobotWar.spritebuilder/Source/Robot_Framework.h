@@ -18,7 +18,8 @@
 // bulletHit
 - (void)_scannedRobot:(Robot*)robot atPosition:(CGPoint)position;
 - (void)_hitWall:(RobotWallHitDirection)hitDirection hitAngle:(CGFloat)angle;
-- (void)_gotHit:(Bullet*)bullet;
+- (void)_gotHit;
 - (void)_run;
+- (void)_bulletHitEnemy:(Bullet*)bullet;
 
 @end

@@ -55,13 +55,14 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   return self;
 }
 
-- (void)runRobotAction:(CCActionFiniteTime *)action target:(CCNode*)target {
+- (void)runRobotAction:(CCActionFiniteTime *)action target:(CCNode*)target canBeCancelled:(BOOL)canBeCancelled {
   // ensure that background queue cannot spawn any actions will main queue is operating
   [self waitForMainQueue];
 
   RobotAction *robotAction = [[RobotAction alloc] init];
   robotAction.target = target;
   robotAction.action = action;
+  robotAction.canBeCancelled = canBeCancelled;
   _currentRobotAction = robotAction;
     
   [robotAction run];
@@ -76,7 +77,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation-degree];
   
-  [self runRobotAction:rotateTo target:_barell];
+  [self runRobotAction:rotateTo target:_barell canBeCancelled:TRUE];
 }
 
 - (void)turnGunRight:(NSInteger)degree {
@@ -86,7 +87,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation+degree];
   
-  [self runRobotAction:rotateTo target:_barell];
+  [self runRobotAction:rotateTo target:_barell canBeCancelled:TRUE];
 }
 
 - (void)turnRobotLeft:(NSInteger)degree {
@@ -97,7 +98,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation-degree];
   
-  [self runRobotAction:rotateTo target:_body];
+  [self runRobotAction:rotateTo target:_body canBeCancelled:TRUE];
 }
 
 
@@ -109,7 +110,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation+degree];
   
-  [self runRobotAction:rotateTo target:_body];
+  [self runRobotAction:rotateTo target:_body canBeCancelled:TRUE];
 }
 
 - (void)moveAhead:(NSInteger)distance {
@@ -120,7 +121,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   CGPoint targetPoint = ccpMult(direction, distance);
   CCActionMoveBy *actionMoveBy = [CCActionMoveBy actionWithDuration:duration position:targetPoint];
 
-  [self runRobotAction:actionMoveBy target:_body];
+  [self runRobotAction:actionMoveBy target:_body canBeCancelled:TRUE];
 }
 
 
@@ -132,7 +133,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   CGPoint targetPoint = ccpMult(direction, -distance);
   CCActionMoveBy *actionMoveBy = [CCActionMoveBy actionWithDuration:duration position:targetPoint];
   
-  [self runRobotAction:actionMoveBy target:_body];
+  [self runRobotAction:actionMoveBy target:_body canBeCancelled:TRUE];
 }
 
 - (void)waitForMainQueue {
@@ -145,15 +146,14 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
 }
 
 - (void)shoot {
-  CGFloat combinedRotation = _body.rotation + _barell.rotation;
-  CGPoint direction = [self directionFromRotation:(combinedRotation)];
+  CGPoint direction = [self gunHeadingDirection];
   
   dispatch_sync(dispatch_get_main_queue(), ^{
     [self.gameBoard fireBulletFromPosition:_body.position inDirection:direction bulletOwner:self];
   });
   
-  CCActionDelay *delay = [CCActionDelay actionWithDuration:0.5f/GAME_SPEED];
-  [self runRobotAction:delay target:_body];
+  CCActionDelay *delay = [CCActionDelay actionWithDuration:1.f/GAME_SPEED];
+  [self runRobotAction:delay target:_body canBeCancelled:FALSE];
 }
 
 
@@ -179,8 +179,33 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   return angle;
 }
 
+- (CGPoint)gunHeadingDirection {
+  CGFloat combinedRotation = _body.rotation + _barell.rotation;
+  CGPoint direction = [self directionFromRotation:(combinedRotation)];
+  
+  return direction;
+}
+
+- (CGFloat)angleBetweenGunHeadingDirectionAndWorldPosition:(CGPoint)position {
+  // vector between robot position and target position
+  CGPoint directionVector = ccp(position.x - _body.position.x, position.y - _body.position.y);
+  CGPoint currentHeading = [self gunHeadingDirection];
+  
+  CGFloat angle = roundf(radToDeg(ccpAngleSigned(directionVector, currentHeading)));
+  
+  return angle;
+}
+
 - (CGFloat)currentTimestamp {
   return self.gameBoard.currentTimestamp;
+}
+
+- (CGSize)arenaDimensions {
+  return [self.gameBoard dimensions];
+}
+
+- (CGRect)robotBoundingBox {
+  return self.robotNode.boundingBox;
 }
 
 #pragma mark - Events
@@ -204,15 +229,23 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   });
 }
 
-- (void)_gotHit:(Bullet*)bullet {
+- (void)_gotHit {
   self.health--;
   [self updateHealthBar];
 
   if (self.health <= 0) {
       [self.gameBoard robotDied:self];
   } else {
-    [self gotHit:bullet];
+    dispatch_group_async(mainQueueGroup, _mainQueue, ^{
+      [self gotHit];
+    });
   }
+}
+
+- (void)_bulletHitEnemy:(Bullet*)bullet {
+  dispatch_group_async(mainQueueGroup, _mainQueue, ^{
+    [self bulletHitEnemy:bullet];
+  });
 }
 
 - (void)cancelActiveAction {
@@ -223,10 +256,11 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
 
 #pragma mark - Event Handlers
 
-- (void)gotHit:(Bullet*)bullet {};
+- (void)gotHit{};
 - (void)hitWall:(RobotWallHitDirection)hitDirection hitAngle:(CGFloat)angle {};
 - (void)scannedRobot:(Robot*)robot atPosition:(CGPoint)position {};
 - (void)run {};
+- (void)bulletHitEnemy:(Bullet *)bullet {}
 
 #pragma mark - UI Updates
 

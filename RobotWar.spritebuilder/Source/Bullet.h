@@ -8,8 +8,10 @@
 
 #import "CCNodeColor.h"
 
+@class Robot;
+
 @interface Bullet : CCNodeColor
 
-@property (nonatomic, weak) id bulletOwner;
+@property (nonatomic, weak) Robot *bulletOwner;
 
 @end

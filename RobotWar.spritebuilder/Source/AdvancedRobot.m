@@ -23,17 +23,17 @@ typedef NS_ENUM(NSInteger, RobotState) {
 }
 
 - (void)run {
-  while (true) {    
+  while (true) {
     if (_currentRobotState == RobotStateFiring) {
       
-      if ((self.currentTimestamp - _lastKnownPositionTimestamp) > 1000.f) {
+      if ((self.currentTimestamp - _lastKnownPositionTimestamp) > 1.f) {
         _currentRobotState = RobotStateSearching;
       } else {
-        CGFloat angle = [self angleBetweenHeadingDirectionAndWorldPosition:_lastKnownPosition];
+        CGFloat angle = [self angleBetweenGunHeadingDirectionAndWorldPosition:_lastKnownPosition];
         if (angle >= 0) {
-          [self turnRobotRight:abs(angle)];
+          [self turnGunRight:abs(angle)];
         } else {
-          [self turnRobotLeft:abs(angle)];
+          [self turnGunLeft:abs(angle)];
         }
         [self shoot];
       }
@@ -52,7 +52,15 @@ typedef NS_ENUM(NSInteger, RobotState) {
   }
 }
 
+- (void)bulletHitEnemy:(Bullet *)bullet {
+  // There are a couple of need thinks you could do in this handler
+}
+
 - (void)scannedRobot:(Robot *)robot atPosition:(CGPoint)position {
+  if (_currentRobotState != RobotStateFiring) {
+    [self cancelActiveAction];
+  }
+  
   _lastKnownPosition = position;
   _lastKnownPositionTimestamp = self.currentTimestamp;
   _currentRobotState = RobotStateFiring;
@@ -62,6 +70,7 @@ typedef NS_ENUM(NSInteger, RobotState) {
   if (_currentRobotState != RobotStateTurnaround) {
     [self cancelActiveAction];
     
+    RobotState previousState = _currentRobotState;
     _currentRobotState = RobotStateTurnaround;
     
     // always turn to head straigh away from the wall
@@ -73,6 +82,8 @@ typedef NS_ENUM(NSInteger, RobotState) {
     }
     
     [self moveAhead:20];
+    
+    _currentRobotState = previousState;
   }
 }
 

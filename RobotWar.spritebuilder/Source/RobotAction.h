@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) CCNode *target;
 @property (strong, nonatomic) CCAction *action;
+@property (assign, nonatomic) BOOL canBeCancelled;
 
 - (void)run;
 - (void)cancel;

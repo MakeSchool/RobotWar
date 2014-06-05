@@ -20,6 +20,7 @@
 - (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction bulletOwner:(id)owner;
 - (void)robotDied:(Robot*)robot;
 - (RobotWallHitDirection)currentWallHitDirectionForRobot:(Robot*)robot;
+- (CGSize)dimensions;
 
 @end
 

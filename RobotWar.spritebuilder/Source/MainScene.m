@@ -66,8 +66,8 @@
 #pragma mark - Update Loop
 
 - (void)update:(CCTime)delta {
-  timeSinceLastEvent += delta;
-  self.currentTimestamp += delta;
+  timeSinceLastEvent += delta * GAME_SPEED;
+  self.currentTimestamp += delta * GAME_SPEED;
   
   for (Robot *robot in _robots) {
     if (!CGRectContainsRect(self.boundingBox, robot.robotNode.boundingBox)) {
@@ -115,7 +115,8 @@
       if (bullet.bulletOwner == robot) {
         continue;
       } else if (CGRectIntersectsRect(bullet.boundingBox, robot.robotNode.boundingBox)) {
-        [robot _gotHit:bullet];
+        [robot _gotHit];
+        [bullet.bulletOwner bulletHitEnemy:bullet];
         
         if (!cleanupBullets) {
           cleanupBullets = [NSMutableArray array];
@@ -135,7 +136,7 @@
     for (Robot *otherRobot in _robots) {
       if (otherRobot == robot) {
         continue;
-      } else if (ccpDistance(robot.robotNode.position, otherRobot.robotNode.position)  < 100) {
+      } else if (ccpDistance(robot.robotNode.position, otherRobot.robotNode.position)  < 150) {
         if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
           [robot _scannedRobot:otherRobot atPosition:otherRobot.robotNode.positionInPoints];
           [otherRobot _scannedRobot:robot atPosition:robot.robotNode.positionInPoints];
@@ -158,6 +159,10 @@
 }
 
 #pragma mark - GameBoard Protocol
+
+- (CGSize)dimensions {
+  return self.contentSizeInPoints;
+}
 
 - (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction bulletOwner:(id)owner {
   Bullet *bullet = [Bullet nodeWithColor:[CCColor redColor]];
