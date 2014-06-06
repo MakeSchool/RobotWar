@@ -11,6 +11,7 @@
 		624A3885193E7B1D0054705C /* SimpleRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = 624A3884193E7B1D0054705C /* SimpleRobot.m */; };
 		624A3889193E9A320054705C /* AdvancedRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = 624A3888193E9A320054705C /* AdvancedRobot.m */; };
 		629FCFF4193E71C300896E8C /* GameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 629FCFF3193E71C300896E8C /* GameOverScene.m */; };
+		62C4F430194141DE0047553C /* Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 62C4F42F194141DE0047553C /* Helpers.m */; };
 		62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E3A32319397BE400BD3F0F /* RobotAction.m */; };
 		62E3A330193D3F3B00BD3F0F /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E3A32F193D3F3B00BD3F0F /* Bullet.m */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
@@ -73,6 +74,7 @@
 		624B45D019411F7600A81B57 /* Configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Configuration.h; path = Source/Configuration.h; sourceTree = "<group>"; };
 		629FCFF2193E71C300896E8C /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverScene.h; path = Source/GameOverScene.h; sourceTree = "<group>"; };
 		629FCFF3193E71C300896E8C /* GameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameOverScene.m; path = Source/GameOverScene.m; sourceTree = "<group>"; };
+		62C4F42F194141DE0047553C /* Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Helpers.m; path = Source/Helpers.m; sourceTree = "<group>"; };
 		62E3A32219397BE400BD3F0F /* RobotAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RobotAction.h; path = Source/RobotAction.h; sourceTree = "<group>"; };
 		62E3A32319397BE400BD3F0F /* RobotAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RobotAction.m; path = Source/RobotAction.m; sourceTree = "<group>"; };
 		62E3A32E193D3F3B00BD3F0F /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Source/Bullet.h; sourceTree = "<group>"; };
@@ -144,18 +146,9 @@
 			name = Robots;
 			sourceTree = "<group>";
 		};
-		9222E2B918734FF800A246C7 /* libs */ = {
+		62C4F42D1941413E0047553C /* Engine */ = {
 			isa = PBXGroup;
 			children = (
-				B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */,
-			);
-			name = libs;
-			sourceTree = "<group>";
-		};
-		B737893C1807616C0076A88C /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				624A3882193E7AF90054705C /* Robots */,
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
 				624A3886193E86140054705C /* GameConstants.h */,
@@ -171,6 +164,24 @@
 				629FCFF2193E71C300896E8C /* GameOverScene.h */,
 				629FCFF3193E71C300896E8C /* GameOverScene.m */,
 				624B4492193F741B00A81B57 /* Helpers.h */,
+				62C4F42F194141DE0047553C /* Helpers.m */,
+			);
+			name = Engine;
+			sourceTree = "<group>";
+		};
+		9222E2B918734FF800A246C7 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		B737893C1807616C0076A88C /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				62C4F42D1941413E0047553C /* Engine */,
+				624A3882193E7AF90054705C /* Robots */,
 				624B45D019411F7600A81B57 /* Configuration.h */,
 			);
 			name = Source;
@@ -371,6 +382,7 @@
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				624A3889193E9A320054705C /* AdvancedRobot.m in Sources */,
+				62C4F430194141DE0047553C /* Helpers.m in Sources */,
 				62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */,
 				62E3A330193D3F3B00BD3F0F /* Bullet.m in Sources */,
 			);
