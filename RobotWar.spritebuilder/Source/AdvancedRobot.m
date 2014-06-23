@@ -53,7 +53,7 @@ typedef NS_ENUM(NSInteger, RobotState) {
 }
 
 - (void)bulletHitEnemy:(Bullet *)bullet {
-  // There are a couple of need thinks you could do in this handler
+  // There are a couple of neat things you could do in this handler
 }
 
 - (void)scannedRobot:(Robot *)robot atPosition:(CGPoint)position {
@@ -73,7 +73,7 @@ typedef NS_ENUM(NSInteger, RobotState) {
     RobotState previousState = _currentRobotState;
     _currentRobotState = RobotStateTurnaround;
     
-    // always turn to head straigh away from the wall
+    // always turn to head straight away from the wall
     if (angle >= 0) {
       [self turnRobotLeft:abs(angle)];
     } else {

@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, RobotAction) {
   _currentRobotAction = RobotActionDefault;
   
 }
-//
+
 //- (void)scannedRobot:(Robot *)robot atPosition:(CGPoint)position {
 //  if (_currentRobotAction != RobotActionTurnaround) {
 //    [self cancelActiveAction];
