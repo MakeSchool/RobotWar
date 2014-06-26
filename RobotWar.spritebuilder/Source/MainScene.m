@@ -180,15 +180,16 @@
 
 - (void)robotDied:(Robot *)robot {
   dispatch_async(dispatch_get_main_queue(), ^{
-    
-    CCParticleSystem *explosion = (CCParticleSystem *) [CCBReader load:@"RobotExplosion"];
-    [self addChild:explosion];
-    explosion.position = robot.robotNode.positionInPoints;
-    
-    [robot.robotNode removeFromParent];
-    [_robots removeObject:robot];
-    
-    [self performSelector:@selector(transitionToGameOverScreen:) withObject:_robots[0] afterDelay:1.f];
+      CCParticleSystem *explosion = (CCParticleSystem *) [CCBReader load:@"RobotExplosion"];
+      [self addChild:explosion];
+      explosion.position = robot.robotNode.positionInPoints;
+      
+      [robot.robotNode removeFromParent];
+      [_robots removeObject:robot];
+      
+      if (_robots.count == 1) {
+          [self performSelector:@selector(transitionToGameOverScreen:) withObject:_robots[0] afterDelay:1.f];
+      }
   });
 }
 
