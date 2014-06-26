@@ -188,7 +188,7 @@
     [robot.robotNode removeFromParent];
     [_robots removeObject:robot];
     
-    [self performSelector:@selector(transitionToGameOverScreen:) withObject:robot afterDelay:1.f];
+    [self performSelector:@selector(transitionToGameOverScreen:) withObject:_robots[0] afterDelay:1.f];
   });
 }
 
