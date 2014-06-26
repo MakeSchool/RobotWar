@@ -42,6 +42,7 @@
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
 		BC7636FA195BBCAA0070222B /* AdvancedRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7636F7195BBCAA0070222B /* AdvancedRobot.m */; };
 		BC7636FB195BBCAA0070222B /* SimpleRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7636F9195BBCAA0070222B /* SimpleRobot.m */; };
+		BCA5F346195BD4DA00F1A2DF /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA5F345195BD4DA00F1A2DF /* GLKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		BC7636F7195BBCAA0070222B /* AdvancedRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdvancedRobot.m; path = Source/Robot/AdvancedRobot.m; sourceTree = "<group>"; };
 		BC7636F8195BBCAA0070222B /* SimpleRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleRobot.h; path = Source/Robot/SimpleRobot.h; sourceTree = "<group>"; };
 		BC7636F9195BBCAA0070222B /* SimpleRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleRobot.m; path = Source/Robot/SimpleRobot.m; sourceTree = "<group>"; };
+		BCA5F345195BD4DA00F1A2DF /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCA5F346195BD4DA00F1A2DF /* GLKit.framework in Frameworks */,
 				B737898A1807642B0076A88C /* libcocos2d.a in Frameworks */,
 				B77F1B3217B978D7009739AE /* QuartzCore.framework in Frameworks */,
 				B77F1B3417B978D7009739AE /* OpenGLES.framework in Frameworks */,
@@ -239,6 +242,7 @@
 		B77F1B3017B978D7009739AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BCA5F345195BD4DA00F1A2DF /* GLKit.framework */,
 				B7B3713D180358F1007369CC /* libObjectiveChipmunk.a */,
 				B77F1B3117B978D7009739AE /* QuartzCore.framework */,
 				B77F1B3317B978D7009739AE /* OpenGLES.framework */,

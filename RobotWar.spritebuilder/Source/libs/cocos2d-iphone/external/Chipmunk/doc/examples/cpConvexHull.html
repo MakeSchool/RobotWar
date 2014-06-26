@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; "><strong><span style="color:#881350;">int</span></strong> first = <span style="color:#0000ff;">0</span>;
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; "><strong><span style="color:#881350;">int</span></strong> first = <span style="color:#0000ff;">0</span>;
 
 <em><span style="color:#236e25;">// Create space to store the convex hull.
 // An alloca(), or a variable length array would be a better, but not always portable choice.
@@ -23,4 +22,4 @@ cpShape *shape = <span style="color:#003369;">cpPolyShapeNew</span>(body, hullCo
 
 cpBody *body = <span style="color:#003369;">cpBodyNew</span>(mass, <span style="color:#003369;">cpMomentForPoly</span>(mass, hullCount, hullVerts, cpvzero));
 cpShape *shape = <span style="color:#003369;">cpPolyShapeNew</span>(body, hullCount, hullVerts, cpvzero);
-</pre></body></html>
+</pre>

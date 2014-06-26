@@ -31,7 +31,7 @@
 
 - (void)didLoadFromCCB {
   _bullets = [NSMutableArray array];
-
+  
   _robots = [NSMutableArray array];
   
   // intantiate two AIs
@@ -41,14 +41,16 @@
   
   //spawn two robots
   robot1.robotNode = [CCBReader load:@"Robot" owner:robot1];
-  robot1.robotNode.position = ccp(50, 200);
+  [robot1 _setRobotColor:[CCColor redColor]];
+  robot1.robotNode.position = ccp(50, 220);
   [self addChild:robot1.robotNode];
   robot1.gameBoard = self;
   [robot1 _run];
   robot1.name = robotName1;
   
   robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
-  robot2.robotNode.position = ccp(240,200);
+  CGSize screenSize = [[CCDirector sharedDirector] viewSize];
+  robot2.robotNode.position = ccp(screenSize.width - 50, 100);
   [self addChild:robot2.robotNode];
   robot2.gameBoard = self;
   [robot2 _run];
@@ -122,7 +124,7 @@
         if (!cleanupBullets) {
           cleanupBullets = [NSMutableArray array];
         }
-      
+        
         [cleanupBullets addObject:bullet];
       }
     }
@@ -180,16 +182,16 @@
 
 - (void)robotDied:(Robot *)robot {
   dispatch_async(dispatch_get_main_queue(), ^{
-      CCParticleSystem *explosion = (CCParticleSystem *) [CCBReader load:@"RobotExplosion"];
-      [self addChild:explosion];
-      explosion.position = robot.robotNode.positionInPoints;
-      
-      [robot.robotNode removeFromParent];
-      [_robots removeObject:robot];
-      
-      if (_robots.count == 1) {
-          [self performSelector:@selector(transitionToGameOverScreen:) withObject:_robots[0] afterDelay:1.f];
-      }
+    CCParticleSystem *explosion = (CCParticleSystem *) [CCBReader load:@"RobotExplosion"];
+    [self addChild:explosion];
+    explosion.position = robot.robotNode.positionInPoints;
+    
+    [robot.robotNode removeFromParent];
+    [_robots removeObject:robot];
+    
+    if (_robots.count == 1) {
+      [self performSelector:@selector(transitionToGameOverScreen:) withObject:_robots[0] afterDelay:1.f];
+    }
   });
 }
 

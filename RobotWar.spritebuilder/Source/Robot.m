@@ -28,6 +28,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   CCNode *_barell;
   CCNode *_body;
   CCNode *_healthBar;
+  CCNodeColor *_bodyColorNode;
   
   dispatch_queue_t _backgroundQueue;
   dispatch_queue_t _mainQueue;
@@ -53,6 +54,10 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   }
   
   return self;
+}
+
+- (void)_setRobotColor:(CCColor*)color {
+  [_bodyColorNode setColor:color];
 }
 
 - (void)runRobotAction:(CCActionFiniteTime *)action target:(CCNode*)target canBeCancelled:(BOOL)canBeCancelled {

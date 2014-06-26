@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; "><em><span style="color:#236e25;">// Faked top down friction.
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; "><em><span style="color:#236e25;">// Faked top down friction.
 </span></em>
 <em><span style="color:#236e25;">// A pivot joint configured this way will calculate friction against the ground for games with a top down perspective.
 // Because the joint correction is disabled, the joint will not recenter itself and only apply to the velocity.
@@ -15,4 +14,4 @@ gear-&gt;maxBias = <span style="color:#0000ff;">0.0f</span>; <em><span style="co
 </span></em>gear-&gt;maxForce = <span style="color:#0000ff;">5000.0f</span>;
 
 <em><span style="color:#236e25;">// Also, instead of connecting the joints to a static body, you can connect them to an infinite mass rogue body.
-// You can then use the rogue body as a control body to the connected body. See the Tank demo as an example.</span></em></pre></body></html>
+// You can then use the rogue body as a control body to the connected body. See the Tank demo as an example.</span></em></pre>

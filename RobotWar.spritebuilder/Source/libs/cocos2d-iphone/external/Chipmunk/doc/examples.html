@@ -1,16 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Chipmunk Game Dynamics Documentation</title>
-<link rel="stylesheet" type="text/css" href="stylesheet.css">
-</head>
-<body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Chipmunk Game Dynamics Documentation</title>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+	</head>
+	<body>
 
 <h1>Example Code Snippets:</h1>
 
 <!-- Transformation Example -->
-<a name="Transform"></a>
+<a name="Transform" />
 <h2>Getting a Transformation from a Rigid Body:</h2>
 
 <p>You can quickly and easily build a transformation matrix from a Chipmunk body. The following code is for OpenGL, but it should be trivial to modify for DirectX or affine transforms. (Note that OpenGL matrices are column-major)</p>
@@ -29,7 +29,7 @@ GLFloat matrix[<span style="color:#0000ff;">16</span>] = {
 </pre>
 
 <!-- Collision Callbacks Example -->
-<a name="CollisionCallbacks"></a>
+<a name="CollisionCallbacks" />
 <h2>Collision Callbacks:</h2>
 
 <p>This snippet demonstrates several Chipmunk collision callback features. It defines a collision handler that is called when collision shapes start touching and also a post-step callback to remove the collision shape and body.</p>
@@ -74,7 +74,7 @@ GLFloat matrix[<span style="color:#0000ff;">16</span>] = {
 <p>For more callback examples, see the <a href="http://code.google.com/p/chipmunk-physics/source/browse/trunk/Demo/OneWay.c">One Way Platform Demo</a>, <a href="http://code.google.com/p/chipmunk-physics/source/browse/trunk/Demo/Sensors.c">Sensors Demo</a>, or the <a href="http://code.google.com/p/chipmunk-physics/source/browse/trunk/Demo/Player.c">Player Demo</a>.</p>
 
 <!-- Query Examples -->
-<a name="Query"></a>
+<a name="Query" />
 <h2>Query Examples:</h2>
 
 <p>The following example is taken directly from <a href="http://code.google.com/p/chipmunk-physics/source/browse/trunk/Demo/ChipmunkDemo.c#319">ChipmunkDemo.c</a>. When the mouse is clicked, a point query is performed to see if there is a shape under the mouse. If there is, it adds a joint to the body that links it to the mouse's movement.</p>

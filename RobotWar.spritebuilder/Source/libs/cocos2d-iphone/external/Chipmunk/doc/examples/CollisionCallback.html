@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; "><strong><span style="color:#881350;">static</span></strong> <strong><span style="color:#881350;">void</span></strong>
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; "><strong><span style="color:#881350;">static</span></strong> <strong><span style="color:#881350;">void</span></strong>
 <span style="color:#003369;">postStepRemove</span>(cpSpace *space, cpShape *shape, <strong><span style="color:#881350;">void</span></strong> *unused)
 {
   <span style="color:#003369;">cpSpaceRemoveShape</span>(space, shape);
@@ -34,4 +33,4 @@
 <em><span style="color:#236e25;">// Define a collision handler for bullets and monsters
 // Kill the monster by removing it&rsquo;s shape and body from the space as soon as it&rsquo;s hit by a bullet 
 </span></em><span style="color:#003369;">cpSpaceAddCollisionHandler</span>(space, BULLET_TYPE, MONSTER_TYPE, begin, <strong><span style="color:#881350;">NULL</span></strong>, <strong><span style="color:#881350;">NULL</span></strong>, <strong><span style="color:#881350;">NULL</span></strong>, <strong><span style="color:#881350;">NULL</span></strong>);
-</pre></body></html>
+</pre>
