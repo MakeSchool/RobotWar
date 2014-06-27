@@ -25,7 +25,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
 @end
 
 @implementation Robot {
-  CCNode *_barell;
+  CCNode *_barrel;
   CCNode *_body;
   CCNode *_healthBar;
   CCNodeColor *_bodyColorNode;
@@ -78,21 +78,21 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
 - (void)turnGunLeft:(NSInteger)degree {
   [self waitForMainQueue];
 
-  CGFloat currentRotation = _barell.rotation;
+  CGFloat currentRotation = _barrel.rotation;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation-degree];
   
-  [self runRobotAction:rotateTo target:_barell canBeCancelled:TRUE];
+  [self runRobotAction:rotateTo target:_barrel canBeCancelled:TRUE];
 }
 
 - (void)turnGunRight:(NSInteger)degree {
   [self waitForMainQueue];
 
-  CGFloat currentRotation = _barell.rotation;
+  CGFloat currentRotation = _barrel.rotation;
   CGFloat duration = degree / ROBOT_DEGREES_PER_SECOND / GAME_SPEED;
   CCActionRotateTo *rotateTo = [CCActionRotateTo actionWithDuration:duration angle:currentRotation+degree];
   
-  [self runRobotAction:rotateTo target:_barell canBeCancelled:TRUE];
+  [self runRobotAction:rotateTo target:_barrel canBeCancelled:TRUE];
 }
 
 - (void)turnRobotLeft:(NSInteger)degree {
@@ -185,7 +185,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
 }
 
 - (CGPoint)gunHeadingDirection {
-  CGFloat combinedRotation = _body.rotation + _barell.rotation;
+  CGFloat combinedRotation = _body.rotation + _barrel.rotation;
   CGPoint direction = [self directionFromRotation:(combinedRotation)];
   
   return direction;
@@ -226,7 +226,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
     // now that action is being executed, check if information about collision is still valid
     RobotWallHitDirection currentWallHitDirection = [self.gameBoard currentWallHitDirectionForRobot:self];
     if (currentWallHitDirection == RobotWallHitDirectionNone || currentWallHitDirection != hitDirection) {
-      NSLog(@"Cancel Hit Wall Notification");
+      CCLOG(@"Cancel Hit Wall Notification");
       return;
     } else {
       [self hitWall:hitDirection hitAngle:angle];

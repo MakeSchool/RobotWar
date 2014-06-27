@@ -176,9 +176,9 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>Barrell</string>
+						<string>Barrel</string>
 						<key>memberVarAssignmentName</key>
-						<string>_barell</string>
+						<string>_barrel</string>
 						<key>memberVarAssignmentType</key>
 						<integer>2</integer>
 						<key>properties</key>
@@ -379,8 +379,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
