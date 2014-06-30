@@ -9,47 +9,40 @@
 #import "TurretRobot.h"
 
 
-typedef NS_ENUM(NSInteger, TurretState)
-{
+typedef NS_ENUM(NSInteger, TurretState) {
     kTurretStateScanning,
     kTurretStateFiring
 };
 
 static const float GUN_ANGLE_TOLERANCE = 5.0f;
 
-@implementation TurretRobot
-{
+@implementation TurretRobot {
     TurretState _currentState;
     
     float _timeSinceLastEnemyHit;
 }
 
-- (id)init
-{
-    if (self = [super init])
-    {
+- (id)init {
+    if (self = [super init]) {
         _currentState = kTurretStateScanning;
     }
     
     return self;
 }
 
-- (void)scannedRobot:(Robot *)robot atPosition:(CGPoint)position
-{
+- (void)scannedRobot:(Robot *)robot atPosition:(CGPoint)position {
     
     // Calculate the angle between the turret and the enemy
     float angleBetweenTurretAndEnemy = [self angleBetweenGunHeadingDirectionAndWorldPosition:position];
     
-    CCLOG(@"Enemy Position: (%f, %f)", position.x, position.y);
-    CCLOG(@"Enemy Spotted at Angle: %f", angleBetweenTurretAndEnemy);
+//    CCLOG(@"Enemy Position: (%f, %f)", position.x, position.y);
+//    CCLOG(@"Enemy Spotted at Angle: %f", angleBetweenTurretAndEnemy);
     
-    if (angleBetweenTurretAndEnemy > GUN_ANGLE_TOLERANCE)
-    {
+    if (angleBetweenTurretAndEnemy > GUN_ANGLE_TOLERANCE) {
         [self cancelActiveAction];
         [self turnGunRight:abs(angleBetweenTurretAndEnemy)];
     }
-    else if (angleBetweenTurretAndEnemy < GUN_ANGLE_TOLERANCE)
-    {
+    else if (angleBetweenTurretAndEnemy < GUN_ANGLE_TOLERANCE) {
         [self cancelActiveAction];
         [self turnGunLeft:abs(angleBetweenTurretAndEnemy)];
     }
@@ -58,24 +51,18 @@ static const float GUN_ANGLE_TOLERANCE = 5.0f;
     _currentState = kTurretStateFiring;
 }
 
-- (void)run
-{
-    while (true)
-    {
-        switch (_currentState)
-        {
+- (void)run {
+    while (true) {
+        switch (_currentState) {
             case kTurretStateScanning:
                 [self turnGunRight:90];
                 break;
                 
             case kTurretStateFiring:
-                if (self.currentTimestamp - _timeSinceLastEnemyHit > 2.5f)
-                {
+                if (self.currentTimestamp - _timeSinceLastEnemyHit > 2.5f) {
                     [self cancelActiveAction];
                     _currentState = kTurretStateScanning;
-                }
-                else
-                {
+                } else {
                     [self shoot];
                 }
                 break;
@@ -83,8 +70,7 @@ static const float GUN_ANGLE_TOLERANCE = 5.0f;
     }
 }
 
-- (void)_bulletHitEnemy:(Bullet*)bullet
-{
+- (void)_bulletHitEnemy:(Bullet*)bullet {
     _timeSinceLastEnemyHit = self.currentTimestamp;
 }
 
