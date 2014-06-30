@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger, TurretState) {
     kTurretStateFiring
 };
 
-static const float GUN_ANGLE_TOLERANCE = 5.0f;
+static const float GUN_ANGLE_TOLERANCE = 2.0f;
 
 @implementation TurretRobot {
     TurretState _currentState;
@@ -42,7 +42,7 @@ static const float GUN_ANGLE_TOLERANCE = 5.0f;
         [self cancelActiveAction];
         [self turnGunRight:abs(angleBetweenTurretAndEnemy)];
     }
-    else if (angleBetweenTurretAndEnemy < GUN_ANGLE_TOLERANCE) {
+    else if (angleBetweenTurretAndEnemy < -GUN_ANGLE_TOLERANCE) {
         [self cancelActiveAction];
         [self turnGunLeft:abs(angleBetweenTurretAndEnemy)];
     }
