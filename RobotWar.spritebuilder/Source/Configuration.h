@@ -9,10 +9,10 @@
 #ifndef RobotWar_Configuration_h
 #define RobotWar_Configuration_h
 
-static NSString *robotClass1 = @"AggressiveRobot";
-static NSString *robotName1 = @"Benji's Robot";
+static NSString *robotClass1 = @"AdvancedRobot";
+static NSString *robotCreator1 = @"Jeremy";
 
-static NSString *robotClass2 = @"AdvancedRobot";
-static NSString *robotName2 = @"Jeremy's Robot";
+static NSString *robotClass2 = @"SimpleRobot";
+static NSString *robotCreator2 = @"Benji";
 
 #endif
