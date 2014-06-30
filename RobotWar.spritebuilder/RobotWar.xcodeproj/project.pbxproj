@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6236628E19612C5500ECB220 /* AdvancedRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7636F7195BBCAA0070222B /* AdvancedRobot.m */; };
 		6244629A1937DDD300895F2D /* Robot.m in Sources */ = {isa = PBXBuildFile; fileRef = 624462991937DDD300895F2D /* Robot.m */; };
 		629FCFF4193E71C300896E8C /* GameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 629FCFF3193E71C300896E8C /* GameOverScene.m */; };
 		62C4F430194141DE0047553C /* Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 62C4F42F194141DE0047553C /* Helpers.m */; };
 		62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E3A32319397BE400BD3F0F /* RobotAction.m */; };
 		62E3A330193D3F3B00BD3F0F /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E3A32F193D3F3B00BD3F0F /* Bullet.m */; };
-		6534A350195E2DCA000E6FFC /* TurretRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = 6534A34F195E2DCA000E6FFC /* TurretRobot.m */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
 		B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5908188484E7003F4D28 /* iPad-old@2x.png */; };
 		B71F5913188484E7003F4D28 /* iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5909188484E7003F4D28 /* iPad.png */; };
@@ -41,7 +41,6 @@
 		B77F1B3E17B978D7009739AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3D17B978D7009739AE /* Foundation.framework */; };
 		B77F1B4017B978D7009739AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3F17B978D7009739AE /* CoreGraphics.framework */; };
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
-		BC7636FA195BBCAA0070222B /* AdvancedRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7636F7195BBCAA0070222B /* AdvancedRobot.m */; };
 		BC7636FB195BBCAA0070222B /* SimpleRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7636F9195BBCAA0070222B /* SimpleRobot.m */; };
 		BCA5F346195BD4DA00F1A2DF /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA5F345195BD4DA00F1A2DF /* GLKit.framework */; };
 /* End PBXBuildFile section */
@@ -77,8 +76,6 @@
 		62E3A32319397BE400BD3F0F /* RobotAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RobotAction.m; path = Source/RobotAction.m; sourceTree = "<group>"; };
 		62E3A32E193D3F3B00BD3F0F /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Source/Bullet.h; sourceTree = "<group>"; };
 		62E3A32F193D3F3B00BD3F0F /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Source/Bullet.m; sourceTree = "<group>"; };
-		6534A34E195E2DCA000E6FFC /* TurretRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TurretRobot.h; path = Source/Robot/TurretRobot.h; sourceTree = "<group>"; };
-		6534A34F195E2DCA000E6FFC /* TurretRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TurretRobot.m; path = Source/Robot/TurretRobot.m; sourceTree = "<group>"; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
 		B71F5908188484E7003F4D28 /* iPad-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old@2x.png"; path = "Icons/iPad-old@2x.png"; sourceTree = "<group>"; };
 		B71F5909188484E7003F4D28 /* iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPad.png; path = Icons/iPad.png; sourceTree = "<group>"; };
@@ -148,8 +145,6 @@
 				BC7636F7195BBCAA0070222B /* AdvancedRobot.m */,
 				BC7636F8195BBCAA0070222B /* SimpleRobot.h */,
 				BC7636F9195BBCAA0070222B /* SimpleRobot.m */,
-				6534A34E195E2DCA000E6FFC /* TurretRobot.h */,
-				6534A34F195E2DCA000E6FFC /* TurretRobot.m */,
 			);
 			name = Robots;
 			sourceTree = "<group>";
@@ -384,6 +379,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6236628E19612C5500ECB220 /* AdvancedRobot.m in Sources */,
 				629FCFF4193E71C300896E8C /* GameOverScene.m in Sources */,
 				6244629A1937DDD300895F2D /* Robot.m in Sources */,
 				BC7636FB195BBCAA0070222B /* SimpleRobot.m in Sources */,
@@ -391,8 +387,6 @@
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				62C4F430194141DE0047553C /* Helpers.m in Sources */,
-				6534A350195E2DCA000E6FFC /* TurretRobot.m in Sources */,
-				BC7636FA195BBCAA0070222B /* AdvancedRobot.m in Sources */,
 				62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */,
 				62E3A330193D3F3B00BD3F0F /* Bullet.m in Sources */,
 			);

@@ -21,10 +21,20 @@
   }];
   
   _sequence = [CCActionSequence actionWithArray:@[self.action, callback]];
-    
-  dispatch_sync(dispatch_get_main_queue(), ^{
+  
+  void (^runAction)() = ^void() {
     [self.target runAction:_sequence];
-  });
+  };
+
+  
+  if ([NSThread isMainThread])
+  {
+    runAction();
+  }
+  else
+  {
+    dispatch_sync(dispatch_get_main_queue(), runAction);
+  }
   
   dispatch_semaphore_wait(_currentActionSemaphore, DISPATCH_TIME_FOREVER);
   dispatch_release(_currentActionSemaphore);
@@ -32,9 +42,19 @@
 
 - (void)cancel {
   if (self.canBeCancelled) {
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    
+    void (^stopAction)() = ^void() {
       [self.target stopAction:_sequence];
-    });
+    };
+    
+    if ([NSThread isMainThread])
+    {
+      stopAction();
+    }
+    else
+    {
+      dispatch_sync(dispatch_get_main_queue(), stopAction);
+    }
     
     dispatch_semaphore_signal(_currentActionSemaphore);
   }
