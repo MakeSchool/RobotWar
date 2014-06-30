@@ -41,7 +41,7 @@
   
   //spawn two robots
   robot1.robotNode = [CCBReader load:@"Robot" owner:robot1];
-  [robot1 _setRobotColor:[CCColor redColor]];
+  [robot1 _setRobotColor:[CCColor colorWithCcColor3b:ccc3(251, 72, 154)]];
   robot1.robotNode.position = ccp(50, 220);
   [self addChild:robot1.robotNode];
   robot1.gameBoard = self;
@@ -172,7 +172,7 @@
 }
 
 - (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction bulletOwner:(id)owner {
-  Bullet *bullet = [Bullet nodeWithColor:[CCColor redColor]];
+  Bullet *bullet = [Bullet nodeWithColor:[CCColor colorWithCcColor3b:ccc3(245, 245, 245)]];
   bullet.contentSize = CGSizeMake(5.f, 5.f);
   CCActionMoveBy *moveBy = [CCActionMoveBy actionWithDuration:0.1f/GAME_SPEED position:ccpMult(direction, 20)];
   CCActionRepeatForever *repeat = [CCActionRepeatForever actionWithAction:moveBy];
@@ -194,7 +194,7 @@
     [_robots removeObject:robot];
     
     if (_robots.count == 1) {
-      [self performSelector:@selector(transitionToGameOverScreen:) withObject:_robots[0] afterDelay:1.f];
+      [self performSelector:@selector(transitionToGameOverScreen:) withObject:_robots[0] afterDelay:2.f];
     }
   });
 }

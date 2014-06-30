@@ -274,6 +274,17 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
     if (self.health > 0) {
       _healthBar.visible = TRUE;
       _healthBar.scaleX = self.health / (ROBOT_INITIAL_LIFES * 1.f);
+    
+        if (self.health >= ROBOT_INITIAL_LIFES * 3 / 4) {
+            _healthBar.color = [CCColor colorWithCcColor3b:ccc3(170, 255, 151)];
+        } else if (self.health >= ROBOT_INITIAL_LIFES * 2 / 4) {
+            _healthBar.color = [CCColor colorWithCcColor3b:ccc3(255, 249, 149)];
+        } else if (self.health >= ROBOT_INITIAL_LIFES * 1 / 4) {
+            _healthBar.color = [CCColor colorWithCcColor3b:ccc3(255, 190, 138)];
+        } else {
+            _healthBar.color = [CCColor colorWithCcColor3b:ccc3(255, 121, 127)];
+        }
+        
     } else {
       _healthBar.visible = FALSE;
     }
