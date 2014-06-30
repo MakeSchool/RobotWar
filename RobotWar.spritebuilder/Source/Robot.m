@@ -226,7 +226,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
     // now that action is being executed, check if information about collision is still valid
     RobotWallHitDirection currentWallHitDirection = [self.gameBoard currentWallHitDirectionForRobot:self];
     if (currentWallHitDirection == RobotWallHitDirectionNone || currentWallHitDirection != hitDirection) {
-      CCLOG(@"Cancel Hit Wall Notification");
+//      CCLOG(@"Cancel Hit Wall Notification");
       return;
     } else {
       [self hitWall:hitDirection hitAngle:angle];
