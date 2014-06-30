@@ -46,7 +46,8 @@
   [self addChild:robot1.robotNode];
   robot1.gameBoard = self;
   [robot1 _run];
-  robot1.name = robotName1;
+  robot1.creator = robotCreator1;
+  robot1.robotClass = robotClass1;
   
   robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
   CGSize screenSize = [[CCDirector sharedDirector] viewSize];
@@ -55,13 +56,16 @@
   robot2.gameBoard = self;
   [robot2 _run];
   robot2.robotNode.rotation = 180;
-  robot2.name = robotName2;
+  robot2.creator = robotCreator2;
+  robot2.robotClass = robotClass2;
 }
 
 - (void)transitionToGameOverScreen:(Robot *)robot {
   CCScene *gameOverSceneWrapper = [CCBReader loadAsScene:@"GameOverScene"];
   GameOverScene *gameOverScene = gameOverSceneWrapper.children[0];
-  gameOverScene.winnerName = robot.name;
+  gameOverScene.winnerClass = robot.robotClass;
+  gameOverScene.winnerName = robot.creator;
+  [gameOverScene displayWinMessage];
   CCTransition *transition = [CCTransition transitionCrossFadeWithDuration:0.3f];
   [[CCDirector sharedDirector] replaceScene:gameOverSceneWrapper withTransition:transition];
 }

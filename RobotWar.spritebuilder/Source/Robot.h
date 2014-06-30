@@ -21,7 +21,8 @@ typedef NS_ENUM(NSInteger, RobotWallHitDirection) {
 
 @interface Robot : NSObject
 
-@property (copy, nonatomic) NSString *name;
+@property (copy, nonatomic) NSString *creator;
+@property (copy, nonatomic) NSString *robotClass;
 
 /*!
  @methodgroup Event Handlers

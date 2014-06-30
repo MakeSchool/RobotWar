@@ -10,6 +10,9 @@
 
 @interface GameOverScene : CCNode
 
+@property (copy, nonatomic) NSString *winnerClass;
 @property (copy, nonatomic) NSString *winnerName;
+
+- (void)displayWinMessage;
 
 @end 
