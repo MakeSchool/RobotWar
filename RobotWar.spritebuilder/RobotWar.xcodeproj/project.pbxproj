@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6236628E19612C5500ECB220 /* AdvancedRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7636F7195BBCAA0070222B /* AdvancedRobot.m */; };
+		6236629219612E1600ECB220 /* AggressiveRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = 6236629019612E1600ECB220 /* AggressiveRobot.m */; };
 		6244629A1937DDD300895F2D /* Robot.m in Sources */ = {isa = PBXBuildFile; fileRef = 624462991937DDD300895F2D /* Robot.m */; };
 		629FCFF4193E71C300896E8C /* GameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 629FCFF3193E71C300896E8C /* GameOverScene.m */; };
 		62C4F430194141DE0047553C /* Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 62C4F42F194141DE0047553C /* Helpers.m */; };
@@ -40,7 +42,6 @@
 		B77F1B3E17B978D7009739AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3D17B978D7009739AE /* Foundation.framework */; };
 		B77F1B4017B978D7009739AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3F17B978D7009739AE /* CoreGraphics.framework */; };
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
-		BC7636FA195BBCAA0070222B /* AdvancedRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7636F7195BBCAA0070222B /* AdvancedRobot.m */; };
 		BC7636FB195BBCAA0070222B /* SimpleRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7636F9195BBCAA0070222B /* SimpleRobot.m */; };
 		BCA5F346195BD4DA00F1A2DF /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA5F345195BD4DA00F1A2DF /* GLKit.framework */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6236629019612E1600ECB220 /* AggressiveRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AggressiveRobot.m; path = Source/Robot/AggressiveRobot.m; sourceTree = "<group>"; };
+		6236629119612E1600ECB220 /* AggressiveRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AggressiveRobot.h; path = Source/Robot/AggressiveRobot.h; sourceTree = "<group>"; };
 		624462981937DDD300895F2D /* Robot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Robot.h; path = Source/Robot.h; sourceTree = "<group>"; };
 		624462991937DDD300895F2D /* Robot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Robot.m; path = Source/Robot.m; sourceTree = "<group>"; };
 		624A3880193E79620054705C /* Robot_Framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Robot_Framework.h; path = Source/Robot_Framework.h; sourceTree = "<group>"; };
@@ -141,6 +144,8 @@
 		624A3882193E7AF90054705C /* Robots */ = {
 			isa = PBXGroup;
 			children = (
+				6236629019612E1600ECB220 /* AggressiveRobot.m */,
+				6236629119612E1600ECB220 /* AggressiveRobot.h */,
 				BC7636F6195BBCAA0070222B /* AdvancedRobot.h */,
 				BC7636F7195BBCAA0070222B /* AdvancedRobot.m */,
 				BC7636F8195BBCAA0070222B /* SimpleRobot.h */,
@@ -379,6 +384,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6236629219612E1600ECB220 /* AggressiveRobot.m in Sources */,
+				6236628E19612C5500ECB220 /* AdvancedRobot.m in Sources */,
 				629FCFF4193E71C300896E8C /* GameOverScene.m in Sources */,
 				6244629A1937DDD300895F2D /* Robot.m in Sources */,
 				BC7636FB195BBCAA0070222B /* SimpleRobot.m in Sources */,
@@ -386,7 +393,6 @@
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				62C4F430194141DE0047553C /* Helpers.m in Sources */,
-				BC7636FA195BBCAA0070222B /* AdvancedRobot.m in Sources */,
 				62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */,
 				62E3A330193D3F3B00BD3F0F /* Bullet.m in Sources */,
 			);

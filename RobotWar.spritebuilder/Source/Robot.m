@@ -153,9 +153,19 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
 - (void)shoot {
   CGPoint direction = [self gunHeadingDirection];
   
-  dispatch_sync(dispatch_get_main_queue(), ^{
+  void (^fireAction)() = ^void() {
     [self.gameBoard fireBulletFromPosition:_body.position inDirection:direction bulletOwner:self];
-  });
+  };
+  
+  
+  if ([NSThread isMainThread])
+  {
+    fireAction();
+  }
+  else
+  {
+    dispatch_sync(dispatch_get_main_queue(), fireAction);
+  }
   
   CCActionDelay *delay = [CCActionDelay actionWithDuration:1.f/GAME_SPEED];
   [self runRobotAction:delay target:_body canBeCancelled:FALSE];
