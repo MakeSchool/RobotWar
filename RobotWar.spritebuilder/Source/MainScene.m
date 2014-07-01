@@ -123,7 +123,7 @@
         continue;
       } else if (CGRectIntersectsRect(bullet.boundingBox, robot.robotNode.boundingBox)) {
         [robot _gotHit];
-        [bullet.bulletOwner bulletHitEnemy:bullet];
+        [bullet.bulletOwner _bulletHitEnemy:bullet];
         
         if (!cleanupBullets) {
           cleanupBullets = [NSMutableArray array];

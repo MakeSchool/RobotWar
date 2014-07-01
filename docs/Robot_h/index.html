@@ -307,6 +307,8 @@ function disclosure_triangle(elt) {
 <dd></dd>
 <dt><tt><!-- a logicalPath="//apple_ref/c/func/headingDirection" target="_top" machineGenerated="true" -->+headingDirection<!-- /a --></tt></dt>
 <dd></dd>
+<dt><tt><!-- a logicalPath="//apple_ref/c/func/position" target="_top" machineGenerated="true" -->+position<!-- /a --></tt></dt>
+<dd></dd>
 <dt><tt><!-- a logicalPath="//apple_ref/c/func/robotBoundingBox" target="_top" machineGenerated="true" -->+robotBoundingBox<!-- /a --></tt></dt>
 <dd></dd>
 </dl>
@@ -356,6 +358,8 @@ function disclosure_triangle(elt) {
 <dt><tt><a href="index.html#//apple_ref/c/func/moveAhead:" target="_top">+moveAhead:</a></tt></dt>
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/moveBack:" target="_top">+moveBack:</a></tt></dt>
+<dd></dd>
+<dt><tt><a href="index.html#//apple_ref/c/func/position" target="_top">+position</a></tt></dt>
 <dd></dd>
 <dt><tt><a href="index.html#//apple_ref/c/func/robotBoundingBox" target="_top">+robotBoundingBox</a></tt></dt>
 <dd></dd>
@@ -527,14 +531,21 @@ Robots should attempt moving away from a wall when receiving this event.
 <!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/moveBack:;name=start --><p>Moves the robot backwards in the direction opposite to the one it is currently heading.
 </p>
 <!-- headerDoc=discussion;uid=//apple_ref/c/func/moveBack:;name=end --><!-- end discussion -->
-<hr class="betweenAPIEntries"><!-- headerDoc=func;  uid=//apple_ref/c/func/robotBoundingBox;   name=robotBoundingBox -->
+<hr class="betweenAPIEntries"><!-- headerDoc=func;  uid=//apple_ref/c/func/position;   name=position -->
+<a name="//apple_ref/c/func/position"></a>
+<h3><a name="position">position</a></h3>
+<hr class="afterName"><div class='declaration_indent'>
+<pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/position;name=start -->- (<!-- a logicalPath="//apple_ref/c/cl/CGPoint //apple_ref/c/tdef/CGPoint //apple_ref/c/tag/CGPoint //apple_ref/c/struct/CGPoint //apple_ref/c/intf/CGPoint //apple_ref/doc/anysymbol/CGPoint" machineGenerated="true" --><span class="type">CGPoint</span><!-- /a -->)<!-- a logicalPath="//apple_ref/c/econst/position //apple_ref/c/data/position //apple_ref/c/clconst/position " machineGenerated="true" --><span class="var">position</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/c/func/position;name=end --></pre>
+</div>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5><p><!-- begin return value --><p>Returns the position of this robot in world coordinates.
+
+<!-- end return value --></p><hr class="betweenAPIEntries"><!-- headerDoc=func;  uid=//apple_ref/c/func/robotBoundingBox;   name=robotBoundingBox -->
 <a name="//apple_ref/c/func/robotBoundingBox"></a>
 <h3><a name="robotBoundingBox">robotBoundingBox</a></h3>
 <hr class="afterName"><div class='declaration_indent'>
 <pre><!-- headerDoc=declaration;uid=//apple_ref/c/func/robotBoundingBox;name=start -->- (<!-- a logicalPath="//apple_ref/c/cl/CGRect //apple_ref/c/tdef/CGRect //apple_ref/c/tag/CGRect //apple_ref/c/struct/CGRect //apple_ref/c/intf/CGRect //apple_ref/doc/anysymbol/CGRect" machineGenerated="true" --><span class="type">CGRect</span><!-- /a -->)<!-- a logicalPath="//apple_ref/c/econst/robotBoundingBox //apple_ref/c/data/robotBoundingBox //apple_ref/c/clconst/robotBoundingBox " machineGenerated="true" --><span class="var">robotBoundingBox</span><!-- /a -->;  <!-- headerDoc=declaration;uid=//apple_ref/c/func/robotBoundingBox;name=end --></pre>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5><p><!-- begin return value --><p>Returns the bounding box of this robot in world coordinates. 
-This can be used to retrieve the robots world position.
 
 <!-- end return value --></p><hr class="betweenAPIEntries"><!-- headerDoc=func;  uid=//apple_ref/c/func/run;   name=run -->
 <a name="//apple_ref/c/func/run"></a>
@@ -557,14 +568,16 @@ and add different movement patterns to this loop.
 <dl>
 <dt><!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/scannedRobot:atPosition:/robot;   name=robot -->
 <a name="//apple_ref/doc/methodparam/scannedRobot:atPosition:/robot"></a>
-<code>robot</code></dt><dd><p>Reference to the robot that has been scanned</dd>
+<code>robot</code></dt><dd><p>Shallow copy of the robot that has been scanned. You can only access the class name
+and the owner of the robot.</dd>
 <dt><!-- headerDoc=methodparam;  uid=//apple_ref/doc/methodparam/scannedRobot:atPosition:/position;   name=position -->
 <a name="//apple_ref/doc/methodparam/scannedRobot:atPosition:/position"></a>
 <code>position</code></dt><dd><p>World position of the robot that has been scanned</dd>
 </dl>
 </div>
 <h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Discussion</font></h5>
-<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/scannedRobot:atPosition:;name=start --><p>This method is called when another robot has been detected.
+<!-- begin discussion --><!-- headerDoc=discussion;uid=//apple_ref/c/func/scannedRobot:atPosition:;name=start --><p>This method is called when another robot has been detected. Another robot is detected if it
+is within 150 points of your robot.
 </p>
 <!-- headerDoc=discussion;uid=//apple_ref/c/func/scannedRobot:atPosition:;name=end --><!-- end discussion -->
 <hr class="betweenAPIEntries"><!-- headerDoc=func;  uid=//apple_ref/c/func/shoot;   name=shoot -->

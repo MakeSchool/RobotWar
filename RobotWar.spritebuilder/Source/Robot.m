@@ -222,6 +222,10 @@
   return self.robotNode.boundingBox;
 }
 
+- (CGPoint)position {
+  return self.robotNode.position;
+}
+
 #pragma mark - Events
 
 - (void)_scannedRobot:(Robot*)robot atPosition:(CGPoint)position {
