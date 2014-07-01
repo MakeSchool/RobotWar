@@ -69,7 +69,7 @@ will also be performed immediately.
  Robots should attempt moving away from a wall when receiving this event.
  
  @param hitDirection
-  Describes which face of the robot has hit the wall (front, left, back, rear)
+  Describes which face of the robot has hit the wall (front, left, rear, right)
   
  @param hitAngle
   Provides the exact angle of the collision between robot and the wall.
