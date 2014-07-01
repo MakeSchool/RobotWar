@@ -13,11 +13,6 @@
 #import "MainScene.h"
 #import "Helpers.h"
 
-static CGFloat const ROBOT_DEGREES_PER_SECOND = 100;
-static CGFloat const ROBOT_DISTANCE_PER_SECOND = 100;
-
-static NSInteger const ROBOT_INITIAL_LIFES = 20;
-
 @interface Robot ()
 
 @property (nonatomic, assign) NSInteger health;
@@ -313,6 +308,14 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
   CGFloat y = sin(rotation);
   
   return ccp(x, (-1)*y);
+}
+
+- (Robot*)copyWithZone:(NSZone *)zone {
+  Robot *newRobot = [[[self class] allocWithZone:zone] init];
+  newRobot->_creator = [_creator copyWithZone:zone];
+  newRobot->_robotClass = [_robotClass copyWithZone:zone];
+  
+  return newRobot;
 }
 
 @end

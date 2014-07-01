@@ -145,8 +145,8 @@
         continue;
       } else if (ccpDistance(robot.robotNode.position, otherRobot.robotNode.position)  < 150) {
         if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
-          [robot _scannedRobot:otherRobot atPosition:otherRobot.robotNode.positionInPoints];
-          [otherRobot _scannedRobot:robot atPosition:robot.robotNode.positionInPoints];
+          [robot _scannedRobot:[otherRobot copy] atPosition:otherRobot.robotNode.positionInPoints];
+          [otherRobot _scannedRobot:[robot copy] atPosition:robot.robotNode.positionInPoints];
           timeSinceLastEvent = 0.f;
         }
       }

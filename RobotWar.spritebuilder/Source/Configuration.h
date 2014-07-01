@@ -12,7 +12,7 @@
 static NSString *robotClass1 = @"AdvancedRobot";
 static NSString *robotCreator1 = @"Jeremy";
 
-static NSString *robotClass2 = @"SimpleRobot";
+static NSString *robotClass2 = @"DemiPixel";
 static NSString *robotCreator2 = @"Benji";
 
 #endif

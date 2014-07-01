@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, RobotWallHitDirection) {
   RobotWallHitDirectionRight
 };
 
-@interface Robot : NSObject
+@interface Robot : NSObject <NSCopying>
 
 @property (copy, nonatomic) NSString *creator;
 @property (copy, nonatomic) NSString *robotClass;
@@ -49,7 +49,8 @@ will also be performed immediately.
  This method is called when another robot has been detected.
  
  @param robot
-  Reference to the robot that has been scanned
+  Shallow copy of the robot that has been scanned. You can only access the class name
+  and the owner of the robot.
  @param position
   World position of the robot that has been scanned
  */
