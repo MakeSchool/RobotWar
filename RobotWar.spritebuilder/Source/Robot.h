@@ -107,7 +107,7 @@ will also be performed immediately.
 /*!
  @method
  
- Turns the gun of the robot to the left.
+ Turns the gun of the robot to the right.
  
  @param degrees degrees of rotation
  */
@@ -143,7 +143,7 @@ will also be performed immediately.
 /*!
  @method
  
- Moves the robot backwards in the oppsote direction it is currently heading.
+Moves the robot backwards in the direction opposite to the one it is currently heading.
  
  @param distance distance in points
  */

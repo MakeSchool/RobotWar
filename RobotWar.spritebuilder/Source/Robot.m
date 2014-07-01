@@ -76,6 +76,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
 }
 
 - (void)turnGunLeft:(NSInteger)degree {
+  NSAssert(degree >= 0, @"No negative values allowed!");
   [self waitForMainQueue];
 
   CGFloat currentRotation = _barrel.rotation;
@@ -86,6 +87,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
 }
 
 - (void)turnGunRight:(NSInteger)degree {
+  NSAssert(degree >= 0, @"No negative values allowed!");
   [self waitForMainQueue];
 
   CGFloat currentRotation = _barrel.rotation;
@@ -119,6 +121,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
 }
 
 - (void)moveAhead:(NSInteger)distance {
+  NSAssert(distance >= 0, @"No negative values allowed!");
   [self waitForMainQueue];
   
   CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND / GAME_SPEED;
@@ -131,6 +134,7 @@ static NSInteger const ROBOT_INITIAL_LIFES = 20;
 
 
 - (void)moveBack:(NSInteger)distance {
+  NSAssert(distance >= 0, @"No negative values allowed!");
   [self waitForMainQueue];
   
   CGFloat duration = distance / ROBOT_DISTANCE_PER_SECOND / GAME_SPEED;
