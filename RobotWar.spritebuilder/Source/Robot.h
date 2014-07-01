@@ -29,10 +29,10 @@ typedef NS_ENUM(NSInteger, RobotWallHitDirection) {
  */
 
 /*
-All of the following event handlers are called with a high priority. If an event handler calls 'cancelActiveAction'
-the currently running action of a robot will be stopped immediately. Any commands to the robot after this cancellation
-will also be performed immediately.
-*/
+ All of the following event handlers are called with a high priority. If an event handler calls 'cancelActiveAction'
+ the currently running action of a robot will be stopped immediately. Any commands to the robot after this cancellation
+ will also be performed immediately. Code running within the event handlers, such as movements, etc. will block further events from being called, until that action has been completed. Therefore you should avoid performing long actions directly in event handlers and instead set a state variable for your robot and run the behaviour from within the run method.
+ */
 
 
 /*!
