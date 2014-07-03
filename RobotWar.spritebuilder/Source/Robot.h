@@ -178,6 +178,13 @@ Moves the robot backwards in the direction opposite to the one it is currently h
 /*!
  @method
  
+ @return Returns the robot's hit points
+ */
+- (NSInteger)hitPoints;
+
+/*!
+ @method
+ 
  @return Returns the bounding box of this robot in world coordinates. 
  */
 - (CGRect)robotBoundingBox;

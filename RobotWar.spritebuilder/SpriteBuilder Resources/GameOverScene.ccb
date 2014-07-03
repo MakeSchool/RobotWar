@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SequencerJoints</key>
+	<dict>
+		<key>hidden</key>
+		<false/>
+		<key>locked</key>
+		<false/>
+	</dict>
+	<key>UUID</key>
+	<integer>5</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -14,17 +23,27 @@
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
 	<integer>4</integer>
+	<key>gridspaceHeight</key>
+	<integer>64</integer>
+	<key>gridspaceWidth</key>
+	<integer>64</integer>
 	<key>guides</key>
+	<array/>
+	<key>joints</key>
 	<array/>
 	<key>jsControlled</key>
 	<false/>
 	<key>nodeGraph</key>
 	<dict>
+		<key>UUID</key>
+		<integer>1</integer>
 		<key>baseClass</key>
 		<string>CCNode</string>
 		<key>children</key>
 		<array>
 			<dict>
+				<key>UUID</key>
+				<integer>2</integer>
 				<key>baseClass</key>
 				<string>CCLabelTTF</string>
 				<key>children</key>
@@ -36,7 +55,7 @@
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -55,10 +74,10 @@
 						<key>value</key>
 						<array>
 							<real>0.5</real>
-							<real>278</real>
+							<real>0.85000002384185791</real>
 							<integer>0</integer>
 							<integer>2</integer>
-							<integer>0</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -102,7 +121,7 @@
 						<key>type</key>
 						<string>FontTTF</string>
 						<key>value</key>
-						<string>Helvetica</string>
+						<string>fonts/wendy.ttf</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -111,7 +130,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>48</real>
+							<real>72</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -228,8 +247,12 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
+				<key>UUID</key>
+				<integer>3</integer>
 				<key>baseClass</key>
 				<string>CCLabelTTF</string>
 				<key>children</key>
@@ -260,10 +283,10 @@
 						<key>value</key>
 						<array>
 							<real>0.5</real>
-							<real>186</real>
+							<real>0.5</real>
 							<integer>0</integer>
 							<integer>2</integer>
-							<integer>0</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -307,7 +330,7 @@
 						<key>type</key>
 						<string>FontTTF</string>
 						<key>value</key>
-						<string>Helvetica</string>
+						<string>fonts/wendy.ttf</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -316,7 +339,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>24</real>
+							<real>30</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -435,6 +458,8 @@
 				</array>
 			</dict>
 			<dict>
+				<key>UUID</key>
+				<integer>4</integer>
 				<key>baseClass</key>
 				<string>CCButton</string>
 				<key>children</key>
@@ -446,7 +471,7 @@
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -630,7 +655,7 @@
 						<key>type</key>
 						<string>FontTTF</string>
 						<key>value</key>
-						<string>Helvetica</string>
+						<string>fonts/wendy.ttf</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -642,6 +667,22 @@
 							<real>17</real>
 							<integer>0</integer>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>horizontalAlignment</string>
+						<key>type</key>
+						<string>IntegerLabeled</string>
+						<key>value</key>
+						<integer>1</integer>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>verticalAlignment</string>
+						<key>type</key>
+						<string>IntegerLabeled</string>
+						<key>value</key>
+						<integer>1</integer>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -750,7 +791,7 @@
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>
-		<integer>0</integer>
+		<integer>1</integer>
 		<key>properties</key>
 		<array>
 			<dict>
@@ -813,8 +854,6 @@
 				</array>
 			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
@@ -903,6 +942,8 @@
 		</dict>
 	</array>
 	<key>stageBorder</key>
+	<integer>0</integer>
+	<key>stageColor</key>
 	<integer>0</integer>
 </dict>
 </plist>

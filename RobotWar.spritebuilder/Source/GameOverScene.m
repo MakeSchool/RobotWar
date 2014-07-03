@@ -13,6 +13,8 @@
 }
 
 - (void)restartGame {
+    CCNode
+    
   CCScene *gameOverScene = [CCBReader loadAsScene:@"MainScene"];
   CCTransition *transition = [CCTransition transitionCrossFadeWithDuration:0.3f];
   [[CCDirector sharedDirector] replaceScene:gameOverScene withTransition:transition];

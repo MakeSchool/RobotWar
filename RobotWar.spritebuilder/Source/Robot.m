@@ -179,6 +179,10 @@
 
 #pragma mark - Info
 
+- (NSInteger)hitPoints {
+  return self.health;
+}
+
 - (CGPoint)headingDirection {
   return [self directionFromRotation:_body.rotation];
 }
