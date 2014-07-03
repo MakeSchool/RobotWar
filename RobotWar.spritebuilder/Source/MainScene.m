@@ -11,9 +11,7 @@
 #import "Bullet.h"
 #import "GameOverScene.h"
 #import "Robot_Framework.h"
-#import "SimpleRobot.h"
 #import "GameConstants.h"
-#import "AdvancedRobot.h"
 #import "Helpers.h"
 #import "Configuration.h"
 
@@ -21,6 +19,9 @@
   CGFloat timeSinceLastEvent;
   NSMutableArray *_bullets;
   NSMutableArray *_robots;
+    
+  CCLabelTTF* _robot1Label;
+  CCLabelTTF* _robot2Label;
 }
 
 #pragma mark - Lifecycle / Scene Transitions
@@ -30,15 +31,21 @@
 }
 
 - (void)didLoadFromCCB {
+    
   _bullets = [NSMutableArray array];
   
   _robots = [NSMutableArray array];
-  
+    
+  [self initWithRobotClassOne:@"SimpleRobot" creatorOne:@"Benji" andRobotClassTwo:@"AdvancedRobot" creatorTwo:@"Jeremy"];
+}
+
+- (void)initWithRobotClassOne:(NSString *)botClass1 creatorOne: (NSString*)creator1 andRobotClassTwo:(NSString *)botClass2 creatorTwo:(NSString *)creator2 {
   // intantiate two AIs
-  Robot *robot1 = (Robot*) [[NSClassFromString(robotClass1) alloc] init];
-  Robot *robot2 = (Robot*) [[NSClassFromString(robotClass2) alloc] init];
+
+  Robot *robot1 = (Robot*) [[NSClassFromString(botClass1) alloc] init];
+  Robot *robot2 = (Robot*) [[NSClassFromString(botClass2) alloc] init];
   _robots = [NSMutableArray arrayWithArray:@[robot1, robot2]];
-  
+
   //spawn two robots
   robot1.robotNode = [CCBReader load:@"Robot" owner:robot1];
   [robot1 _setRobotColor:[CCColor colorWithCcColor3b:ccc3(251, 72, 154)]];
@@ -48,9 +55,9 @@
   [self addChild:robot1.robotNode];
   robot1.gameBoard = self;
   [robot1 _run];
-  robot1.creator = robotCreator1;
-  robot1.robotClass = robotClass1;
-  
+  robot1.creator = creator1;
+  robot1.robotClass = botClass1;
+
   robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
   CGSize screenSize = [[CCDirector sharedDirector] viewSize];
   robot2.robotNode.position = ccp(screenSize.width - 50, 100);
@@ -58,8 +65,10 @@
   robot2.gameBoard = self;
   [robot2 _run];
   robot2.robotNode.rotation = 180;
-  robot2.creator = robotCreator2;
-  robot2.robotClass = robotClass2;
+  robot2.creator = creator2;
+  robot2.robotClass = botClass2;
+    
+  [self updateScoreLabels];
 }
 
 - (void)transitionToGameOverScreen:(Robot *)robot {
@@ -108,6 +117,7 @@
   }
   
   NSMutableArray *cleanupBullets = nil;
+  BOOL labelsNeedUpdate = NO;
   
   for (Bullet *bullet in _bullets) {
     
@@ -125,6 +135,7 @@
         continue;
       } else if (CGRectIntersectsRect(bullet.boundingBox, robot.robotNode.boundingBox)) {
         [robot _gotHit];
+        labelsNeedUpdate = YES;
         [bullet.bulletOwner _bulletHitEnemy:bullet];
         
         if (!cleanupBullets) {
@@ -135,6 +146,9 @@
       }
     }
   }
+    
+  if (labelsNeedUpdate)
+      [self updateScoreLabels];
   
   for (Bullet *bullet in cleanupBullets) {
     [self cleanupBullet:bullet];
@@ -231,6 +245,26 @@
 }
 
 #pragma mark - Util Methods/Functions
+
+- (void)updateScoreLabels {
+  Robot* robot1 = nil;
+  Robot* robot2 = nil;
+    
+    
+    CCNode
+  if (_robots.count > 0) robot1 = (Robot*) _robots[0];
+  if (_robots.count > 1) robot2 = (Robot*) _robots[1];
+    
+  if (robot1)
+      _robot1Label.string = [NSString stringWithFormat:@"%@ %d", robotClass1, [robot1 hitPoints]];
+  else
+      _robot1Label.string = [NSString stringWithFormat:@"%@ %@", robotClass1, @"DEAD"];
+      
+  if (robot2)
+      _robot2Label.string = [NSString stringWithFormat:@"%@ %d", robotClass2, [robot2 hitPoints]];
+  else
+      _robot2Label.string = [NSString stringWithFormat:@"%@ %@", robotClass2, @"DEAD"];
+}
 
 - (void)cleanupBullet:(CCNode *)bullet {
   [bullet removeFromParent];

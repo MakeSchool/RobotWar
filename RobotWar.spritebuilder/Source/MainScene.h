@@ -17,6 +17,7 @@
 @property (atomic, assign) CGFloat currentTimestamp;
 
 // direction should be normalized
+- (void)initWithRobotClassOne:(NSString *)botClass1 creatorOne: (NSString*)creator1 andRobotClassTwo:(NSString *)botClass2 creatorTwo:(NSString *)creator2;
 - (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction bulletOwner:(id)owner;
 - (void)robotDied:(Robot*)robot;
 - (RobotWallHitDirection)currentWallHitDirectionForRobot:(Robot*)robot;
