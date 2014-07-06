@@ -42,6 +42,8 @@
   //spawn two robots
   robot1.robotNode = [CCBReader load:@"Robot" owner:robot1];
   [robot1 _setRobotColor:[CCColor colorWithCcColor3b:ccc3(251, 72, 154)]];
+  [robot1 _setFieldOfViewColor:[CCColor colorWithCcColor3b:ccc3(251, 87, 172)]];
+  
   robot1.robotNode.position = ccp(50, 220);
   [self addChild:robot1.robotNode];
   robot1.gameBoard = self;
@@ -145,8 +147,12 @@
         continue;
       } else if (ccpDistance(robot.robotNode.position, otherRobot.robotNode.position)  < 150) {
         if (timeSinceLastEvent > 0.5f/GAME_SPEED) {
-          [robot _scannedRobot:[otherRobot copy] atPosition:otherRobot.robotNode.positionInPoints];
-          [otherRobot _scannedRobot:[robot copy] atPosition:robot.robotNode.positionInPoints];
+          if (fabsf([robot angleBetweenGunHeadingDirectionAndWorldPosition:otherRobot.position]) < FIELD_OF_VIEW/2) {
+            [robot _scannedRobot:[otherRobot copy] atPosition:otherRobot.robotNode.positionInPoints];
+          }
+          if (fabsf([otherRobot angleBetweenGunHeadingDirectionAndWorldPosition:robot.position]) < FIELD_OF_VIEW/2) {
+            [otherRobot _scannedRobot:[robot copy] atPosition:robot.robotNode.positionInPoints];
+          }
           timeSinceLastEvent = 0.f;
         }
       }

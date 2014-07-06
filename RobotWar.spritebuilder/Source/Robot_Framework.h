@@ -22,5 +22,6 @@
 - (void)_run;
 - (void)_bulletHitEnemy:(Bullet*)bullet;
 - (void)_setRobotColor:(CCColor*)color;
+- (void)_setFieldOfViewColor:(CCColor*)color;
 
 @end

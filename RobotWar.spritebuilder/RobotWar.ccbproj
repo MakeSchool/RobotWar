@@ -65,7 +65,7 @@
 	<key>publishToZipFile</key>
 	<false/>
 	<key>resourceAutoScaleFactor</key>
-	<integer>4</integer>
+	<integer>2</integer>
 	<key>resourcePaths</key>
 	<array>
 		<dict>
@@ -164,6 +164,8 @@
 			<key>tabletScale</key>
 			<integer>1</integer>
 		</dict>
+		<key>fieldOfView.png</key>
+		<dict/>
 	</dict>
 	<key>versionStr</key>
 	<string>Version: 1.1.0

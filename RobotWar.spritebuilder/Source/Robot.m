@@ -24,6 +24,7 @@
   CCNode *_body;
   CCNode *_healthBar;
   CCNodeColor *_bodyColorNode;
+  CCNode *_fieldOfViewNode;
   
   dispatch_queue_t _backgroundQueue;
   dispatch_queue_t _mainQueue;
@@ -53,6 +54,10 @@
 
 - (void)_setRobotColor:(CCColor*)color {
   [_bodyColorNode setColor:color];
+}
+
+- (void)_setFieldOfViewColor:(CCColor*)color {
+  [_fieldOfViewNode setColor:color];
 }
 
 - (void)runRobotAction:(CCActionFiniteTime *)action target:(CCNode*)target canBeCancelled:(BOOL)canBeCancelled {
@@ -201,7 +206,7 @@
 }
 
 - (CGFloat)angleBetweenGunHeadingDirectionAndWorldPosition:(CGPoint)position {
-  // vector between robot position and target position
+  // vector between robot's gun position and target position
   CGPoint directionVector = ccp(position.x - _body.position.x, position.y - _body.position.y);
   CGPoint currentHeading = [self gunHeadingDirection];
   
