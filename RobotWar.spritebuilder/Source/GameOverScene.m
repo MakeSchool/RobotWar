@@ -13,13 +13,18 @@
 }
 
 - (void)restartGame {
-  CCScene *gameOverScene = [CCBReader loadAsScene:@"MainScene"];
+//  CCScene *tournamentScene = [CCBReader loadAsScene:@"TournamentScene"];
   CCTransition *transition = [CCTransition transitionCrossFadeWithDuration:0.3f];
-  [[CCDirector sharedDirector] replaceScene:gameOverScene withTransition:transition];
+//  [[CCDirector sharedDirector] replaceScene:tournamentScene withTransition:transition];
+    [[CCDirector sharedDirector] popSceneWithTransition:transition];
 }
 
 - (void)displayWinMessage {
-      _winnerLabel.string = [NSString stringWithFormat:@"%@'s %@ wins this battle!", self.winnerName, self.winnerClass];
+    
+    if (!self.winnerName || [self.winnerName isEqualToString:@""])
+        _winnerLabel.string = [NSString stringWithFormat:@"%@ wins this battle!", self.winnerClass];
+    else
+        _winnerLabel.string = [NSString stringWithFormat:@"%@'s %@ wins this battle!", self.winnerName, self.winnerClass];
 }
 
 @end
