@@ -244,8 +244,6 @@
   Robot* robot1 = nil;
   Robot* robot2 = nil;
     
-    
-    CCNode
   if (_robots.count > 0) robot1 = (Robot*) _robots[0];
   if (_robots.count > 1) robot2 = (Robot*) _robots[1];
     
