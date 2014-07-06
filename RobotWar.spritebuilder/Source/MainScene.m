@@ -135,6 +135,10 @@
         [robot _gotHit];
         labelsNeedUpdate = YES;
         [bullet.bulletOwner _bulletHitEnemy:bullet];
+          
+        CCParticleSystem *bulletExplosion = (CCParticleSystem *) [CCBReader load:@"BulletExplosion"];
+        bulletExplosion.position = bullet.position;
+        [self addChild:bulletExplosion];
         
         if (!cleanupBullets) {
           cleanupBullets = [NSMutableArray array];
