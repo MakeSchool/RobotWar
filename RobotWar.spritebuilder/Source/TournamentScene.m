@@ -13,7 +13,7 @@
 static NSArray* allRobots;
 static NSDictionary* schedule;
 
-static const int countdownTime = 10;
+static const int COUNTDOWN_TIME = 10;
 
 @implementation TournamentScene
 {
@@ -76,17 +76,18 @@ NSArray *ClassGetSubclasses(Class parentClass)
 - (NSDictionary*)createTournamentScheduleWithBots:(NSArray*)robots
 {
     NSMutableArray* matches = [NSMutableArray arrayWithCapacity:(robots.count / 2) * (robots.count - 1)];
+    NSMutableDictionary* records = [NSMutableDictionary dictionaryWithCapacity:robots.count];
     
     int matchNumber = 0;
     
     for (int i = 0; i < robots.count; ++i)
     {
+        const char* robotOneClassName = class_getName(robots[i]);
+        NSString* robotOneClassString = [NSString stringWithUTF8String:robotOneClassName];
+        
         for (int j = i + 1; j < robots.count; ++j)
         {
-            const char* robotOneClassName = class_getName(robots[i]);
             const char* robotTwoClassName = class_getName(robots[j]);
-            
-            NSString* robotOneClassString = [NSString stringWithUTF8String:robotOneClassName];
             NSString* robotTwoClassString = [NSString stringWithUTF8String:robotTwoClassName];
             
             NSDictionary* match = @{@"Match": @(matchNumber),
@@ -99,10 +100,12 @@ NSArray *ClassGetSubclasses(Class parentClass)
             ++matchNumber;
         }
         
-        //TODO: Add record (win, loss draw) entry for each bot 
+        //TODO: Add record (win, loss draw) entry for each bot
+        NSDictionary* record = @{@"Wins": @(0), @"Losses": @(0), @"Draws": @(0)};
+        [records addObject:record forKey:robotOneClassName];
     }
     
-    return @{@"Matches": matches, @"CurrentMatch": @(-1)};
+    return @{@"Matches": matches, @"CurrentMatch": @(-1), @"Records": records};
 }
 
 #pragma mark -
@@ -121,7 +124,7 @@ NSArray *ClassGetSubclasses(Class parentClass)
     
     [self updateLabels];
     
-    countdown = countdownTime;
+    countdown = COUNTDOWN_TIME;
     [self schedule:@selector(updateCountdown) interval:1.0f];
 }
 
@@ -145,6 +148,8 @@ NSArray *ClassGetSubclasses(Class parentClass)
         [scheduleCopy setObject:@(nextMatchNumber) forKey:@"CurrentMatch"];
         schedule = [NSDictionary dictionaryWithDictionary:scheduleCopy];
     }
+    
+    // TODO: Save state down to disk
 }
 
 - (void)updateCountdown
@@ -152,7 +157,7 @@ NSArray *ClassGetSubclasses(Class parentClass)
     --countdown;
     countdownLabel.string = [NSString stringWithFormat:@"%d", countdown];
     
-    if (countdown == 0)
+    if (countdown <= 0)
     {
         [self unschedule:@selector(updateCountdown)];
         [self loadNextMatch];
@@ -178,6 +183,8 @@ NSArray *ClassGetSubclasses(Class parentClass)
     NSDictionary* match = matches[matchNumber];
     
     MainScene* nextMatch = (MainScene*) [CCBReader load:@"MainScene"];
+    
+    // TODO: Randomize Positions
     [nextMatch initWithRobotClassOne: [match objectForKey:@"RobotOne"] andRobotClassTwo:[match objectForKey:@"RobotTwo"]];
     
     CCScene* nextMatchScene = [CCScene node];
