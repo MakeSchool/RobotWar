@@ -36,7 +36,7 @@
   
   _robots = [NSMutableArray array];
     
-  [self initWithRobotClassOne:@"SimpleRobot" creatorOne:@"Benji" andRobotClassTwo:@"AdvancedRobot" creatorTwo:@"Jeremy"];
+  [self initWithRobotClassOne:robotClass1 creatorOne:robotCreator1 andRobotClassTwo:robotClass2 creatorTwo:robotCreator2];
 }
 
 - (void)initWithRobotClassOne:(NSString *)botClass1 creatorOne: (NSString*)creator1 andRobotClassTwo:(NSString *)botClass2 creatorTwo:(NSString *)creator2 {
@@ -258,14 +258,14 @@
   if (_robots.count > 1) robot2 = (Robot*) _robots[1];
     
   if (robot1)
-      _robot1Label.string = [NSString stringWithFormat:@"%@ %d", robotClass1, [robot1 hitPoints]];
+      _robot1Label.string = [NSString stringWithFormat:@"%@ %d", robot1.robotClass, [robot1 hitPoints]];
   else
-      _robot1Label.string = [NSString stringWithFormat:@"%@ %@", robotClass1, @"DEAD"];
+      _robot1Label.string = [NSString stringWithFormat:@"DEAD"];
       
   if (robot2)
-      _robot2Label.string = [NSString stringWithFormat:@"%@ %d", robotClass2, [robot2 hitPoints]];
+      _robot2Label.string = [NSString stringWithFormat:@"%@ %d", robot2.robotClass, [robot2 hitPoints]];
   else
-      _robot2Label.string = [NSString stringWithFormat:@"%@ %@", robotClass2, @"DEAD"];
+      _robot2Label.string = [NSString stringWithFormat:@"DEAD"];
 }
 
 - (void)cleanupBullet:(CCNode *)bullet {
