@@ -13,15 +13,12 @@
 }
 
 - (void)restartGame {
-    CCNode
-    
   CCScene *gameOverScene = [CCBReader loadAsScene:@"MainScene"];
   CCTransition *transition = [CCTransition transitionCrossFadeWithDuration:0.3f];
   [[CCDirector sharedDirector] replaceScene:gameOverScene withTransition:transition];
 }
 
-- (void)displayWinMessage
-{
+- (void)displayWinMessage {
       _winnerLabel.string = [NSString stringWithFormat:@"%@'s %@ wins this battle!", self.winnerName, self.winnerClass];
 }
 
