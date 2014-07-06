@@ -60,6 +60,14 @@
   [_fieldOfViewNode setColor:color];
 }
 
+- (void)_updateFOVScaned:(BOOL)scanned {
+  if (scanned) {
+    _fieldOfViewNode.opacity = 0.5f;
+  } else {
+    _fieldOfViewNode.opacity = 0.25f;
+  }
+}
+
 - (void)runRobotAction:(CCActionFiniteTime *)action target:(CCNode*)target canBeCancelled:(BOOL)canBeCancelled {
   // ensure that background queue cannot spawn any actions will main queue is operating
   [self waitForMainQueue];
