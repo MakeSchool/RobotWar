@@ -43,6 +43,7 @@
 		B77F1B3E17B978D7009739AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3D17B978D7009739AE /* Foundation.framework */; };
 		B77F1B4017B978D7009739AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3F17B978D7009739AE /* CoreGraphics.framework */; };
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
+		BC0E62DC196A0CB600AED4CF /* NewAdvancedRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0E62DB196A0CB600AED4CF /* NewAdvancedRobot.m */; };
 		BCA5F346195BD4DA00F1A2DF /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA5F345195BD4DA00F1A2DF /* GLKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +117,8 @@
 		B77F1B3F17B978D7009739AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B77F1B4117B978D7009739AE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B7B3713D180358F1007369CC /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveChipmunk.a; path = "../libs/cocos2d-iphone/external/Chipmunk/xcode/build/Debug-iphoneos/libObjectiveChipmunk.a"; sourceTree = "<group>"; };
+		BC0E62DA196A0CB600AED4CF /* NewAdvancedRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAdvancedRobot.h; sourceTree = "<group>"; };
+		BC0E62DB196A0CB600AED4CF /* NewAdvancedRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewAdvancedRobot.m; sourceTree = "<group>"; };
 		BCA5F345195BD4DA00F1A2DF /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -174,6 +177,8 @@
 				65CC917A19648EEE00838899 /* SimpleRobot.m */,
 				65CC917B19648EEE00838899 /* TurretRobot.h */,
 				65CC917C19648EEE00838899 /* TurretRobot.m */,
+				BC0E62DA196A0CB600AED4CF /* NewAdvancedRobot.h */,
+				BC0E62DB196A0CB600AED4CF /* NewAdvancedRobot.m */,
 			);
 			name = Robots;
 			path = Source/Robot;
@@ -396,6 +401,7 @@
 				65CC917D19648EEE00838899 /* AdvancedRobot.m in Sources */,
 				62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */,
 				62E3A330193D3F3B00BD3F0F /* Bullet.m in Sources */,
+				BC0E62DC196A0CB600AED4CF /* NewAdvancedRobot.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
