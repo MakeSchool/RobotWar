@@ -13,6 +13,9 @@
 @property (copy, nonatomic) NSString *winnerClass;
 @property (copy, nonatomic) NSString *winnerName;
 
+@property (copy, nonatomic) NSString *loserClass;
+@property (copy, nonatomic) NSString *loserName;
+
 - (void)displayWinMessage;
 
 @end 

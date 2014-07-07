@@ -10,4 +10,6 @@
 
 @interface TournamentScene : CCScene
 
+- (void)updateWithResults:(NSDictionary*)results;
+
 @end

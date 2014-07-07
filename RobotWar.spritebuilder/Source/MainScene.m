@@ -65,11 +65,19 @@
   [self updateScoreLabels];
 }
 
-- (void)transitionToGameOverScreen:(Robot *)robot {
+- (void)transitionToGameOverScreen:(NSDictionary *)results {
+    
   CCScene *gameOverSceneWrapper = [CCBReader loadAsScene:@"GameOverScene"];
   GameOverScene *gameOverScene = gameOverSceneWrapper.children[0];
-  gameOverScene.winnerClass = robot.robotClass;
-  gameOverScene.winnerName = robot.creator;
+    
+  Robot* winner = [results objectForKey:@"Winner"];
+  Robot* loser = [results objectForKey:@"Loser"];
+    
+  gameOverScene.winnerClass = winner.robotClass;
+  gameOverScene.winnerName = winner.creator;
+  gameOverScene.loserClass = loser.robotClass;
+  gameOverScene.loserName = loser.creator;
+    
   [gameOverScene displayWinMessage];
   CCTransition *transition = [CCTransition transitionCrossFadeWithDuration:0.3f];
   [[CCDirector sharedDirector] replaceScene:gameOverSceneWrapper withTransition:transition];
@@ -208,7 +216,8 @@
     [_robots removeObject:robot];
     
     if (_robots.count == 1) {
-      [self performSelector:@selector(transitionToGameOverScreen:) withObject:_robots[0] afterDelay:2.f];
+        NSDictionary* results = @{@"Winner": _robots[0], @"Loser": robot};
+      [self performSelector:@selector(transitionToGameOverScreen:) withObject:results afterDelay:3.0f];
     }
   });
 }

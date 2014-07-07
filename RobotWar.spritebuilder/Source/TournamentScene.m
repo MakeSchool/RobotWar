@@ -9,9 +9,9 @@
 #import "TournamentScene.h"
 #import "Robot.h"
 #import "MainScene.h"
+#import "TournamentWonScene.h"
 
-static NSArray* allRobots;
-static NSDictionary* schedule;
+static NSMutableDictionary* schedule;
 
 static const int COUNTDOWN_TIME = 10;
 
@@ -20,6 +20,8 @@ static const int COUNTDOWN_TIME = 10;
     CCLabelTTF* roundLabel;
     CCLabelTTF* robotOneLabel;
     CCLabelTTF* robotTwoLabel;
+    CCLabelTTF* robotOneStats;
+    CCLabelTTF* robotTwoStats;
     CCLabelTTF* countdownLabel;
     
     int countdown;
@@ -34,8 +36,16 @@ static const int COUNTDOWN_TIME = 10;
     {
         static dispatch_once_t once;
         dispatch_once(&once, ^ {
-            allRobots = ClassGetSubclasses([Robot class]);
-            schedule = [self createTournamentScheduleWithBots:allRobots];
+            
+            // Check if there's a tournament saved to disk to resume
+            schedule = [[NSUserDefaults standardUserDefaults] objectForKey:@"TournamentState"];
+            
+            if (!schedule)
+            {
+                // No tournament on disk, so make a new one
+                NSArray* allRobots = ClassGetSubclasses([Robot class]);
+                schedule = [NSMutableDictionary dictionaryWithDictionary:[self createTournamentScheduleWithBots:allRobots]];
+            }
         });
     }
     
@@ -100,9 +110,9 @@ NSArray *ClassGetSubclasses(Class parentClass)
             ++matchNumber;
         }
         
-        //TODO: Add record (win, loss draw) entry for each bot
+        // Add record (win, loss draw) entry for each bot
         NSDictionary* record = @{@"Wins": @(0), @"Losses": @(0), @"Draws": @(0)};
-        [records addObject:record forKey:robotOneClassName];
+        [records setObject:record forKey:robotOneClassString];
     }
     
     return @{@"Matches": matches, @"CurrentMatch": @(-1), @"Records": records};
@@ -111,9 +121,9 @@ NSArray *ClassGetSubclasses(Class parentClass)
 #pragma mark -
 #pragma mark Tournament Stuff
 
-- (void)didLoadFromCCB
+- (void)cleanup
 {
-
+    [self unschedule:@selector(updateCountdown)];
 }
 
 - (void)onEnterTransitionDidFinish
@@ -128,11 +138,6 @@ NSArray *ClassGetSubclasses(Class parentClass)
     [self schedule:@selector(updateCountdown) interval:1.0f];
 }
 
-- (void)cleanup
-{
-    [self unschedule:@selector(updateCountdown)];
-}
-
 - (void)incrementMatchNumber
 {
     int nextMatchNumber = [[schedule objectForKey:@"CurrentMatch"] intValue] + 1;
@@ -140,16 +145,14 @@ NSArray *ClassGetSubclasses(Class parentClass)
     
     if (nextMatchNumber >= matches.count)
     {
-        // Load Tournament Winner Screen
+        [self loadTournamentWonScene];
     }
     else
     {
-        NSMutableDictionary* scheduleCopy = [NSMutableDictionary dictionaryWithDictionary:schedule];
-        [scheduleCopy setObject:@(nextMatchNumber) forKey:@"CurrentMatch"];
-        schedule = [NSDictionary dictionaryWithDictionary:scheduleCopy];
+        [schedule setObject:@(nextMatchNumber) forKey:@"CurrentMatch"];
     }
     
-    // TODO: Save state down to disk
+    [self saveTournamentStateToDisk];
 }
 
 - (void)updateCountdown
@@ -170,8 +173,18 @@ NSArray *ClassGetSubclasses(Class parentClass)
     NSArray* matches = [schedule objectForKey:@"Matches"];
     NSDictionary* match = matches[matchNumber];
     
-    robotOneLabel.string = [match objectForKey:@"RobotOne"];
-    robotTwoLabel.string = [match objectForKey:@"RobotTwo"];
+    NSString* robotOneClass = [match objectForKey:@"RobotOne"];
+    NSString* robotTwoClass = [match objectForKey:@"RobotTwo"];
+    
+    robotOneLabel.string = robotOneClass;
+    robotTwoLabel.string = robotTwoClass;
+    
+    NSDictionary* records = [schedule objectForKey:@"Records"];
+    NSDictionary* robotOneRecord = [records objectForKey:robotOneClass];
+    NSDictionary* robotTwoRecord = [records objectForKey:robotTwoClass];
+    
+    robotOneStats.string = [NSString stringWithFormat:@"%d - %d", [[robotOneRecord objectForKey:@"Wins"] intValue], [[robotOneRecord objectForKey:@"Losses"] intValue]];
+    robotTwoStats.string = [NSString stringWithFormat:@"%d - %d", [[robotTwoRecord objectForKey:@"Wins"] intValue], [[robotTwoRecord objectForKey:@"Losses"] intValue]];
     
     roundLabel.string = [NSString stringWithFormat:@"Round %d", matchNumber];
 }
@@ -189,7 +202,86 @@ NSArray *ClassGetSubclasses(Class parentClass)
     
     CCScene* nextMatchScene = [CCScene node];
     [nextMatchScene addChild:nextMatch];
-    [[CCDirector sharedDirector] pushScene:nextMatchScene];
+    [[CCDirector sharedDirector] replaceScene:nextMatchScene];
+}
+
+- (void)updateWithResults:(NSDictionary*)results
+{
+    // Update results dictionary
+    NSString* winningRobotClass = [results objectForKey:@"Winner"];
+    NSString* losingRobotClass = [results objectForKey:@"Loser"];
+    
+    NSMutableDictionary* records = [NSMutableDictionary dictionaryWithDictionary:[schedule objectForKey:@"Records"]];
+    NSDictionary* winningRobotRecord = [records objectForKey:winningRobotClass];
+    NSDictionary* losingRobotRecord = [records objectForKey:losingRobotClass];
+    
+    NSMutableDictionary* winningRobotRecordCopy = [NSMutableDictionary dictionaryWithDictionary:winningRobotRecord];
+    int wins = [[winningRobotRecordCopy objectForKey:@"Wins"] intValue];
+    wins++;
+    [winningRobotRecordCopy setObject:@(wins) forKey:@"Wins"];
+    
+    NSMutableDictionary* losingRobotRecordCopy = [NSMutableDictionary dictionaryWithDictionary:losingRobotRecord];
+    int losses = [[losingRobotRecordCopy objectForKey:@"Losses"] intValue];
+    losses++;
+    [losingRobotRecordCopy setObject:@(losses) forKey:@"Losses"];
+    
+    [records setObject:[NSDictionary dictionaryWithDictionary:winningRobotRecordCopy] forKey:winningRobotClass];
+    [records setObject:[NSDictionary dictionaryWithDictionary:losingRobotRecordCopy] forKey:losingRobotClass];
+    
+    [schedule setObject:[NSDictionary dictionaryWithDictionary:records] forKey:@"Records"];
+    
+    // Update match winner in matches array
+    NSMutableArray* matches = [NSMutableArray arrayWithArray:[schedule objectForKey:@"Matches"]];
+    int matchNumber = [[schedule objectForKey:@"CurrentMatch"] intValue];
+    NSMutableDictionary* match = [NSMutableDictionary dictionaryWithDictionary:matches[matchNumber]];
+    [match setObject:winningRobotClass forKey:@"Winner"];
+    matches[matchNumber] = match;
+    
+    [schedule setObject:[NSArray arrayWithArray:matches] forKey:@"Matches"];
+}
+
+- (void)saveTournamentStateToDisk
+{
+    [[NSUserDefaults standardUserDefaults] setObject:schedule forKey:@"TournamentState"];
+}
+
+#pragma mark - 
+#pragma mark Tournament Finish Stuff
+
+
+- (void)loadTournamentWonScene
+{
+    TournamentWonScene* tournamentWonScene = (TournamentWonScene*) [CCBReader load:@"TournamentWonScene"];
+    
+    tournamentWonScene.winningRobot = [self getWinningRobot];
+    
+    CCScene* newScene = [CCScene node];
+    [newScene addChild:tournamentWonScene];
+    
+    [[CCDirector sharedDirector] replaceScene:newScene];
+}
+
+- (NSString*)getWinningRobot
+{
+    NSDictionary* records = [schedule objectForKey:@"Records"];
+    
+    __block int mostWins = 0;
+    __block NSString* winningestBot;
+    
+    [records enumerateKeysAndObjectsUsingBlock:^(NSString* robotClass, NSDictionary* record, BOOL *stop)
+     {
+         int thisBotWins = [[record objectForKey:@"Wins"] intValue];
+         
+         if (thisBotWins > mostWins)
+         {
+             mostWins = thisBotWins;
+             winningestBot = [robotClass copy];
+         }
+     }];
+    
+    // TODO: Check for tie conditions, look at which bot beat the other to break tie
+    
+    return winningestBot;
 }
 
 @end

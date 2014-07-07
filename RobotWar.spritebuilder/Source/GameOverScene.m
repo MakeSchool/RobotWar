@@ -7,24 +7,62 @@
 //
 
 #import "GameOverScene.h"
+#import "TournamentScene.h"
 
 @implementation GameOverScene {
   CCLabelTTF *_winnerLabel;
+  CCLabelTTF *_countdownLabel;
+  int countdown;
 }
 
-- (void)restartGame {
-//  CCScene *tournamentScene = [CCBReader loadAsScene:@"TournamentScene"];
-  CCTransition *transition = [CCTransition transitionCrossFadeWithDuration:0.3f];
-//  [[CCDirector sharedDirector] replaceScene:tournamentScene withTransition:transition];
-    [[CCDirector sharedDirector] popSceneWithTransition:transition];
+- (void)didLoadFromCCB
+{
+    countdown = 10;
 }
 
-- (void)displayWinMessage {
+- (void)onEnterTransitionDidFinish
+{
+    [super onEnterTransitionDidFinish];
     
+    [self schedule:@selector(updateCountdown) interval:1.0f];
+}
+
+- (void)cleanup
+{
+    [self unschedule:@selector(updateCountdown)];
+}
+
+- (void)loadTournamentScene
+{
+    TournamentScene* tournamentScene = (TournamentScene*) [CCBReader load:@"TournamentScene"];
+    CCTransition *transition = [CCTransition transitionCrossFadeWithDuration:0.3f];
+    
+    [tournamentScene updateWithResults:@{@"Winner": self.winnerClass, @"Loser": self.loserClass}];
+    
+    CCScene* newScene = [CCScene node];
+    [newScene addChild:tournamentScene];
+    
+    [[CCDirector sharedDirector] replaceScene:newScene withTransition:transition];
+}
+
+- (void)displayWinMessage
+{
     if (!self.winnerName || [self.winnerName isEqualToString:@""])
         _winnerLabel.string = [NSString stringWithFormat:@"%@ wins this battle!", self.winnerClass];
     else
         _winnerLabel.string = [NSString stringWithFormat:@"%@'s %@ wins this battle!", self.winnerName, self.winnerClass];
+}
+
+- (void)updateCountdown
+{
+    countdown--;
+    
+    _countdownLabel.string = [NSString stringWithFormat:@"%d", countdown];
+    
+    if (countdown <= 0)
+    {
+        [self loadTournamentScene];
+    }
 }
 
 @end
