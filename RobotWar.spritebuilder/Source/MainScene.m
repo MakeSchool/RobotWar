@@ -203,7 +203,7 @@
 #pragma mark - GameBoard Protocol
 
 - (CGSize)dimensions {
-  return self.contentSizeInPoints;
+  return [[CCDirector sharedDirector] viewSize];
 }
 
 - (void)fireBulletFromPosition:(CGPoint)position inDirection:(CGPoint)direction bulletOwner:(id)owner {
