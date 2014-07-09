@@ -93,6 +93,7 @@
 		62E3A32F193D3F3B00BD3F0F /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Source/Bullet.m; sourceTree = "<group>"; };
 		650785CF196A20290022192D /* TournamentWonScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TournamentWonScene.h; path = Source/TournamentWonScene.h; sourceTree = "<group>"; };
 		650785D0196A20290022192D /* TournamentWonScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TournamentWonScene.m; path = Source/TournamentWonScene.m; sourceTree = "<group>"; };
+		65859D4F196C4E49009F640D /* TournamentConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TournamentConfiguration.h; path = Source/TournamentConfiguration.h; sourceTree = "<group>"; };
 		65CC917719648EEE00838899 /* AdvancedRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedRobot.h; sourceTree = "<group>"; };
 		65CC917819648EEE00838899 /* AdvancedRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedRobot.m; sourceTree = "<group>"; };
 		65CC917919648EEE00838899 /* SimpleRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleRobot.h; sourceTree = "<group>"; };
@@ -164,7 +165,6 @@
 			children = (
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
-				624A3886193E86140054705C /* GameConstants.h */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
 				62E3A32E193D3F3B00BD3F0F /* Bullet.h */,
@@ -214,6 +214,8 @@
 			children = (
 				62C4F42D1941413E0047553C /* Engine */,
 				624B45D019411F7600A81B57 /* Configuration.h */,
+				624A3886193E86140054705C /* GameConstants.h */,
+				65859D4F196C4E49009F640D /* TournamentConfiguration.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";

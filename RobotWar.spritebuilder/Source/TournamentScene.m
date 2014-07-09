@@ -10,10 +10,9 @@
 #import "Robot.h"
 #import "MainScene.h"
 #import "TournamentWonScene.h"
+#import "TournamentConfiguration.h"
 
 static NSMutableDictionary* schedule;
-
-static const int COUNTDOWN_TIME = 10;
 
 @implementation TournamentScene
 {
@@ -25,6 +24,7 @@ static const int COUNTDOWN_TIME = 10;
     CCLabelTTF* countdownLabel;
     
     int countdown;
+    BOOL tournamentOver;
 }
 
 #pragma mark -
@@ -45,6 +45,7 @@ static const int COUNTDOWN_TIME = 10;
                 // No tournament on disk, so make a new one
                 NSArray* allRobots = ClassGetSubclasses([Robot class]);
                 schedule = [NSMutableDictionary dictionaryWithDictionary:[self createTournamentScheduleWithBots:allRobots]];
+                tournamentOver = NO;
             }
         });
     }
@@ -126,15 +127,16 @@ NSArray *ClassGetSubclasses(Class parentClass)
     [self unschedule:@selector(updateCountdown)];
 }
 
-- (void)onEnterTransitionDidFinish
+- (void)onEnter
 {
-    [super onEnterTransitionDidFinish];
+    [super onEnter];
     
     [self incrementMatchNumber];
     
     [self updateLabels];
     
-    countdown = COUNTDOWN_TIME;
+    countdown = COUNTDOWN;
+    countdownLabel.string = [NSString stringWithFormat:@"%d", countdown];
     [self schedule:@selector(updateCountdown) interval:1.0f];
 }
 
@@ -145,6 +147,8 @@ NSArray *ClassGetSubclasses(Class parentClass)
     
     if (nextMatchNumber >= matches.count)
     {
+        tournamentOver = YES;
+        [self unschedule:@selector(updateCountdown)];
         [self loadTournamentWonScene];
     }
     else
@@ -160,7 +164,7 @@ NSArray *ClassGetSubclasses(Class parentClass)
     --countdown;
     countdownLabel.string = [NSString stringWithFormat:@"%d", countdown];
     
-    if (countdown <= 0)
+    if (countdown <= 0 && !tournamentOver)
     {
         [self unschedule:@selector(updateCountdown)];
         [self loadNextMatch];
@@ -197,8 +201,17 @@ NSArray *ClassGetSubclasses(Class parentClass)
     
     MainScene* nextMatch = (MainScene*) [CCBReader load:@"MainScene"];
     
-    // TODO: Randomize Positions
-    [nextMatch initWithRobotClassOne: [match objectForKey:@"RobotOne"] andRobotClassTwo:[match objectForKey:@"RobotTwo"]];
+    // Randomize Positions
+    int randPosition = arc4random() % 2;
+    
+    if (randPosition == 0)
+    {
+        [nextMatch initWithRobotClassOne: [match objectForKey:@"RobotOne"] andRobotClassTwo:[match objectForKey:@"RobotTwo"]];
+    }
+    else
+    {
+        [nextMatch initWithRobotClassOne: [match objectForKey:@"RobotTwo"] andRobotClassTwo:[match objectForKey:@"RobotOne"]];
+    }
     
     CCScene* nextMatchScene = [CCScene node];
     [nextMatchScene addChild:nextMatch];
@@ -258,7 +271,7 @@ NSArray *ClassGetSubclasses(Class parentClass)
     CCScene* newScene = [CCScene node];
     [newScene addChild:tournamentWonScene];
     
-    [[CCDirector sharedDirector] replaceScene:newScene];
+    [[CCDirector sharedDirector] presentScene:newScene];
 }
 
 - (NSString*)getWinningRobot

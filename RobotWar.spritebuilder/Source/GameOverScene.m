@@ -8,6 +8,7 @@
 
 #import "GameOverScene.h"
 #import "TournamentScene.h"
+#import "TournamentConfiguration.h"
 
 @implementation GameOverScene {
   CCLabelTTF *_winnerLabel;
@@ -17,13 +18,14 @@
 
 - (void)didLoadFromCCB
 {
-    countdown = 10;
+    countdown = COUNTDOWN;
 }
 
-- (void)onEnterTransitionDidFinish
+- (void)onEnter
 {
-    [super onEnterTransitionDidFinish];
+    [super onEnter];
     
+    _countdownLabel.string = [NSString stringWithFormat:@"%d", countdown];
     [self schedule:@selector(updateCountdown) interval:1.0f];
 }
 
