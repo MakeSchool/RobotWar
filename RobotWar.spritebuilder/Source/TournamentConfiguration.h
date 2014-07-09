@@ -9,6 +9,6 @@
 #ifndef RobotWar_TournamentConfiguration_h
 #define RobotWar_TournamentConfiguration_h
 
-static const int COUNTDOWN = 2;
+static const int COUNTDOWN = 10;
 
 #endif
