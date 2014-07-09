@@ -127,9 +127,9 @@ NSArray *ClassGetSubclasses(Class parentClass)
     [self unschedule:@selector(updateCountdown)];
 }
 
-- (void)onEnter
+- (void)onEnterTransitionDidFinish
 {
-    [super onEnter];
+    [super onEnterTransitionDidFinish];
     
     [self incrementMatchNumber];
     
@@ -290,7 +290,12 @@ NSArray *ClassGetSubclasses(Class parentClass)
              mostWins = thisBotWins;
              winningestBot = [robotClass copy];
          }
+         
+         // Print ranks to console
+         NSLog(@"(%d W, %d L) - %@", [[record objectForKey:@"Wins"] intValue], [[record objectForKey:@"Losses"] intValue], robotClass);
+         
      }];
+    
     
     // TODO: Check for tie conditions, look at which bot beat the other to break tie
     

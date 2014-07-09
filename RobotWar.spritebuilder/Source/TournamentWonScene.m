@@ -13,11 +13,17 @@
     CCLabelTTF* robotLabel;
 }
 
-- (void)onEnter
+- (void)setWinningRobot:(NSString *)winningRobot
 {
-    [super onEnter];
-    
-    robotLabel.string = self.winningRobot;
+    robotLabel.string = winningRobot;
+    _winningRobot = [winningRobot copy];
 }
+
+//- (void)onEnterTransitionDidFinish
+//{
+//    [super onEnterTransitionDidFinish];
+//
+//    robotLabel.string = self.winningRobot;
+//}
 
 @end
