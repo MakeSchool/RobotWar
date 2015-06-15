@@ -37,10 +37,10 @@
   
   _robots = [NSMutableArray array];
     
-  [self initWithRobotClassOne:robotClass1 creatorOne:robotCreator1 andRobotClassTwo:robotClass2 creatorTwo:robotCreator2];
+//  [self initWithRobotClassOne:robotClass1 creatorOne:robotCreator1 andRobotClassTwo:robotClass2 creatorTwo:robotCreator2];
 }
 
-- (void)initWithRobotClassOne:(NSString *)botClass1 creatorOne: (NSString*)creator1 andRobotClassTwo:(NSString *)botClass2 creatorTwo:(NSString *)creator2 {
+- (void)initWithRobotClassOne:(NSString *)botClass1 andRobotClassTwo:(NSString *)botClass2  {
   // intantiate two AIs
 
   Robot *robot1 = (Robot*) [[NSClassFromString(botClass1) alloc] init];
@@ -56,7 +56,6 @@
   [_gameNode addChild:robot1.robotNode];
   robot1.gameBoard = self;
   [robot1 _run];
-  robot1.creator = creator1;
   robot1.robotClass = botClass1;
 
   robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
@@ -66,17 +65,24 @@
   robot2.gameBoard = self;
   [robot2 _run];
   robot2.robotNode.rotation = 180;
-  robot2.creator = creator2;
   robot2.robotClass = botClass2;
     
   [self updateScoreLabels];
 }
 
-- (void)transitionToGameOverScreen:(Robot *)robot {
+- (void)transitionToGameOverScreen:(NSDictionary *)results {
+    
   CCScene *gameOverSceneWrapper = [CCBReader loadAsScene:@"GameOverScene"];
   GameOverScene *gameOverScene = gameOverSceneWrapper.children[0];
-  gameOverScene.winnerClass = robot.robotClass;
-  gameOverScene.winnerName = robot.creator;
+    
+  Robot* winner = [results objectForKey:@"Winner"];
+  Robot* loser = [results objectForKey:@"Loser"];
+    
+  gameOverScene.winnerClass = winner.robotClass;
+  gameOverScene.winnerName = winner.creator;
+  gameOverScene.loserClass = loser.robotClass;
+  gameOverScene.loserName = loser.creator;
+    
   [gameOverScene displayWinMessage];
   CCTransition *transition = [CCTransition transitionCrossFadeWithDuration:0.3f];
   [[CCDirector sharedDirector] replaceScene:gameOverSceneWrapper withTransition:transition];
@@ -228,7 +234,8 @@
     [_robots removeObject:robot];
     
     if (_robots.count == 1) {
-      [self performSelector:@selector(transitionToGameOverScreen:) withObject:_robots[0] afterDelay:2.f];
+        NSDictionary* results = @{@"Winner": _robots[0], @"Loser": robot};
+      [self performSelector:@selector(transitionToGameOverScreen:) withObject:results afterDelay:3.0f];
     }
   });
 }
