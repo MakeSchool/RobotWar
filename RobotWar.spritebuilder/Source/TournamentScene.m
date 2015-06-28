@@ -39,7 +39,7 @@ static NSMutableDictionary* schedule;
             
             // Check if there's a tournament saved to disk to resume
             schedule = [[NSUserDefaults standardUserDefaults] objectForKey:@"TournamentState"];
-            
+//            [self hackScheduleToResetToMatch:30];
             if (!schedule)
             {
                 // No tournament on disk, so make a new one
@@ -51,6 +51,48 @@ static NSMutableDictionary* schedule;
     }
     
     return self;
+}
+
+- (void)hackScheduleToResetToMatch:(int)matchNum
+{
+    [schedule setObject:@(matchNum) forKey:@"CurrentMatch"];
+    
+    // reset win loss records based on match record
+    
+    NSMutableDictionary* records = [NSMutableDictionary dictionaryWithDictionary:[schedule objectForKey:@"Records"]];
+    
+    NSArray* matches = [schedule objectForKey:@"Matches"];
+    
+    NSMutableDictionary* newRecords = [NSMutableDictionary dictionary];
+    
+    [records enumerateKeysAndObjectsUsingBlock:^(NSString* robot, NSDictionary* record, BOOL *stop)
+    {
+        [newRecords setObject:[@{@"Wins": @(0), @"Losses": @(0), @"Draws": @(0)} mutableCopy] forKey:robot];
+    }];
+    
+    for (int idx = 0; idx <= matchNum; ++idx)
+    {
+        NSDictionary* match = matches[idx];
+        NSString* robotOne = [match objectForKey:@"RobotOne"];
+        NSString* robotTwo = [match objectForKey:@"RobotTwo"];
+        NSString* winner = [match objectForKey:@"Winner"];
+        
+        NSMutableDictionary* robotOneRecord = [newRecords objectForKey:robotOne];
+        NSMutableDictionary* robotTwoRecord = [newRecords objectForKey:robotTwo];
+        
+        if ([robotOne isEqualToString:winner])
+        {
+            [robotOneRecord setObject:@([[robotOneRecord objectForKey:@"Wins"] intValue] + 1) forKey:@"Wins"];
+            [robotTwoRecord setObject:@([[robotTwoRecord objectForKey:@"Losses"] intValue] + 1) forKey:@"Losses"];
+        }
+        else if ([robotTwo isEqualToString:winner])
+        {
+            [robotTwoRecord setObject:@([[robotTwoRecord objectForKey:@"Wins"] intValue] + 1) forKey:@"Wins"];
+            [robotOneRecord setObject:@([[robotOneRecord objectForKey:@"Losses"] intValue] + 1) forKey:@"Losses"];
+        }
+    }
+    
+    [schedule setObject:newRecords forKey:@"Records"];
 }
 
 NSArray *ClassGetSubclasses(Class parentClass)

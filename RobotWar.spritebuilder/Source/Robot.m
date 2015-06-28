@@ -51,6 +51,11 @@
   return self;
 }
 
+- (CCColor*)getRobotColor
+{
+    return _bodyColorNode.color;
+}
+
 - (void)_setRobotColor:(CCColor*)color {
   [_bodyColorNode setColor:color];
 }

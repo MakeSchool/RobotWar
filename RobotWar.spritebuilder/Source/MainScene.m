@@ -46,7 +46,9 @@
 
   //spawn two robots
   robot1.robotNode = [CCBReader load:@"Robot" owner:robot1];
-  [robot1 _setRobotColor:[CCColor colorWithCcColor3b:ccc3(251, 72, 154)]];
+    CCColor* bot1Color = [CCColor colorWithCcColor3b:ccc3(251, 72, 154)];
+    [robot1 _setRobotColor: bot1Color];
+     _robot1Label.color = bot1Color;
   robot1.robotNode.position = ccp(50, 220);
   [self addChild:robot1.robotNode];
   robot1.gameBoard = self;
@@ -56,6 +58,7 @@
   robot2.robotNode = [CCBReader load:@"Robot" owner:robot2];
   CGSize screenSize = [[CCDirector sharedDirector] viewSize];
   robot2.robotNode.position = ccp(screenSize.width - 50, 100);
+    _robot2Label.color = [robot2 getRobotColor];
   [self addChild:robot2.robotNode];
   robot2.gameBoard = self;
   [robot2 _run];
