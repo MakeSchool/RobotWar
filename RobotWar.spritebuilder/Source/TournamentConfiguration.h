@@ -10,5 +10,6 @@
 #define RobotWar_TournamentConfiguration_h
 
 static const int COUNTDOWN = 10;
+static const BOOL TOURNAMENT = NO;
 
 #endif

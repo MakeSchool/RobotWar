@@ -37,7 +37,7 @@
   }
   
   dispatch_semaphore_wait(_currentActionSemaphore, DISPATCH_TIME_FOREVER);
-  dispatch_release(_currentActionSemaphore);
+//  dispatch_release(_currentActionSemaphore);
 }
 
 - (void)cancel {

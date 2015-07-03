@@ -13,9 +13,6 @@
 		62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E3A32319397BE400BD3F0F /* RobotAction.m */; };
 		62E3A330193D3F3B00BD3F0F /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = 62E3A32F193D3F3B00BD3F0F /* Bullet.m */; };
 		650785D1196A20290022192D /* TournamentWonScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 650785D0196A20290022192D /* TournamentWonScene.m */; };
-		65CC917D19648EEE00838899 /* AdvancedRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC917819648EEE00838899 /* AdvancedRobot.m */; };
-		65CC917E19648EEE00838899 /* SimpleRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC917A19648EEE00838899 /* SimpleRobot.m */; };
-		65CC917F19648EEE00838899 /* TurretRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CC917C19648EEE00838899 /* TurretRobot.m */; };
 		65EC9A5F19691E9A002F9DB2 /* TournamentScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 65EC9A5E19691E99002F9DB2 /* TournamentScene.m */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
 		B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5908188484E7003F4D28 /* iPad-old@2x.png */; };
@@ -45,8 +42,10 @@
 		B77F1B3E17B978D7009739AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3D17B978D7009739AE /* Foundation.framework */; };
 		B77F1B4017B978D7009739AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3F17B978D7009739AE /* CoreGraphics.framework */; };
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
-		BC0E62DC196A0CB600AED4CF /* NewAdvancedRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0E62DB196A0CB600AED4CF /* NewAdvancedRobot.m */; };
-		BC717229196AF978002FCF86 /* LiveRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = BC717228196AF978002FCF86 /* LiveRobot.m */; };
+		BC0F77681B45AD1E0043EEA4 /* SimpleRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0F77671B45AD1E0043EEA4 /* SimpleRobot.swift */; };
+		BC2FCAF81B45C6FC00A7837D /* TurretRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FCAF71B45C6FC00A7837D /* TurretRobot.swift */; };
+		BC2FCAFB1B45EB8B00A7837D /* AdvancedRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FCAFA1B45EB8B00A7837D /* AdvancedRobot.swift */; };
+		BC2FCAFD1B45F42000A7837D /* CamperRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FCAFC1B45F42000A7837D /* CamperRobot.swift */; };
 		BCA5F346195BD4DA00F1A2DF /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCA5F345195BD4DA00F1A2DF /* GLKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -96,12 +95,6 @@
 		650785CF196A20290022192D /* TournamentWonScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TournamentWonScene.h; path = Source/TournamentWonScene.h; sourceTree = "<group>"; };
 		650785D0196A20290022192D /* TournamentWonScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TournamentWonScene.m; path = Source/TournamentWonScene.m; sourceTree = "<group>"; };
 		65859D4F196C4E49009F640D /* TournamentConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TournamentConfiguration.h; path = Source/TournamentConfiguration.h; sourceTree = "<group>"; };
-		65CC917719648EEE00838899 /* AdvancedRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedRobot.h; sourceTree = "<group>"; };
-		65CC917819648EEE00838899 /* AdvancedRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedRobot.m; sourceTree = "<group>"; };
-		65CC917919648EEE00838899 /* SimpleRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleRobot.h; sourceTree = "<group>"; };
-		65CC917A19648EEE00838899 /* SimpleRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleRobot.m; sourceTree = "<group>"; };
-		65CC917B19648EEE00838899 /* TurretRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurretRobot.h; sourceTree = "<group>"; };
-		65CC917C19648EEE00838899 /* TurretRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurretRobot.m; sourceTree = "<group>"; };
 		65EC9A5D19691E99002F9DB2 /* TournamentScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TournamentScene.h; path = Source/TournamentScene.h; sourceTree = "<group>"; };
 		65EC9A5E19691E99002F9DB2 /* TournamentScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TournamentScene.m; path = Source/TournamentScene.m; sourceTree = "<group>"; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
@@ -137,10 +130,11 @@
 		B77F1B3F17B978D7009739AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B77F1B4117B978D7009739AE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B7B3713D180358F1007369CC /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveChipmunk.a; path = "../libs/cocos2d-iphone/external/Chipmunk/xcode/build/Debug-iphoneos/libObjectiveChipmunk.a"; sourceTree = "<group>"; };
-		BC0E62DA196A0CB600AED4CF /* NewAdvancedRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAdvancedRobot.h; sourceTree = "<group>"; };
-		BC0E62DB196A0CB600AED4CF /* NewAdvancedRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewAdvancedRobot.m; sourceTree = "<group>"; };
-		BC717227196AF978002FCF86 /* LiveRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveRobot.h; sourceTree = "<group>"; };
-		BC717228196AF978002FCF86 /* LiveRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveRobot.m; sourceTree = "<group>"; };
+		BC0F77661B45AD1D0043EEA4 /* RobotWar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RobotWar-Bridging-Header.h"; path = "Source/Robot/RobotWar-Bridging-Header.h"; sourceTree = "<group>"; };
+		BC0F77671B45AD1E0043EEA4 /* SimpleRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleRobot.swift; sourceTree = "<group>"; };
+		BC2FCAF71B45C6FC00A7837D /* TurretRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurretRobot.swift; sourceTree = "<group>"; };
+		BC2FCAFA1B45EB8B00A7837D /* AdvancedRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedRobot.swift; sourceTree = "<group>"; };
+		BC2FCAFC1B45F42000A7837D /* CamperRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CamperRobot.swift; sourceTree = "<group>"; };
 		BCA5F345195BD4DA00F1A2DF /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -188,7 +182,6 @@
 				65EC9A5E19691E99002F9DB2 /* TournamentScene.m */,
 				624B4492193F741B00A81B57 /* Helpers.h */,
 				62C4F42F194141DE0047553C /* Helpers.m */,
-				65CC917619648EEE00838899 /* Robots */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -196,16 +189,10 @@
 		65CC917619648EEE00838899 /* Robots */ = {
 			isa = PBXGroup;
 			children = (
-				65CC917719648EEE00838899 /* AdvancedRobot.h */,
-				65CC917819648EEE00838899 /* AdvancedRobot.m */,
-				65CC917919648EEE00838899 /* SimpleRobot.h */,
-				65CC917A19648EEE00838899 /* SimpleRobot.m */,
-				65CC917B19648EEE00838899 /* TurretRobot.h */,
-				65CC917C19648EEE00838899 /* TurretRobot.m */,
-				BC0E62DA196A0CB600AED4CF /* NewAdvancedRobot.h */,
-				BC0E62DB196A0CB600AED4CF /* NewAdvancedRobot.m */,
-				BC717227196AF978002FCF86 /* LiveRobot.h */,
-				BC717228196AF978002FCF86 /* LiveRobot.m */,
+				BC0F77671B45AD1E0043EEA4 /* SimpleRobot.swift */,
+				BC2FCAF71B45C6FC00A7837D /* TurretRobot.swift */,
+				BC2FCAFA1B45EB8B00A7837D /* AdvancedRobot.swift */,
+				BC2FCAFC1B45F42000A7837D /* CamperRobot.swift */,
 			);
 			name = Robots;
 			path = Source/Robot;
@@ -222,10 +209,12 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				65CC917619648EEE00838899 /* Robots */,
 				62C4F42D1941413E0047553C /* Engine */,
 				624B45D019411F7600A81B57 /* Configuration.h */,
 				624A3886193E86140054705C /* GameConstants.h */,
 				65859D4F196C4E49009F640D /* TournamentConfiguration.h */,
+				BC0F77661B45AD1D0043EEA4 /* RobotWar-Bridging-Header.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -421,20 +410,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				629FCFF4193E71C300896E8C /* GameOverScene.m in Sources */,
-				BC717229196AF978002FCF86 /* LiveRobot.m in Sources */,
 				650785D1196A20290022192D /* TournamentWonScene.m in Sources */,
+				BC2FCAFD1B45F42000A7837D /* CamperRobot.swift in Sources */,
 				6244629A1937DDD300895F2D /* Robot.m in Sources */,
-				65CC917E19648EEE00838899 /* SimpleRobot.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				62C4F430194141DE0047553C /* Helpers.m in Sources */,
-				65CC917F19648EEE00838899 /* TurretRobot.m in Sources */,
 				65EC9A5F19691E9A002F9DB2 /* TournamentScene.m in Sources */,
-				65CC917D19648EEE00838899 /* AdvancedRobot.m in Sources */,
 				62E3A32419397BE400BD3F0F /* RobotAction.m in Sources */,
+				BC2FCAF81B45C6FC00A7837D /* TurretRobot.swift in Sources */,
 				62E3A330193D3F3B00BD3F0F /* Bullet.m in Sources */,
-				BC0E62DC196A0CB600AED4CF /* NewAdvancedRobot.m in Sources */,
+				BC0F77681B45AD1E0043EEA4 /* SimpleRobot.swift in Sources */,
+				BC2FCAFB1B45EB8B00A7837D /* AdvancedRobot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +500,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -528,7 +517,8 @@
 					"\"Source/libs/cocos2d-iphone/external/ObjectAL\"/**",
 				);
 				INFOPLIST_FILE = Source/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lz",
@@ -537,6 +527,8 @@
 				);
 				PRODUCT_NAME = RobotWar;
 				PROVISIONING_PROFILE = "18D84403-392D-4C50-BA7D-C45F153D06AB";
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/Robot/RobotWar-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -545,6 +537,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -560,7 +553,8 @@
 					"\"Source/libs/cocos2d-iphone/external/ObjectAL\"/**",
 				);
 				INFOPLIST_FILE = Source/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -568,6 +562,7 @@
 				);
 				PRODUCT_NAME = RobotWar;
 				PROVISIONING_PROFILE = "18D84403-392D-4C50-BA7D-C45F153D06AB";
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/Robot/RobotWar-Bridging-Header.h";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

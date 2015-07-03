@@ -37,14 +37,20 @@
   
   _robots = [NSMutableArray array];
     
-//  [self initWithRobotClassOne:robotClass1 creatorOne:robotCreator1 andRobotClassTwo:robotClass2 creatorTwo:robotCreator2];
+  [self initWithRobotClassOne:robotClass1 andRobotClassTwo:robotClass2];
+}
+
+- (Class)swiftClassFromString:(NSString *)className {
+  NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+  NSString *classStringName = [NSString stringWithFormat:@"_TtC%lu%@%lu%@", (unsigned long)appName.length, appName, (unsigned long)className.length, className];
+  return NSClassFromString(classStringName);
 }
 
 - (void)initWithRobotClassOne:(NSString *)botClass1 andRobotClassTwo:(NSString *)botClass2  {
   // intantiate two AIs
 
-  Robot *robot1 = (Robot*) [[NSClassFromString(botClass1) alloc] init];
-  Robot *robot2 = (Robot*) [[NSClassFromString(botClass2) alloc] init];
+  Robot *robot1 = (Robot*) [[[self swiftClassFromString:botClass1] alloc] init];
+  Robot *robot2 = (Robot*) [[[self swiftClassFromString:botClass2] alloc] init];
   _robots = [NSMutableArray arrayWithArray:@[robot1, robot2]];
 
   //spawn two robots

@@ -24,9 +24,13 @@
 - (void)onEnter
 {
     [super onEnter];
-    
-    _countdownLabel.string = [NSString stringWithFormat:@"%d", countdown];
-    [self schedule:@selector(updateCountdown) interval:1.0f];
+  
+    if (TOURNAMENT) {
+      _countdownLabel.string = [NSString stringWithFormat:@"%d", countdown];
+      [self schedule:@selector(updateCountdown) interval:1.0f];
+    } else {
+      _countdownLabel.visible = NO;
+    }
 }
 
 - (void)cleanup
@@ -57,14 +61,14 @@
 
 - (void)updateCountdown
 {
-    countdown--;
-    
-    _countdownLabel.string = [NSString stringWithFormat:@"%d", countdown];
-    
-    if (countdown <= 0)
-    {
-        [self loadTournamentScene];
-    }
+  countdown--;
+  
+  _countdownLabel.string = [NSString stringWithFormat:@"%d", countdown];
+  
+  if (countdown <= 0)
+  {
+    [self loadTournamentScene];
+  }
 }
 
 @end

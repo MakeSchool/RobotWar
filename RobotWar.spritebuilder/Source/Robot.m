@@ -34,9 +34,9 @@
   RobotAction *_currentRobotAction;
 }
 
-- (void)dealloc {
-  dispatch_release(mainQueueGroup);
-}
+//- (void)dealloc {
+//  dispatch_release(mainQueueGroup);
+//}
 
 - (instancetype)init {
   self = [super init];

@@ -28,6 +28,7 @@
 #import "AppDelegate.h"
 #import "CCBuilderReader.h"
 #import "Configuration.h"
+#import "TournamentConfiguration.h"
 
 @implementation AppController
 
@@ -58,7 +59,11 @@
 }
 
 - (CCScene *)startScene {
-  return [CCBReader loadAsScene:@"TournamentScene"];
+  if (TOURNAMENT) {
+    return [CCBReader loadAsScene:@"TournamentScene"];
+  } else {
+    return [CCBReader loadAsScene:@"MainScene"];
+  }
 }
 
 @end
